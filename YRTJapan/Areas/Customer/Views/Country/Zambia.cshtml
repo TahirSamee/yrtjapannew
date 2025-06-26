@@ -27,7 +27,7 @@
         background-color: #c10000;
         color: #fff;
         border: none;
-        padding: 10px 25px;
+        padding: 8px 20px;
         border-radius: 30px;
         font-weight: 500;
         transition: 0.3s;
@@ -37,34 +37,75 @@
             background-color: #a00000;
             color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(193, 0, 0, 0.3);
+            box-shadow: 0 6px 14px rgba(193, 0, 0, 0.3);
         }
 
     .section-title {
-        border-left: 5px solid #c10000;
-        padding-left: 15px;
-        margin-bottom: 30px;
-        font-weight: bold;
-        font-size: 1.75rem;
+        border: 1px dashed #c10000;
+        padding-left: 12px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        font-size: 1.5rem;
     }
 
     .review-card {
         background: #fff;
-        border-left: 4px solid #c10000;
-        border-radius: 8px;
-        padding: 20px;
+        border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        margin-bottom: 20px;
+        transition: all 0.2s ease-in-out;
+        height: 100%;
     }
 
-    .faq-icon {
-        margin-right: 10px;
-        color: #c10000;
-    }
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(193, 0, 0, 0.2);
+        }
+
+   
 
     .faq-btn {
         font-weight: 600;
         color: #c10000;
+    }
+
+    h6 {
+        font-size: 1rem;
+    }
+
+    .small {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+
+
+    .faq-icon {
+        color: #c10000;
+        font-size: 1.1rem;
+    }
+
+    .accordion-button {
+        background-color: #f9f9f9;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: 5px !important;
+        transition: background-color 0.2s ease;
+        text-align: left;
+        border: 1px solid #c10000;
+    }
+
+        .accordion-button:hover {
+            background-color: #f1f1f1;
+        }
+
+    .accordion-body {
+        background-color: #fff;
+        font-size: 0.9rem;
+        color: #555;
+        
+    }
+    .customercard{
+        border: 1px solid #c10000 !important;
     }
 
     
@@ -103,7 +144,7 @@
                                 }
                                 else
                                 {
-                                    <span class="text-danger small">Login/ASK FOR PRICE</span>
+                                <a href="#" onclick="openAskForModal('@car.MARKA_NAME', '@car.MODEL_NAME', '@car.YEAR')" class="text-danger small">Login/ASK FOR PRICE</a>
                                 }
                             </p>
                             <p class="mb-2">
@@ -114,7 +155,7 @@
                                 }
                                 else
                                 {
-                                    <span class="text-danger small">Login/ASK FOR PRICE</span>
+                                <a href="#" onclick="openAskForModal('@car.MARKA_NAME', '@car.MODEL_NAME', '@car.YEAR')" class="text-danger small">Login/ASK FOR PRICE</a>
                                 }
                             </p>
 
@@ -139,7 +180,7 @@
     </div>
 
     <!-- ✅ Custom Styled Pagination -->
-    <div class="pagebtncontainer d-flex justify-content-center w-100 my-5">
+    <div class="pagebtncontainer d-flex justify-content-center w-100 my-2">
         @if (currentPage > 1)
         {
             <a class="btn page-btn mr-1" href="@Url.Action("Zambia", new { page = currentPage - 1 })">&lt;&lt;</a>
@@ -169,6 +210,39 @@
 </section>
 
 
+<!-- _InquiryModal.cshtml -->
+<div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inquiryModalLabel">Car Inquiry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Html.PartialAsync("_InquiryModal")
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- _InquiryModal.cshtml -->
+<div class="modal fade" id="askForModal" tabindex="-1" aria-labelledby="askForModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="askForModalLabel">Ask For Price</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Html.PartialAsync("_AskForPriceModal")
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -176,7 +250,7 @@
 
 
 <!-- Intro Section -->
-<section class="py-5 bg-light text-center">
+<section class="py-3 bg-light text-center">
     <div class="container">
         <h2 class="text-red fw-bold mb-3">Drive Your Dream Car in Zambia</h2>
         <p class="lead">We connect you to top Japanese car auctions, handle shipping, and deliver right to Zambia.</p>
@@ -185,7 +259,7 @@
 </section>
 
 <!-- Catalogue Section -->
-<section class="py-5" id="catalogue">
+<section class="py-3" id="catalogue">
     <div class="container">
         <h3 class="section-title">Buy Japanese Cars in Zambia</h3>
         <p>YRT can make your dream of owning a reliable and fuel efficient Japanese car a reality. Browse our catalogue to find the best used cars, SUVs, and vans imported directly from Japan.</p>
@@ -194,7 +268,7 @@
 </section>
 
 <!-- Paperwork Section -->
-<section class="bg-light py-5">
+<section class="bg-light py-3">
     <div class="container">
         <h3 class="section-title">Leave the Paperwork to Us</h3>
         <p>Don’t worry about the complexity of the import process. We manage everything – from vehicle inspection to documentation and shipping – so you can relax and wait for your delivery.</p>
@@ -203,70 +277,115 @@
 </section>
 
 <!-- Delivery Section -->
-<section class="py-5">
+<section class="py-3">
     <div class="container">
         <h3 class="section-title">Secure & Fast Delivery to Zambia</h3>
         <p>We work with trusted logistics partners to ensure your car arrives safely and on time. Our shipping system guarantees a smooth and secure experience, no matter where in Zambia you are.</p>
-        <a href="#reviews" class="btn btn-red mt-3">Hear from our customers</a>
+        <center>  <a href="#reviews" class="btn btn-red mt-3">Hear from our customers</a></center>
     </div>
 </section>
+
 
 <!-- Reviews -->
-<section class="bg-light py-5" id="reviews">
+<section class="bg-white py-4" id="reviews">
     <div class="container">
         <h3 class="section-title">Customer Testimonials</h3>
-        @foreach (var review in new[]{
-        new {Name="Ms. Jika N.", Comment="My ordered vehicle has safely arrived in Zambia and is in top condition. Highly grateful to YRT."},
-        new {Name="Mr. Michael P.", Comment="I now own and drive a fuel-efficient Japanese car. Delivered quickly!"},
-        new {Name="Mr. Mutale N.", Comment="I thought it’d be complex to import, but YRT made it so easy!"},
-        new {Name="Ms. Florence M.", Comment="I’m very glad to receive the IST in excellent condition. Thank you Yuki and Lusaka office."},
-        new {Name="Ms. Catherine N.", Comment="My car arrived in good time. Everyone loves it. I'm impressed and happy!"},
-        new {Name="Mr. John S.", Comment="Vehicle from Nakonde is excellent. You’re a lovely company!"},
-        new {Name="Mr. Aaron M.", Comment="This is my second purchase. Never disappointed. My friends are buying from you too!"}
-        })
-        {
-            <div class="review-card">
-                <strong>@review.Name (Zambia)</strong>
-                <p>@review.Comment</p>
-            </div>
-        }
-    </div>
-</section>
 
-<!-- FAQ Section -->
-<section class="py-5" id="faqs">
-    <div class="container">
-        <h3 class="section-title">Frequently Asked Questions</h3>
-        <div class="accordion" id="faqAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="faq1Heading">
-                    <button class="accordion-button collapsed faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq1"
-                            aria-expanded="false" aria-controls="faq1">
-                        <i class="bi bi-truck faq-icon"></i> What is the process of importing a car from Japan?
-                    </button>
-                </h2>
-                <div id="faq1" class="accordion-collapse collapse" aria-labelledby="faq1Heading" data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        We handle the full process: auction bidding, inspection, export documentation, and delivery to Zambia. You just choose your vehicle!
-                    </div>
+        <!-- Review Card 1 -->
+        <div class="card customercard mb-3 shadow-sm p-3 border-0">
+            <div class="row align-items-center g-0">
+                <div class="col-md-2">
+                    <img src="/images/reviews.jpg" alt="Ms. Jika N. Car" class="img-fluid rounded">
+                </div>
+                <div class="col-md-10 ps-md-3">
+                    <strong>1. Ms. Jika N. (Zambia)</strong>
+                    <p class="mb-0 small">
+                        I am highly grateful to YRT for their continued assistance throughout the process.
+                        My ordered vehicle has safely arrived in Zambia and I am happy to report that it is in top condition.
+                        If anyone is in search of a reliable car trader in Zambia, I would suggest they connect with YRT Japan today.
+                    </p>
                 </div>
             </div>
-            <div class="accordion-item mt-3">
-                <h2 class="accordion-header" id="faq2Heading">
-                    <button class="accordion-button collapsed faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq2"
-                            aria-expanded="false" aria-controls="faq2">
-                        <i class="bi bi-clock-history faq-icon"></i> How long can Japanese cars last?
-                    </button>
-                </h2>
-                <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2Heading" data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        Typically 13–15 years or more with proper care. Japanese cars are known for longevity and reliability. We provide condition and mileage details.
-                    </div>
+        </div>
+
+        <!-- Review Card 2 -->
+        <div class="card customercard mb-3 shadow-sm p-3 border-0">
+            <div class="row align-items-center g-0">
+                <div class="col-md-2">
+                    <img src="/images/reviews.jpg" alt="Mr. Michael P. Car" class="img-fluid rounded">
+                </div>
+                <div class="col-md-10 ps-md-3">
+                    <strong>2. Mr. Michael P. (Zambia)</strong>
+                    <p class="mb-0 small">
+                        Thanks to YRT Japan, I am now finally able to own and drive a fuel-efficient Japanese car.
+                        The vehicle safely and quickly arrived in my town and I was able to take it out for a drive to see its performance.
+                        I am forever indebted to YRT for delivering on its promise to find me a high performing used Japanese car.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Card 3 -->
+        <div class="card customercard mb-3 shadow-sm p-3 border-0">
+            <div class="row align-items-center g-0">
+                <div class="col-md-2">
+                    <img src="/images/reviews.jpg" alt="Mr. Mutale N. Car" class="img-fluid rounded">
+                </div>
+                <div class="col-md-10 ps-md-3">
+                    <strong>3. Mr. Mutale N. (Zambia)</strong>
+                    <p class="mb-0 small">
+                        I always assumed that importing a used Japanese car in Zambia would require me to fill a lot of paperwork,
+                        but thanks to YRT Japan, the process was a piece of cake. The car arrived this week and is exactly how it looked in the pictures.
+                        I am very happy with the buying process.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+<!-- FAQ Section -->
+<section class="py-3" id="faqs">
+    <div class="container">
+        <h3 class="section-title text-center mb-4">Frequently Asked Questions</h3>
+        <div class="accordion" id="faqAccordion">
+
+            <!-- FAQ 1 -->
+            <div class="accordion-item border-0 border-bottom mb-1">
+                <h2 class="accordion-header w-100">
+                    <button class="accordion-button collapsed w-100 text-start bg-white shadow-sm px-3 py-2 rounded-1"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
+                        <i class="bi bi-truck faq-icon me-2"></i> What is the process of importing a car from Japan? <i class="bi bi-arrow-down faq-icon" style="float:right"></i>
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body px-3 py-2 small">
+                        We handle the full process: auction bidding, inspection, export documentation, and delivery to Zambia. You just choose your vehicle!
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="accordion-item border-0 border-bottom mb-1">
+                <h2 class="accordion-header w-100">
+                    <button class="accordion-button collapsed w-100 text-start bg-white shadow-sm px-3 py-2 rounded-1"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                        <i class="bi bi-clock-history faq-icon me-2"></i> How long can Japanese cars last?<i class="bi bi-arrow-down faq-icon" style="float:right"></i>
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body px-3 py-2 small">
+                        Typically 13–15 years or more with proper care. Japanese cars are known for longevity and reliability. We provide condition and mileage details.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 
 <!-- Footer CTA -->
 <footer class="bg-red-gradient text-white text-center py-5">
@@ -513,7 +632,7 @@
             $("#skTxtYear").val(year);
             $("#askForModal").modal("show");
         }
-
+       
     </script>
 
 }
