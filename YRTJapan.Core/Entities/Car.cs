@@ -38,5 +38,6 @@ namespace YRTJapan.Core.Entities
         public string TAG2 { get; set; }
         public List<string> IMAGES_LIST { get; set; }
     }
+ 
 
 }

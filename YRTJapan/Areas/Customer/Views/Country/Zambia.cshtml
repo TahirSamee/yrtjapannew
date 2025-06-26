@@ -1,12 +1,18 @@
-﻿@{
+﻿@using YRTJapan.Core.Entities
+@model List<YRTJapan.Core.Entities.Car>
+@{
     ViewBag.Title = "Buy used Japanese vehicles in Zambia only at YRT Japan!";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int currentPage = ViewData["CurrentPage"] != null ? Convert.ToInt32(ViewData["CurrentPage"]) : 1;
+    int totalLots = ViewData["TotalLots"] != null ? Convert.ToInt32(ViewData["TotalLots"]) : 0;
+    int itemsPerPage = 30;
+    int totalPages = (int)Math.Ceiling((double)totalLots / itemsPerPage);
 }
 
 @section MetaTags {
     <meta name="description" content="Are you looking for used Japanese cars for sale in Zambia from reliable sellers? Check out YRT Japan today for the best car deal!">
 }
-
 <!-- Custom Styles -->
 <style>
     .bg-red-gradient {
@@ -60,6 +66,8 @@
         font-weight: 600;
         color: #c10000;
     }
+
+    
 </style>
 
 <!-- Header -->
@@ -67,9 +75,105 @@
     <div class="container">
         <h1 class="display-5 fw-bold">Buy Japanese Cars in Zambia</h1>
         <p class="lead mt-2">Get the best deals on reliable Japanese vehicles – only at YRT Japan</p>
-        <a href="#catalogue" class="btn btn-light btn-lg mt-3">Browse Vehicles</a>
+        <a href="#catalogue" class="btn btn-light btn-lg mt-3">Browse Vehicles @totalLots Cars Found</a>
     </div>
 </header>
+<section class="p-2">
+    <div class="row m-0" id="searchResults">
+        @foreach (var car in Model)
+        {
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-1">
+                <div class="card h-100 shadow-sm ">
+                    @{
+                        string imageUrl = car.IMAGES.Replace("&h=50", "");
+                        int hashIndex = imageUrl.IndexOf("#");
+                        imageUrl = hashIndex != -1 ? imageUrl.Insert(hashIndex, "&w=320") : imageUrl + "&w=320";
+                    }
+                    <a href='/Customer/Stock/Details?id=@car.ID'>
+                        <img src="@imageUrl" class="card-img-top" alt="Car Image">
+                    </a>
+                    <div class="card-body d-flex flex-column p-2" >
+                        
+                            <h6 class="card-title">@car.MARKA_NAME @car.MODEL_NAME @car.YEAR</h6>
+                            <p class="mb-1">
+                                <strong>FOB:</strong>
+                                @if (car.FOBPriceInUSD > 0)
+                                {
+                                    @("$ " + car.FOBPriceInUSD.ToString("N0"))
+                                }
+                                else
+                                {
+                                    <span class="text-danger small">Login/ASK FOR PRICE</span>
+                                }
+                            </p>
+                            <p class="mb-2">
+                                <strong>Total:</strong>
+                                @if (!string.IsNullOrWhiteSpace(car.FINISH))
+                                {
+                                    @car.FINISH
+                                }
+                                else
+                                {
+                                    <span class="text-danger small">Login/ASK FOR PRICE</span>
+                                }
+                            </p>
+
+                      
+                    </div>
+
+
+                    <div class="card-footer text-muted small d-flex flex-column p-2">
+                        <span><strong>Mileage:</strong> @car.MILEAGE km</span>
+                        <span><strong>Engine:</strong> @car.ENG_V cc</span>
+                        <div><strong>Transmission:</strong> @car.KPP</div>
+                        <button class="btn btn-outline-primary btn-sm w-100 mt-2"
+                                onclick="openInquiryModal('@car.MARKA_NAME', '@car.MODEL_NAME', '@car.YEAR', @car.FOBPriceInUSD, '@car.ID')">
+                            Inquire Now
+                        </button>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- ✅ Custom Styled Pagination -->
+    <div class="pagebtncontainer d-flex justify-content-center w-100 my-5">
+        @if (currentPage > 1)
+        {
+            <a class="btn page-btn mr-1" href="@Url.Action("Zambia", new { page = currentPage - 1 })">&lt;&lt;</a>
+        }
+
+        @{
+            int startPage = Math.Max(1, currentPage - 1);
+            int endPage = Math.Min(totalPages, startPage + 2);
+
+            // Ensure 3 buttons if possible
+            if (endPage - startPage < 2)
+            {
+                startPage = Math.Max(1, endPage - 2);
+            }
+        }
+
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            <a class="btn page-btn @(i == currentPage ? "page-btn-active" : "") mr-1" href="@Url.Action("Zambia", new { page = i })">@i</a>
+        }
+
+        @if (currentPage < totalPages)
+        {
+            <a class="btn page-btn-red mr-1" href="@Url.Action("Zambia", new { page = currentPage + 1 })">>></a>
+        }
+    </div>
+</section>
+
+
+
+
+
+
+
 
 <!-- Intro Section -->
 <section class="py-5 bg-light text-center">
@@ -173,7 +277,243 @@
     </div>
 </footer>
 
+
 @section Scripts {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        //fetch model on the base of makers
+        async function fetchModels(markaName) {
+            const url = '@Url.Action("GetModels", "Stock")' + '?markaName=' + encodeURIComponent(markaName);
+            const response = await fetch(url);
+            const content = await response.text();
+            const modelsContainer = document.getElementById('modelsContainer');
+            modelsContainer.innerHTML = content;
+            $(modelsContainer).find('select').select2();
+        }
+        //fetch modelcode on the base of modelname
+        async function fetchModelCodes(modelName) {
+            const url = '@Url.Action("GetModelCodes", "Stock")' + '?modelName=' + encodeURIComponent(modelName);
+            const response = await fetch(url);
+            const content = await response.text();
+            const modelCodesContainer = document.getElementById('modelCodesContainer');
+            modelCodesContainer.innerHTML = content;
+            $(modelCodesContainer).find('select').select2();
+        }
+        //search cars on the base of filters
+        $(document).ready(function () {
+            $('.tab-link').click(function () {
+                var tabValue = $(this).attr('data-tab'); // Tab ki value lo
+                $('#activeTab').val(tabValue); // Hidden input field mein set karo
+            });
+            $('#searchButton').click(function (event) {
+                event.preventDefault();
+                loadPage(1);
+            });
+        });
+        function loadPage(page) {
+            var formData = $('#searchForm').serializeArray();
+            formData.push({ name: "page", value: page });
+            formData.push({ name: "Tab", value: $('#activeTab').val() });
+
+            $.ajax({
+                url: '@Url.Action("StockCars", "Stock")',
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    showLoader('Finding you car, please wait...');
+                },
+                success: function (result) {
+                    $('#searchResults').html(result.carListHtml);
+                    $('#pagination').html(result.paginationHtml);
+                    $('#totalnolots').html(result.totalLots);
+                    $("#viewTotalLots").html(result.totalLotsHtml);
+                    $('#totalCarsCount').html(result.totalLots);
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        }
+
+    </script>
+    <script>
+        function addToFavourites(imageLink, price, markaName, modelName, year, userId) {
+            $.ajax({
+                url: '@Url.Action("AddToFavourites", "Stock")',
+                type: "POST",
+                data: {
+                    ImageLink: imageLink,
+                    Price: price,
+                    MakeName: markaName,
+                    ModelName: modelName,
+                    Year: year,
+                    UserId: userId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert("Failed to add to favourites.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred.");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function openInquiryModal(name, model, year, price, id) {
+            $("#quotemake").val(name);
+            $("#quotemodel").val(model);
+            $("#quoteYear").val(year);
+            $("#quotePrice").val(parseInt(price));
+            $("#carId").val(id);
+            $("#inquiryModal").modal("show");
+        }
+        $(document).ready(function () {
+            $("#inquiryForm").submit(function (event) {
+                event.preventDefault();
+                var country = $("#userCountry").val();
+
+                if (!country) {
+                    toastr.warning("Please select a country", "Warning", {
+                        positionClass: "toast-top-right",
+                        closeButton: true,
+                        progressBar: true
+                    });
+                    return;
+                }
+                var formData = {
+                    Make: $("#quotemake").val(),
+                    Model: $("#quotemodel").val(),
+                    Year: parseInt($("#quoteYear").val()) || 0,
+                    Price: parseInt($("#quotePrice").val()) || 0,
+                    Email: $("#userEmail").val(),
+                    Message: $("#userMessage").val(),
+                    Country: $("#userCountry").val(),
+                    CarId: $("#carId").val(),
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SubmitInquiries", "Stock")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide Modal
+                            $("#inquiryModal").modal("hide");
+
+                            // Reset Form
+                            $("#inquiryForm")[0].reset();
+
+                            $("#userCountry").val("").change();
+                            toastr.success("Inquiry submitted successfully!", "Success", {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                showMethod: "fadeIn",
+                                hideMethod: "fadeOut",
+                                timeOut: 4000,
+                                extendedTimeOut: 1000
+                            });
+                        } else {
+                            toastr.error("Error submitting inquiry: " + response.message, "Error", {
+                                positionClass: "toast-top-right"
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", xhr.responseText);
+                        toastr.error("Server error: " + xhr.responseText, "Error", {
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
+            });
+
+            $("#askForm").submit(function (event) {
+                event.preventDefault();
+                let country = $("#askForCountry").val();
+
+                if (!country) {
+                    toastr.warning("Please select a country", "Warning", {
+                        positionClass: "toast-top-right",
+                        closeButton: true,
+                        progressBar: true
+                    });
+                    return;
+                }
+                let askForValues = {
+                    Make: $("#hdfMake").val(),
+                    Model: $("#hdfModel").val(),
+                    Year: parseInt($("#hdfYear").val()) || 0,
+                    Name: $("#askTxtName").val(),
+                    Email: $("#asktxtEmail").val(),
+                    Phone: $("#askTxtPhone").val(),
+                    Country: country
+                };
+                $.ajax({
+                    url: '@Url.Action("SubmitAskForPrice", "Stock")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(askForValues),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide Modal
+                            $("#askForModal").modal("hide");
+
+                            // Reset Form
+                            $("#askForm")[0].reset();
+
+                            $("#askForCountry").val("").change();
+                            toastr.success("Request submitted successfully!", "Success", {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                showMethod: "fadeIn",
+                                hideMethod: "fadeOut",
+                                timeOut: 4000,
+                                extendedTimeOut: 1000
+                            });
+                        } else {
+                            toastr.error("Error submitting request: " + response.message, "Error", {
+                                positionClass: "toast-top-right"
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", xhr.responseText);
+                        toastr.error("Server error: " + xhr.responseText, "Error", {
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
+            });
+        });
+
+        function openAskForModal(make, model, year) {
+            $("#hdfMake").val(make);
+            $("#hdfModel").val(model);
+            $("#hdfYear").val(year);
+            $("#askTxtMake").val(make);
+            $("#askTxtModel").val(model);
+            $("#skTxtYear").val(year);
+            $("#askForModal").modal("show");
+        }
+
+    </script>
+
 }
