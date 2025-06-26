@@ -1,0 +1,39 @@
+﻿
+               <form class="my-1 p-sm-3 p-lg-3 p-3 d-flex flex-column justify-content-center align-items-center contact-form" id="inquiryForm" style="background-color: #F7F7F7;">
+                   <div class="row flex-wrap justify-content-between">
+                    <input type="text" id="quotemake" name="make" class="form-control" placeholder="Make *" required style="height: 53px; width: 48%;" disabled readonly>
+                    <input type="text" id="quotemodel" name="model" class="form-control" placeholder="Model *" required style="height: 53px;width: 48%;" disabled readonly>
+                    </div>
+
+                    <div class="row justify-content-between mt-3">
+                     <input type="text" id="quoteYear" name="mfg_year" class="form-control" placeholder="Mfg. Year" style="height: 53px" disabled readonly>
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                      <input type="text" id="quotePrice" name="price" class="form-control" placeholder="Price (FOB)" style="height: 53px" disabled readonly>
+                    </div>
+
+                    <div class="row justify-content-between mt-3" >
+                    <input type="email" id="userEmail" class="form-control" placeholder="Your Email *" style="height: 45px" required>
+                    </div>
+                    <div class="row justify-content-between mt-3">
+
+                    @await Component.InvokeAsync("CountriesDropdown", new
+                        {
+                            selectId = "userCountry",
+                            selectName = "final-country",
+                            selectStyle = "height:65px !important;",
+                            isSelect2 = false
+                        })
+                    
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Type message here"
+                                  style="width: 100%;" id="userMessage"></textarea>
+                    </div>
+                    <input type="text" class="row justify-content-between mt-3" id="carId" name="carId" hidden>
+
+                    <div class="mt-3 row justify-content-between">
+                        <button type="submit" id="salesinquirybutton" class="btn btn-theme" style="width: 60%; --bg-color: #d60000;">Submit</button>
+                    </div>
+                </form>
+

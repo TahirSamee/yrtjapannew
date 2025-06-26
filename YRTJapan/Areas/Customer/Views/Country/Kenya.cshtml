@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Buy used Japanese cars in Kenya with YRT!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section MetaTags {
+    <meta name="description" content="Import the best used Japanese vehicles in Kenya with YRT and enjoy quick and secure delivery!">
+}
+
+<style>
+    .bg-red-gradient {
+        background: linear-gradient(135deg, #c10000, #7b0000);
+    }
+
+    .text-red {
+        color: #c10000;
+    }
+
+    .btn-red {
+        background-color: #c10000;
+        color: #fff;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+        .btn-red:hover {
+            background-color: #a00000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(193, 0, 0, 0.3);
+        }
+
+    .section-title {
+        border-left: 5px solid #c10000;
+        padding-left: 15px;
+        margin-bottom: 30px;
+        font-weight: bold;
+        font-size: 1.75rem;
+    }
+
+    .review-card {
+        background: #fff;
+        border-left: 4px solid #c10000;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .faq-icon {
+        margin-right: 10px;
+        color: #c10000;
+    }
+
+    .faq-btn {
+        font-weight: 600;
+        color: #c10000;
+    }
+</style>
+
+<!-- Header -->
+<header class="bg-red-gradient text-white py-5 text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold">Import Japanese Cars to Kenya</h1>
+        <p class="lead mt-2">Affordable & Reliable Japanese Cars and Auto Parts – Delivered Across Kenya</p>
+        <a href="#catalogue" class="btn btn-light btn-lg mt-3">Browse Vehicles</a>
+    </div>
+</header>
+
+<!-- Intro -->
+<section class="py-5 bg-light text-center">
+    <div class="container">
+        <h2 class="text-red fw-bold mb-3">Drive Your Dream Car in Kenya</h2>
+        <p class="lead">We connect you with Japan’s top auctions, handle shipping and paperwork, and deliver to your city.</p>
+        <a href="#faqs" class="btn btn-red mt-3">Have Questions?</a>
+    </div>
+</section>
+
+<!-- Catalogue -->
+<section class="py-5" id="catalogue">
+    <div class="container">
+        <h3 class="section-title">Affordable & Reliable Used Japanese Vehicles in Kenya</h3>
+        <p>Japanese vehicles are famous for their long-lasting performance, fuel efficiency, and advanced engineering. At YRT, we make these top-quality vehicles accessible to customers in Kenya — all within your budget.</p>
+        <p>From our live auction access to ready-to-ship stock, you’ll find a wide range of used Japanese cars and parts customized to your needs.</p>
+    </div>
+</section>
+
+<!-- Parts & Selection -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h3 class="section-title">Find the Best Cars & Auto Parts in Kenya</h3>
+        <p>Use advanced filters at YRT to select make, model, engine, and color. Once you’ve chosen your ideal vehicle or parts, we handle everything else — from purchase to delivery in Kenya.</p>
+        <p>Explore our vehicle stock or use the ‘Buy Parts’ tab for accessories and spares.</p>
+    </div>
+</section>
+
+<!-- Documentation -->
+<section class="py-5">
+    <div class="container">
+        <h3 class="section-title">We Handle Documentation & Shipping</h3>
+        <p>Importing a car from Japan to Kenya doesn’t have to be difficult. YRT takes care of all the steps: from paperwork to secure delivery via trusted shipping partners — ensuring a smooth and timely process.</p>
+        <a href="/how-to-buy" class="btn btn-red mt-3">See How It Works</a>
+    </div>
+</section>
+
+<!-- Reviews -->
+<section class="bg-light py-5" id="reviews">
+    <div class="container">
+        <h3 class="section-title">Customer Testimonials from Kenya</h3>
+        @foreach (var review in new[] {
+        new { Name = "Mr. Masai A.", Comment = "I received my SUZUKI JIMNY 2024 and the parts I requested. Great service and fast delivery. I’ll be back!" },
+        new { Name = "Mr. Emmanuel J.", Comment = "The car I got from YRT is exactly what I expected. Very satisfied with their service and support." },
+        new { Name = "Ms. Esther M.", Comment = "The pictures looked amazing — but the actual car looked even better! Highly recommended." }
+        })
+        {
+            <div class="review-card">
+                <strong>@review.Name (Kenya)</strong>
+                <p>@review.Comment</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- FAQs -->
+<section class="py-5" id="faqs">
+    <div class="container">
+        <h3 class="section-title">Frequently Asked Questions</h3>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq1Heading">
+                    <button class="accordion-button collapsed faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq1"
+                            aria-expanded="false" aria-controls="faq1">
+                        <i class="bi bi-tools faq-icon"></i> Are Japanese cars cheaper to maintain?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" aria-labelledby="faq1Heading" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, Japanese cars are known for their low maintenance costs and widely available spare parts. This makes them ideal for long-term ownership in Kenya.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item mt-3">
+                <h2 class="accordion-header" id="faq2Heading">
+                    <button class="accordion-button collapsed faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq2"
+                            aria-expanded="false" aria-controls="faq2">
+                        <i class="bi bi-globe2 faq-icon"></i> How can I import a car from Japan to Kenya?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2Heading" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Simply partner with YRT — we’re a trusted Japanese car importer for Kenya. You choose the car, and we’ll take care of shipping, documentation, and delivery.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer CTA -->
+<footer class="bg-red-gradient text-white text-center py-5">
+    <div class="container">
+        <h4 class="fw-bold">Start Driving Your Japanese Dream Car in Kenya</h4>
+        <p>Check our latest vehicles and place your order today!</p>
+        <a href="#catalogue" class="btn btn-light btn-lg mt-2">Explore Cars</a>
+    </div>
+</footer>
+
+@section Scripts {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+}

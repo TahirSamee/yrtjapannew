@@ -1,0 +1,51 @@
+﻿@{
+    var activeTab = ViewData["ActiveTab"] as string;
+}
+
+<div class="col-12 col-md-12 col-sm-12 col-lg-12 px-0 px-sm-3">
+    <div class="mt-4">
+        <div class="row mx-auto">
+            <a asp-area="Customer" asp-controller="Stock" asp-action="Index" asp-route-tab="stock"
+               class="col-6 col-md-3 col-lg-3 col-sm-4 tab-link"
+               data-tab="stock"
+               style="background-color: @(activeTab == "stock" ? "#E30202" : "#FF4F4F");">
+                <h2 class="text-white text-center custom-heading-1">YRT STOCK</h2>
+            </a>
+
+            <a asp-area="Customer" asp-controller="Stock" asp-action="Index" asp-route-tab="newArrival"
+               class="col-6 col-md-2 col-lg-2 col-sm-4 tab-link"
+               data-tab="newArrival"
+               style="background-color: @(activeTab == "newArrival" ? "#E30202" : "#FF4F4F");">
+                <h2 class="text-white text-center custom-heading-2">NEW ARRIVAL</h2>
+            </a>
+
+            <a asp-area="Customer" asp-controller="Stock" asp-action="Index" asp-route-tab="discountedStock"
+               class="col-6 col-md-2 col-lg-2 col-sm-4 tab-link"
+               data-tab="discountedStock"
+               style="background-color: @(activeTab == "discountedStock" ? "#E30202" : "#FF4F4F");">
+                <h2 class="text-white text-center custom-heading-3">CLEARANCE</h2>
+            </a>
+
+            <a asp-area="Customer" asp-controller="HowToBuy" asp-action="Index"
+               class="col-6 col-md-2 col-lg-2 col-sm-6 tab-link"
+               data-tab="howToBuy"
+               style="background-color: @(activeTab == "howToBuy" ? "#E30202" : "#FF4F4F");">
+                <h2 class="text-white text-center custom-heading-4">HOW TO BUY</h2>
+            </a>
+
+            @* <a asp-area="Customer" asp-controller="FreightRates" asp-action="Index" *@
+            @*    class="col-6 col-md-2 col-lg-2 col-sm-4 tab-link" *@
+            @*    data-tab="freightRates" *@
+            @*    style="background-color: @(activeTab == "freightRates" ? "#E30202" : "#FF4F4F");"> *@
+            @*     <h2 class="text-white text-center custom-heading-5">FREIGHT RATES</h2> *@
+            @* </a> *@
+
+            <a asp-area="Customer" asp-controller="CarInquiry" asp-action="Index"
+               class="col-6 col-md-3 col-lg-3 col-sm-6 tab-link"
+               data-tab="carInquiry"
+               style="background-color: @(activeTab == "carInquiry" ? "#E30202" : "#FF4F4F");">
+                <h2 class="text-white text-center custom-heading-6">CAR INQUIRY</h2>
+            </a>
+        </div>
+    </div>
+</div>

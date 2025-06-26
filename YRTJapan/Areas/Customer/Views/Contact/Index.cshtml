@@ -1,0 +1,262 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<section class="search-wrapper pl-5 pr-5 py-3 my-5" style="border-bottom: 1px solid black; border-top: 1px solid black;">
+        <div class="row my-4 justify-content-between">
+            <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+                <h3 class="heading mb-3">Send in an inquiry</h3>
+            </div>
+
+        </div>
+        <div class="row my-4 justify-content-between">
+            <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+                <form class="my-4 p-sm-4 p-lg-5 p-5 d-flex flex-column justify-content-center align-items-center contact-form" style="background-color: #F7F7F7;">
+                    <div class="row flex-wrap justify-content-between">
+                        <input type="text" name="firstname" class="form-control" placeholder="First Name"
+                               style="height: 53px; width: 48%;">
+                        <input type="text" name="lastname" class="form-control" placeholder="Last Name"
+                               style="height: 53px;width: 48%;">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email Address"
+                               style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="text" name="phone" class="form-control" placeholder="Phone Number"
+                               style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+
+                    @await Component.InvokeAsync("CountriesDropdown", new
+                        {
+                            selectId = "final-country",
+                            selectName = "final-country",
+                            selectStyle = "height:65px !important;",
+                            isSelect2 = false
+                        })
+                    </div>
+
+                    <div class="row justify-content-between mt-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Type message here"
+                                  style="width: 73%;" id=""></textarea>
+                        <label class="d-flex align-items-center" style="font-weight: 400; text-transform: uppercase;">
+                            <input type="checkbox" id="stockInquiryCheckbox" class="form-check-input mr-1" style="height: 26px;">
+                            Stock Inquiry
+                        </label>
+                    </div>
+                    <div class="mt-4 row">
+                        <button type="submit" class="btn btn-theme" style="width: 60%;--bg-color: #d60000;">Submit Message</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-md-5 col-sm-12 col-lg-5 mb-5" style="align-content: flex-end;">
+                <div class="row flex-column justify-content-around align-items-center mt-4" style="height: 100%;">
+                    <div class="row">
+                        <div class="d-flex justify-content-center align-items-center"
+                             style="background-color: #000; width: 60px; height: 60px;">
+                            <img src="../images/call.svg" />
+                        </div>
+                        <div class="pl-3">
+                            <p class="textcolor mb-0">telephone:</p>
+                            <p class="valuecolor mb-0">+81 90 1876 2811</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center align-items-center"
+                             style="background-color: #000; width: 60px; height: 60px;">
+                            <img src="../images/message.svg" />
+                        </div>
+                        <div class="pl-3">
+                            <p class="textcolor mb-0">Email us at:</p>
+                            <p class="valuecolor mb-0">info@yrtjapan.com</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-center align-items-center"
+                             style="background-color: #000; width: 60px; height: 60px;">
+                            <img src="../images/location.svg" />
+                        </div>
+                        <div class="pl-3 col-10">
+                            <p class="textcolor mb-0">Address:</p>
+                            <p class="valuecolor mb-0">
+                                Isesaki SHI Sakai Higashi Arai
+                                718-1 gunma ken, 370-0101 Japan.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mt-3">
+    @*                     <p class="mr-2 label mb-0" style="font-size: 15px; *@
+    @* font-weight: 600;">Follow us at</p> *@
+    @*                 <a href="https://www.facebook.com/profile.php?id=61569649042926" target="_blank"> *@
+    @*                     <span><img class="mr-2" src="../images/facebook.svg" /></span> *@
+    @*                 </a> *@
+                    
+    @*                 <a href="https://wa.me/819018762811" target="_blank"><span><img src="images/soical_media/whatsapp.png"></span></a> *@
+                        
+                        @* <img class="mr-2" src="../images/instagram.svg" /> *@
+                        @* <img class="mr-2" src="../images/linkedin.svg" /> *@
+                        @* <img class="mr-2" src="../images/twitter.png" /> *@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="search-wrapper pl-5 pr-5 py-3 my-5" style="border-bottom: 1px solid black;">
+        <div class="row flex-wrap my-4 justify-content-between bd-con">
+            <div class="col-12 col-md-5 col-sm-12 col-lg-5 mt-4">
+                <h3 class="heading mb-3">Japan Office</h3>
+                <div class="row mt-4 ml-2">
+                    <img src="../images/light-location.svg" />
+                    <p class="mb-0 location col-10">
+                        718-1 Sakai Higashi Arai, Isesaki,
+                        Gunma 370-0101 Japan
+                    </p>
+                </div>
+                <div class="row mt-4 ml-2">
+                    <img src="../images/light-call.svg" />
+                    <p class="mb-0 location col-10">
+                        Phone: +81 90 1876 2811
+                        TEL: 0270-61-9892
+
+                    </p>
+                </div>
+                <iframe class="mt-4 ml-2"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12860.11310425996!2d139.2536064415518!3d36.31162114913734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601ee71993f8a0fb%3A0x8cc4fa338bbc2c80!2sJoshoken%20Isesaki%20Sohonten!5e0!3m2!1sen!2s!4v1734239121566!5m2!1sen!2s"
+                        width="700" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="col-12 col-md-5 col-sm-12 col-lg-5 mt-4">
+                <h3 class="heading mb-3">Chile Office</h3>
+                <div class="row mt-4 ml-2">
+                    <img src="../images/light-location.svg" />
+                    <p class="mb-0 location col-10">
+                        718-1 Sakai Higashi Arai, Isesaki, 
+                        Gunma 370-0101 Japan
+                    </p>
+                </div>
+                <div class="row mt-4 ml-2">
+                    <img src="../images/light-call.svg" />
+                    <p class="mb-0 location col-10">
+                        Phone: +81 90 1876 2811 <br>
+                        TEL: 0270-61-9892
+                    </p>
+                </div>
+                <iframe class="mt-4 ml-2"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12860.11310425996!2d139.2536064415518!3d36.31162114913734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601ee71993f8a0fb%3A0x8cc4fa338bbc2c80!2sJoshoken%20Isesaki%20Sohonten!5e0!3m2!1sen!2s!4v1734239121566!5m2!1sen!2s"
+                        width="700" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="col-12 col-md-5 col-sm-12 col-lg-5 mt-4">
+                <h3 class="heading mb-3">Other Contact Details:</h3>
+                <div class="row mt-4 ml-2">
+                    <img src="../images/light-location.svg" />
+                    <p class="mb-0 location col-10">
+                        718-1 Sakai Higashi Arai, Isesaki, 
+                        Gunma 370-0101 Japan
+                    </p>
+                </div>
+                <div class="row mt-4 ml-2">
+                    <img src="../images/light-call.svg" />
+                    <p class="mb-0 location col-10">
+                        Phone: +81 90 1876 2811 <br>
+                        TEL: 0270-61-9892
+                    </p>
+                </div>
+                <!-- <iframe class="mt-4 ml-2"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12860.11310425996!2d139.2536064415518!3d36.31162114913734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601ee71993f8a0fb%3A0x8cc4fa338bbc2c80!2sJoshoken%20Isesaki%20Sohonten!5e0!3m2!1sen!2s!4v1734239121566!5m2!1sen!2s"
+                    width="700" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+            </div>
+
+        </div>
+    </section>
+    <section class="search-wrapper pl-5 pr-5 py-3 my-5" style="border-bottom: 1px solid black;">
+        <h3 class="heading mb-3">Office Pictures</h3>
+        <div class="row flex-wrap my-4">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img1.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img2.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img3.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img4.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img5.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img6.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12 mb-4">
+               <img src="../images/chile_office/img7.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-4">
+               <img src="../images/chile_office/img8.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-4">
+               <img src="../images/chile_office/img9.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-4">
+               <img src="../images/chile_office/img10.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-4">
+               <img src="../images/chile_office/img11.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-4">
+               <img src="../images/chile_office/img12.jfif" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12  mb-4">
+               <img src="../images/chile_office/img13.jfif" />
+            </div>
+
+        </div>
+    </section>
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="stockInquiryModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Stock Inquiry Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="my-4 p-sm-4 p-lg-5 p-5 d-flex flex-column justify-content-center align-items-center contact-form" style="background-color: #F7F7F7;">
+                    <div class="row flex-wrap justify-content-between">
+                        <input type="text" name="make" class="form-control" placeholder="Make *" required style="height: 53px; width: 48%;">
+                        <input type="text" name="model" class="form-control" placeholder="Model *" required style="height: 53px;width: 48%;">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="text" name="drive_type" class="form-control" placeholder="Drive Type" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="number" name="mfg_year" class="form-control" placeholder="Mfg. Year" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="text" name="price" class="form-control" placeholder="Price (FOB)" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="file" name="vehicle_image" class="form-control" accept="image/*" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Type message here (0 / 500)" maxlength="500" style="width: 100%;"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>
+    document.getElementById('stockInquiryCheckbox').addEventListener('change', function () {
+        if (this.checked) {
+            var modal = new bootstrap.Modal(document.getElementById('stockInquiryModal'));
+            modal.show();
+        }
+    });
+</script>
+}

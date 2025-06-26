@@ -1,0 +1,62 @@
+﻿@model string
+
+@{
+    var priceSpanId = Model;
+    var relativeConvertUrl = Url.Action("Convert", "Currency", new { area = "Customer" });
+    var currentCurrency = ViewBag.SelectedCurrency as string ?? "USD";
+}
+<form name="currform" class="op" method="post" action="">
+    <select id="currencySelect" class="form-select">
+        @if (currentCurrency == "JPY")
+        {
+            <option value="JPY" selected="selected">YEN</option>
+            <option value="USD">USD</option>
+        }
+        else
+        {
+            <option value="JPY">YEN</option>
+            <option value="USD" selected="selected">USD</option>
+        }
+    </select>
+</form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#currencySelect').change(function () {
+            var selectedCurrency = $(this).val();
+            var span = $('#' + '@priceSpanId');
+            var currentPriceText = span.text().trim();
+            var priceValue = parseFloat(currentPriceText.replace(/[^0-9.]/g, ''));
+            if (isNaN(priceValue)) {
+                console.error("Invalid price value:", currentPriceText);
+                return;
+            }
+            var baseUrl = window.location.origin;
+            var convertUrl = baseUrl + '@Html.Raw(relativeConvertUrl)';
+            var url = convertUrl + '?price=' + encodeURIComponent(priceValue) + '&targetCurrency=' + encodeURIComponent(selectedCurrency);
+            console.log("Calling conversion endpoint: " + url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                beforeSend: function () {
+                    // Optionally, show a loader here
+                    console.log("Conversion request started...");
+                },
+                success: function (data) {
+                    if (data.convertedPrice) {
+                        span.text(data.convertedPrice);
+                    } else if (data.error) {
+                        console.error("Conversion error:", data.error);
+                    }
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                },
+                complete: function () {
+                    // Optionally, hide the loader here
+                    console.log("Conversion request complete.");
+                }
+            });
+        });
+    });
+</script>

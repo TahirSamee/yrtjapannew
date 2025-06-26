@@ -1,0 +1,120 @@
+﻿@model IEnumerable<YRTJapan.Core.Entities.FreeQuote>
+
+@{
+    ViewData["Title"] = "Quotes";
+}
+
+<div style="margin-left:75%"><partial name="_LoginPartial" /></div>
+<h2 style="margin-left:20px">Quotes</h2>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+<style>
+
+    table.dataTable thead {
+        background-color: black;
+        margin-right: 20px;
+    }
+
+        table.dataTable thead th {
+            color: #c31919;
+        }
+
+    table.dataTable tbody {
+        margin-right: 20px;
+    }
+
+        table.dataTable tbody td {
+            font-size: 12px;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .dataTables_length {
+        margin-left: 20px;
+    }
+
+    .dataTables_filter {
+        margin-right: 20px;
+    }
+</style>
+
+<table id="quotesTable" class="display ml-2">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Country)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Message)</th>
+            <th>@Html.DisplayNameFor(model => model.CarId)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#quotesTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "@Url.Action("LoadData", "Inquiry", new { area = "Admin" })",
+                "type": "POST"
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "country" },
+                { "data": "email" },
+                { "data": "phoneNumber" },
+                { "data": "message" },
+                { "data": "carId" },
+                {
+                    "data": null,
+                    "sortable": false,
+                    "render": function (data, type, row) {
+                        return `
+                            <button class="btn btn-warning btn-sm" onclick="openEditQuoteModal(${data.id}, '${row.name}', '${row.country}', '${row.email}', '${row.phoneNumber}', '${row.message}', '${row.carId}')">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteQuote(${data.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        `;
+                    }
+                }
+            ],
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true
+        });
+    });
+
+    function openEditQuoteModal(id, name, country, email, phoneNumber, message, carId) {
+        // Your logic to open and populate the edit modal
+    }
+
+    function deleteQuote(id) {
+        // Your logic to delete the quote
+    }
+</script>
+  

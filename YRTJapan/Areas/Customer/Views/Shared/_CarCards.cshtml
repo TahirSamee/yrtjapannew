@@ -1,0 +1,76 @@
+﻿@using YRTJapan.Core.Entities
+
+@model List<Car>
+
+@{
+    int totalCards = 4;
+    int totalModelCounts = Model.Count;
+    int totalWrappers = 0;
+    if (totalModelCounts > 0 && totalModelCounts < 5)
+    {
+        totalWrappers = 1;
+    }
+    else if (totalModelCounts > 4 && totalModelCounts < 9)
+    {
+        totalWrappers = 2;
+    }
+    else if (totalModelCounts > 8)
+    {
+        totalWrappers = 3;
+    }
+}
+
+@for (int i = 0; i < totalWrappers; i++)
+{
+    <div class="col-lg-12 wrapper flex-wrap">
+        @for (int j = 0; j < totalCards; j++)
+        {
+            var index = i * totalCards + j;
+            if (index < Model.Count) // Ensure the index does not exceed the number of elements in the list
+            {
+                var car = Model[index]; // Access the model directly with index
+                <div class="card home-card">
+                    @{
+                        string imageUrl = car.IMAGES;
+
+                        // Remove '&h=50'
+                        imageUrl = imageUrl.Replace("&h=50", "");
+
+                        // Insert '&w=320' before '#'
+                        int hashIndex = imageUrl.IndexOf("#");
+                        if (hashIndex != -1)
+                        {
+                            imageUrl = imageUrl.Insert(hashIndex, "&w=320");
+                            imageUrl += "&w=320";
+                        }
+                        else
+                        {
+                            imageUrl += "&w=320";
+                        }
+                    }
+                    <a href='/Customer/Stock/Details?id=@car.ID'>
+                    <img src="@imageUrl" class="card-img-top" alt="...">
+                    </a>
+                    <div class="card-body p-1">
+                        <a href='/Customer/Stock/Details?id=@car.ID' class="card-title mb-0">@car.MODEL_NAME</a>
+                        <p class="card-text mb-2">Model @car.YEAR</p>
+                        <div class="prices d-flex justify-content-between">
+                            <span class="title">FOB</span>
+                            @if (car.FOBPriceInUSD > 0)
+                            {
+                                <span class="tag tagPrice">$ @car.FOBPriceInUSD.ToString("N0")</span>
+                            }
+                            else
+                            {
+                                <a href="/Customer/Stock/Details?id=@car.ID&imageUrl=@imageUrl" class="tag tagPrice">ASK PRICE</a>
+                            }
+
+                            @* <span class="tag tagPrice"> @(car.FOBPriceInUSD > 0 ? car.FOBPriceInUSD.ToString("N0") + " $": "ASK PRICE")</span> *@
+                            @* <span class="tag tagPrice">¥@car.START / $@car.PriceInUSD.ToString("N0")</span> *@
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}

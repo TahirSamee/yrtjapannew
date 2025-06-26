@@ -1,0 +1,937 @@
+﻿@model YRTJapan.Core.DropDownDataList
+@using YRTJapan.UI.Helper
+
+@{
+    ViewData["Title"] = "Home";
+    var yearsList = DropdownHelper.GetYearsList;
+}
+<section class="search-wrapper pl-5 pr-5">
+    <div class="">
+        <div class="row">
+            <div class="p-0 left left-content" style="width: 15%;">
+                <div class="carMakersList">
+                    <h2>
+                        <i class="fi fi-jp" aria-hidden="true"></i> <span class="">Japanese Makers</span>
+                    </h2>
+                    <ul class="makerCompanisList makerCompanisLists">
+                        @foreach (var item in DropdownHelper.JapenesMakersSubset)
+                        {
+                            <li>
+                                <img src="@item.Value">
+                                <a class="makerButton" data-marka="@item.Text" href="#">@item.Text</a>
+                            </li>
+                        }
+                        <li>
+                            <a href="javascript:void(0)" class="btnToggleJapenesMakers" style="color: #d60000;">
+                                <span>View All</span>
+                                <span>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </div>
+                <div class="carMakersList mt-5">
+                    <h2>
+                        <img style="height: 22px; width: 22px" src="images/global_makers.svg"> <span class="">Global Makers</span>
+                    </h2>
+                    <ul class="makerCompanisList makerGlobalCompanisList">
+                        @foreach (var item in DropdownHelper.GlobalMakersSubset)
+                        {
+                            <li>
+                                <img src="@item.Value">
+                                <a class="globalMakerButton" data-marka="@item.Text" href="#">@item.Text</a>
+                            </li>
+                        }
+                        <li>
+                            <a href="javascript:void(0)" class="btnToggleGlobalMakers" style="color: #d60000;">
+                                <span>View All</span>
+                                <span>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="carMakersList searcbyPrice mt-5">
+                    <h2 class="bg-dark">
+                        <img class="mainbox-img" style="width: 30px;margin-right: 5px;"
+                             src="images/io_searchbyshape.svg"> <span class="">Search By Shape</span>
+                    </h2>
+                    
+                    <ul class="makerCompanisList makerTypeList">
+                        @foreach (var item in DropdownHelper.BodyTypesSubset)
+                        {
+                            <li>
+                                <img src="@item.Value">
+                                <a href="/Customer/Stock/Index?HomeTypeName=@item.Text">@item.Text</a>
+                            </li>
+                        }
+                        <li>
+                            <a href="javascript:void(0)" class="btnToggleBodyTypes" style="color: #d60000;">
+                                <span>View All</span>
+                                <span>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="carMakersList searcbyShare mt-5">
+                    <h2 class="bg-dark">
+                        <img class="priceimg" src="images/ico-searchbyprice.svg"> <span class="">
+                            Search By Price
+                        </span>
+                    </h2>
+                    <ul class="makerCompanisList">
+                        <li>
+                            <a href="/Customer/Stock/Index?OverPrice=7000">Over $7,000</a>
+                        </li>
+                        <li>
+                            <a href="/Customer/Stock/Index?UnderPrice=7000">Under $7,000</a>
+                        </li>
+                        <li>
+                            <a href="/Customer/Stock/Index?UnderPrice=6000">Under $6,000</a>
+                        </li>
+                        <li>
+                            <a href="/Customer/Stock/Index?UnderPrice=5000">Under $5,000</a>
+                        </li>
+                        <li>
+                            <a href="/Customer/Stock/Index?UnderPrice=4000">Under $4,000</a>
+                        </li>
+                        <li>
+                            <a href="/Customer/Stock/Index?UnderPrice=3000">Under $3,000</a>
+                        </li>
+                        <li>
+                            <a href="/Customer/Stock/Index?UnderPrice=2000">Under $2,000</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <form id="homeSearchForm">
+                <div class="searchbar">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">SEARCH CARS</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                                   style="height: 53px;" name="HomeSearch" placeholder="SEARCH BY KEYWORDS">
+                        <div class="input-group-append">
+                            <a class="input-group-text" id="searchElements">
+                                <i class="fa fa-search"
+                                   aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <div class="alerts mt-4">
+                    <div class="alert alert-danger">
+                        <div class="alert-header mb-3">
+                            <span>News & Announcements</span>
+                        </div>
+                        <div class="alert-body">
+                            <ul class="alertlist">
+                                <li>
+                                    <div>
+                                        <p class="mb-1">
+                                            Beware of Scams Advising Fake Money Transfer
+                                            Instructions!
+                                        </p>
+                                        <button type ="button" onclick="window.location.href='/Customer/BankInfo/Index'">Learn More...</button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <p class="mb-1">
+                                            YRT Japan Is Not Responsible For Unprovided Accounts!
+                                        </p>
+                                        <button type="button" onclick="window.location.href='/Customer/BankInfo/Index'">Learn More...</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="sliderWrapper mt-3">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="images/1.1.jpg" alt="First slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="images/1.2.jpg" alt="Second slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="images/1.3.jpg" alt="Third slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="images/1.4.jpg" alt="Fourth slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="images/1.5.jpg" alt="Fifth slide">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="findyourcar mt-3 p-4">
+                    <h3 class="mb-4">Find Your Car</h3>
+                    <form id="searchForm">
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-1 col-form-label text-right">Make</label>
+                            <div class="col-sm-3">
+                                @await Html.PartialAsync("_MakersDropdown", Model)
+                            </div>
+                            <label for="inputPassword" class="col-sm-1 col-form-label text-right">Model</label>
+                            <div class="col-sm-3" style="padding-left:25px">
+                                <div id="modelsContainer">
+                                    @await Html.PartialAsync("_HomeModelDropDown", Model.ListModels)
+                                </div>
+
+                            </div>
+                            <label for="inputPrice" class="col-sm-1 col-form-label text-right">Price</label>
+                            <div class="col-sm-3 d-flex justify-content-between price">
+                                @Html.DropDownList("FromPrice", DropdownHelper.GetPriceFromList(), "From", new { @class = "form-control", style = "width: 20%;" })
+                                @Html.DropDownList("ToPrice", DropdownHelper.GetPriceToList(), "To", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                            <label for="inputPassword" class="col-sm-1 col-form-label text-right">Type</label>
+                            <div class="col-sm-3">
+                                @Html.DropDownList("Type", DropdownHelper.GetBodyTypesList, "-- Type --", new { @class = "form-control" })
+                            </div>
+                            <label for="inputPassword" class="col-sm-1 col-form-label text-right">Steering</label>
+                            <div class="col-sm-3" style="padding-left:25px">
+                                @Html.DropDownList("ddlSteering", DropdownHelper.Steering, "Steering", new { @class = "form-control" })
+                            </div>
+                            <label for="inputPrice" class="col-sm-1 col-form-label text-right">Year</label>
+                            <div class="col-sm-3 d-flex justify-content-between price">
+                                @Html.DropDownList("FromYear", yearsList, "From", new { @class = "form-control" })
+                                @Html.DropDownList("ToYear", yearsList, "To", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </form>
+                    <button class="btn-block mt-4 btnsearchnow" id="searchButton">Search Now</button>
+                    <hr class="mt-3">
+                </div>
+                <div id="content-loader-area" class="categoryCars d-flex flex-column w-100 align-items-center">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="btnsfilter flex-wrap">
+                                <a href="#" id="newArrivalButton" class="btntabs active" ><img src="images/new.svg"> New Arrival</a>
+                                <a href="#" id="bestDealButton" class="btntabs">
+                                    <img src="images/sale.svg"> Best Deals
+                                </a>
+                                <a href="#" id="premiumButton" class="btntabs">
+                                    <img src="images/primium.svg"> Premium
+                                </a>
+                                <a href="#" id="clearenceButton" class="btntabs">
+                                    <img src="images/clearance.svg">Clearance
+                                </a>
+                 
+                                <a class="btntabs" id="homeViewAllButton">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        Html.RenderPartial("_CustomLoader");
+                    }
+                    <div class="row px-4 mt-5" id="searchResults">
+                        @await Html.PartialAsync("_CarCards", Model.ListCars)
+                    </div>
+                    <div class="viewall">
+                        <button class="btnViewAll text-white" id="viewAllButton">View All</button>
+                    </div>
+                </div>
+                <hr>
+                @* <div class="followFacebook mt-5">
+                    <h3>follow us on facebook for more interesting news & deals</h3>
+                    <div class="wrapper">
+                        <img src="images/followfb.png">
+                        <p class="mt-3">
+                        </p>
+                        <div class="promotions ml-3">
+                            <img src="images/promotion.png" >
+                            <img src="images/promotion.png" >
+                            <img src="images/promotion.png">
+                        </div>
+                    </div>
+                </div>
+                <hr> *@
+                <div class="whyChoose mt-5">
+                    <h3>why choose YRT Japan</h3>
+                    <div class="wrapper">
+                        <div class="left">
+                            <h4>
+                                Transparent
+                                Process
+                            </h4>
+                            <p>
+                                YRT believes in clear communication and transparency. You'll receive detailed
+                                information
+                                on your car, including photos, specifications, and history, so you can confidently make
+                                an
+                                informed decision from the comfort of your home.
+                            </p>
+                            <h4> To Us, All Your Wants Matter</h4>
+                            <p>
+                                At YRT your satisfaction is our top priority. We go the extra mile to address your
+                                concerns,
+                                answer your queries precisely, and ensure a seamless buying experience. With YRT, you
+                                can
+                                trust that your needs come first.
+                            </p>
+                        </div>
+                        <div class="center">
+                            <img src="~/images/yrt-logo.png">
+                        </div>
+                        <div class="right">
+
+                            <h4 class="mt-5">Reliable Shipping and Meticulous Documentation</h4>
+                            <p>
+                                Once you make your purchase, YRT handles all the necessary documentation and shipping
+                                logistics. We partner with world-renowned and deeply trusted carriers to ensure
+                                your car reaches you safely and on time.
+                            </p>
+                            <h4>Assistance from Experts in the Field</h4>
+                            <p>
+                                Our experienced and knowledgeable staff is dedicated to providing personalized support
+                                throughout your buying journey. From selecting your desired car to navigating import
+                                regulations, we are here to guide you every step of the way.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <style>
+                    iframe {
+                        width: 100%;
+                        height: 238px;
+                        border: none;
+                    }
+
+                    .overlap-div {
+                        margin-top: -60px; /* Adjust based on where branding shows */
+                        height: 60px;
+                        background: white; /* or transparent / matching background */
+                        z-index: 10;
+                        position: relative;
+                    }
+                </style>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js"></script>
+
+                <iframe onload="iFrameResize(this)" src="https://fab1241ab45a420aa02489446c8515ae.elf.site" scrolling="no"></iframe>
+
+                <!-- This div visually covers the bottom part of the iframe -->
+                <div class="overlap-div"></div>
+
+                @* <hr> *@
+                @* <div class="FAQs mt-5"> *@
+                @*     <h3 class="mb-5">frequently asked questions</h3> *@
+                @*     <div class="question"> *@
+                @*         <div class="d-flex"> *@
+                @*             <span class="question_tag">01</span> *@
+                @*             <p class="text_question"> *@
+                @*                 Is it possible to buy a car for my personal use? *@
+                @*             </p> *@
+                @*         </div> *@
+                @*         <p class="answer"> *@
+                @*             Yes, but it is essential to verify your country’s import requirements, such as age restrictions, roadworthiness  *@
+                @*             inspections, and customs duties, before placing an order. Certain vehicles may not be eligible for import. *@
+                @*         </p> *@
+                @*     </div> *@
+                @*     <div class="question"> *@
+                @*         <div class="d-flex"> *@
+                @*             <span class="question_tag">02</span> *@
+                @*             <p class="text_question"> *@
+                @*                 Can I buy cars which are not listed on your website? *@
+                @*             </p> *@
+                @*         </div> *@
+                @*         <p class="answer"> *@
+                @*             Yes. If you are unable to find your desired vehicle, *@
+                @*             kindly inform us. We can locate a vehicle that meets your requirements, *@
+                @*             either from the Dealers' stock in Japan or from the Japan Auction. *@
+                @*         </p> *@
+                @*     </div> *@
+                @* </div> *@
+            </div>
+            <div class="p-0 right right-content" style="width: 18%;">
+                <div class="socialLinks">
+                    <h2 class="right-heading"><span class="">Follow Us At</span></h2>
+                    <ul class="px-1">
+                        <li class="mb-2">
+                            <img src="images/soical_media/facebook.png">
+                            <a href="https://www.facebook.com/profile.php?id=61569649042926" target="_blank"><span>Follow Us On Facebook</span></a>
+                        </li>
+                        <li class="mb-2">
+                            <img src="images/soical_media/instagram.png">
+                            <a href="https://www.instagram.com/yrtjapan/" target="_blank"><span>Follow Us On Instagram</span></a>
+                        </li>
+                        <li class="mb-2">
+                            <img src="images/soical_media/whatsapp.png">
+                            <a href="https://wa.me/819018762811" target="_blank"><span>Contact Us On Whatsapp</span></a>
+                        </li>
+                        <li class="mb-2">
+                            <img src="images/soical_media/viber.png">
+                            <a href="https://invite.viber.com/?number=819018762811" target="_blank"><span>Contact Us On Viber</span></a>
+                        </li>
+
+                        <li class="mb-2">
+                            <img src="images/soical_media/line.png">
+                            <a href="https://line.me/ti/p/~YOUR_LINE_ID" target="_blank"><span>Contact Us On Line</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="myFav news mt-1">
+                    <h2 class="fav">
+                        <img class="mainbox-img" src="images/fav.svg"> <span class="">
+                            My
+                            Favourites
+                        </span>
+                    </h2>
+                    <div class="newslist" style="max-height: 380px;overflow-y: auto;">
+                        <ul class="mt-4 mb-4" id="carList">
+                            
+                        </ul>
+                    </div>
+                    <div id="loading" style="display:none; text-align:center;">
+                    </div>
+                </div>
+                <div class="yrt_country">
+                    <h3 class="bg-dark"><span class="">YRT In Your Country Now</span></h3>
+                    <ul class="makerCompanisList" id="countryList">
+                        
+                        @foreach (var item in DropdownHelper.CountriesSubset)
+                        {
+                            <li>
+                                <a href="#" data-country="@item.Code.ToLower()">
+                                    <i class="fi fi-@item.Code.ToLower()" aria-hidden="true"></i> @item.Name
+                                </a>
+                            </li>
+                        }
+
+                        <!-- View All Button -->
+                        <li>
+                            <a href="javascript:void(0)" class="btnViewAllCoutry btnViewAll ">
+                                <span>View All</span>
+                                <span>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+   
+
+    <script>
+        async function fetchModels(markaName) {
+            const url = '@Url.Action("GetModels", "Home")' + '?markaName=' + encodeURIComponent(markaName);
+            const response = await fetch(url);
+            const content = await response.text();
+            const modelsContainer = document.getElementById('modelsContainer');
+            modelsContainer.innerHTML = content;
+            $(modelsContainer).find('select').select2();
+        }
+        $(document).ready(function () {
+            $('#searchButton').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: $('#searchForm').serialize(),
+                    beforeSend: function () {
+                        showLoader('Finding you car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $('#searchElements').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: $('#homeSearchForm').serialize(),
+                    beforeSend: function () {
+                        showLoader('Finding you car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+        });
+
+         // View All Button Click
+        document.getElementById('viewAllButton').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            var form = document.getElementById('searchForm'); // Ensure the correct form ID
+            if (!form) {
+                console.error('Form not found!');
+                return;
+            }
+
+            var formData = new FormData(form);
+            console.log('FormData:', formData); // Debugging FormData object
+            var params = new URLSearchParams();
+
+            for (var pair of formData.entries()) {
+                console.log('Key:', pair[0], 'Value:', pair[1]); // Debugging each key-value pair
+                params.append(pair[0], pair[1]);
+            }
+
+            console.log('Redirecting with params:', params.toString());
+
+            // Correctly generate the URL for MVC
+            window.location.href = '@Url.Action("Index", "Stock")?' + params.toString();
+        });
+        $(document).ready(function () {
+            // Premium Deal button functionality
+            $('#premiumButton').click(function (e) {
+                e.preventDefault();
+                $('.btntabs').removeClass('active'); 
+                $(this).addClass('active');
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: { OverPrice: 20000 }, 
+                    beforeSend: function () {
+                        showLoader('Finding your premium car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+           $('#newArrivalButton').click(function (e) {
+                e.preventDefault();
+                $('.btntabs').removeClass('active');
+                $(this).addClass('active');
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: { OverPrice: 100 },
+                    beforeSend: function () {
+                        showLoader('Finding your premium car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+            //active
+            $('.btntabs').click(function () {
+                $('.btntabs').removeClass('active'); 
+                $(this).addClass('active'); 
+            });
+            // Clearance Deal button functionality
+            $('#clearenceButton').click(function (e) {
+                e.preventDefault();
+                $('.btntabs').removeClass('active');
+                $(this).addClass('active');
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: { UnderPrice: 3000 }, 
+                    beforeSend: function () {
+                        showLoader('Finding your clearance car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+
+            // Best Deal button functionality
+            $('#bestDealButton').click(function (e) {
+                e.preventDefault();
+                $('.btntabs').removeClass('active');
+                $(this).addClass('active');
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: { UnderPrice: 5000 }, 
+                    beforeSend: function () {
+                        showLoader('Finding your best deal car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+             $('#homeViewAllButton').click(function (e) {
+                e.preventDefault();
+                $('.btntabs').removeClass('active');
+                $(this).addClass('active');
+                $.ajax({
+                    url: '@Url.Action("SearchCars", "Home")',
+                    type: 'POST',
+                    data: { OverPrice: 100 },
+                    beforeSend: function () {
+                        showLoader('Finding your premium car, please wait...');
+                    },
+                    success: function (result) {
+                        $("#viewTotalLots").html(result.totalLots);
+                        $("#searchResults").html(result.carCards);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            });
+        });
+
+        //japenese makers
+             $(document).on("click", ".makerButton", function (e) {
+            e.preventDefault(); // Default anchor behavior rokna
+
+            var homeMarkaName = $(this).attr("data-marka"); // Anchor ka data attribute se value lena
+            var finalUrl = '@Url.Action("Index", "Stock")' + '?homeMarkaName=' + encodeURIComponent(homeMarkaName);
+
+            console.log("Redirecting to:", finalUrl);
+            window.location.href = finalUrl; // Redirect karein
+        });
+        //get types
+
+           $(document).on("click", ".typeButton", function (e) {
+            e.preventDefault(); // Default anchor behavior rokna
+
+            var homeMarkaName = $(this).attr("data-marka"); // Anchor ka data attribute se value lena
+            var finalUrl = '@Url.Action("Index", "Stock")' + '?HomeTypeName=' + encodeURIComponent(homeMarkaName);
+
+            console.log("Redirecting to:", finalUrl);
+            window.location.href = finalUrl; // Redirect karein
+        });
+        //global makers
+        $(document).on("click", ".globalMakerButton", function (e) {
+            e.preventDefault(); // Default anchor behavior rokna
+
+            var homeMarkaName = $(this).attr("data-marka"); // Anchor ka data attribute se value lena
+            var finalUrl = '@Url.Action("Index", "Stock")' + '?homeMarkaName=' + encodeURIComponent(homeMarkaName);
+
+            console.log("Redirecting to:", finalUrl);
+            window.location.href = finalUrl; // Redirect karein
+        });
+
+        //for scrolling
+        let page = 1;
+        let loading = false;
+
+        function loadMoreCars() {
+            if (loading) return;
+            loading = true;
+            $("#loading").show();
+
+            $.get("/Customer/Home/GetFavouriteCars", { page: page }, function (data) {
+                if (data.length > 0) {
+                    data.forEach(car => {
+                        let priceText = car.price == 0 ? 'ASK PRICE' : `${Number(car.price).toFixed(0).toLocaleString()} $`;
+                        $("#carList").append(`
+                            <li>
+                                <div class="imghold">
+                                 <a href="/Customer/Stock/Details?id=${car.userId}&imageUrl=${car.imageLink}"><img src="${car.imageLink}" width="106" alt="favourite vehicle"></a>
+                                </div>
+                                <div class="texthold">
+                                    <h4><a><strong>${car.makeName}</strong></a></h4>
+                                    <p>Model ${car.modelName} ${car.year}</p>
+                                    <span class="tag tag-warning">${priceText}</span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        `);
+                    });
+
+                    page++;
+                    loading = false;
+                    $("#loading").hide();
+                }
+            });
+        }
+
+        // Scroll Event
+        $(document).ready(function () {
+            $(".newslist").on("scroll", function () {
+                if ($(".newslist").scrollTop() + $(".newslist").height() >= $(".newslist")[0].scrollHeight - 10) {
+                    loadMoreCars();
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            loadMoreCars();
+            $("select option").addClass("text-dark");
+        });
+        let offset = 10; // Initially 5 countries loaded
+
+        $(".btnViewAllCoutry").click(function () {
+            $.ajax({
+                url: "/Customer/Home/LoadMoreCountries",
+                type: "GET",
+                data: { offset: offset },
+                success: function (data) {
+                    if (data.length > 0) {
+                        let newCountries = "";
+                        data.forEach(country => {
+                            newCountries += `
+                                <li>
+                                    <a href="#" data-country="${country.code.toLowerCase()}">
+                                        <i class="fi fi-${country.code.toLowerCase()}" aria-hidden="true"></i> ${country.name}
+                                    </a>
+                                </li>
+                            `;
+                        });
+
+                        // Insert new countries before the View All button
+                        $(".btnViewAllCoutry").parent().before(newCountries);
+
+                        offset += data.length; // Update offset
+                    }
+
+                    // Hide "View All" button if no more countries left
+                    if (data.length < 3) {
+                        $(".btnViewAllCoutry").hide();
+                    }
+                }
+            });
+        });
+        let isGlobalExpanded = false; // Track state
+        let initialGlobalRecords = $(".makerGlobalCompanisList li").not(":last"); // Initial 6 records
+
+        $(".btnToggleGlobalMakers").click(function () {
+            if (!isGlobalExpanded) {
+                // Load all Global Makers
+                $.ajax({
+                    url: "/Customer/Home/LoadMoreGlobalMakers",
+                    type: "GET",
+                    data: { offset: 6, all: true }, // Send 'all' flag
+                    success: function (data) {
+                        console.log("Response:", data); // Debugging response
+                        if (data.length > 0) {
+                            let newGlobalMakers = "";
+                            data.forEach(globalMaker => {
+                                newGlobalMakers += `
+                                    <li>
+                                        <img src="${globalMaker.value}">
+                                        <a class="globalMakerButton" href="#" data-marka="${globalMaker.text}">
+                                            ${globalMaker.text}
+                                        </a>
+                                    </li>
+                                `;
+                            });
+
+                            // Replace old records with new ones
+                            $(".makerGlobalCompanisList li").not(":last").remove();
+                            $(".btnToggleGlobalMakers").parent().before($(newGlobalMakers));
+
+                            // Update button text to "View Less"
+                            $(".btnToggleGlobalMakers span:first").text("View Less");
+                            $(".btnToggleGlobalMakers i").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+                            isGlobalExpanded = true;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            } else {
+                // Collapse back to initial 6 records
+                $(".makerGlobalCompanisList li").not(":last").remove();
+                $(".btnToggleGlobalMakers").parent().before(initialGlobalRecords.clone());
+
+                // Reset button to "View All"
+                $(".btnToggleGlobalMakers span:first").text("View All");
+                $(".btnToggleGlobalMakers i").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+                isGlobalExpanded = false;
+            }
+        });
+
+
+        let isExpanded = false; // Track state
+        let initialRecords = $(".makerCompanisLists li").not(":last"); // Initial 6 records
+
+        $(".btnToggleJapenesMakers").click(function () {
+            if (!isExpanded) {
+                // Load all records
+                $.ajax({
+                    url: "/Customer/Home/LoadMoreJapenesMakers",
+                    type: "GET",
+                    data: { offset: 6, all: true }, // Send 'all' flag
+                    success: function (data) {
+                        console.log("Response:", data); // Debugging response
+                        if (data.length > 0) {
+                            let newJapenesMakers = "";
+                            data.forEach(japenesMakers => {
+                                newJapenesMakers += `
+                                    <li>
+                                        <img src="${japenesMakers.value}">
+                                        <a class="makerButton" href="#" data-marka="${japenesMakers.text}">
+                                            ${japenesMakers.text}
+                                        </a>
+                                    </li>
+                                `;
+                            });
+
+                            // Replace old records with new ones
+                            $(".makerCompanisLists li").not(":last").remove();
+                            $(".btnToggleJapenesMakers").parent().before($(newJapenesMakers));
+
+                            // Update button text to "View Less"
+                            $(".btnToggleJapenesMakers span:first").text("View Less");
+                            $(".btnToggleJapenesMakers i").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+                            isExpanded = true;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            } else {
+                // Collapse back to initial 6 records
+                $(".makerCompanisLists li").not(":last").remove();
+                $(".btnToggleJapenesMakers").parent().before(initialRecords.clone());
+
+                // Reset button to "View All"
+                $(".btnToggleJapenesMakers span:first").text("View All");
+                $(".btnToggleJapenesMakers i").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+                isExpanded = false;
+            }
+        });
+
+        let isBodyExpanded = false; // Track state
+        let initialBodyRecords = $(".makerTypeList li").not(":last"); // Initial 6 records
+
+        $(".btnToggleBodyTypes").click(function () {
+            if (!isBodyExpanded) {
+                // Load all Body Types
+                $.ajax({
+                    url: "/Customer/Home/LoadMoreBodyTypes",
+                    type: "GET",
+                    data: { offset: 6, all: true }, // Send 'all' flag
+                    success: function (data) {
+                        console.log("Response:", data); // Debugging response
+                        if (data.length > 0) {
+                            let newBodyTypes = "";
+                            data.forEach(bodyType => {
+                                newBodyTypes += `
+                                    <li>
+                                        <img src="${bodyType.value}">
+                                        <a href="/Customer/Stock/Index?HomeTypeName=${bodyType.text}">
+                                            ${bodyType.text}
+                                        </a>
+                                    </li>
+                                `;
+                            });
+
+                            // Replace old records with new ones
+                            $(".makerTypeList li").not(":last").remove();
+                            $(".btnToggleBodyTypes").parent().before($(newBodyTypes));
+
+                            // Update button text to "View Less"
+                            $(".btnToggleBodyTypes span:first").text("View Less");
+                            $(".btnToggleBodyTypes i").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+                            isBodyExpanded = true;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            } else {
+                // Collapse back to initial 6 records
+                $(".makerTypeList li").not(":last").remove();
+                $(".btnToggleBodyTypes").parent().before(initialBodyRecords.clone());
+
+                // Reset button to "View All"
+                $(".btnToggleBodyTypes span:first").text("View All");
+                $(".btnToggleBodyTypes i").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+                isBodyExpanded = false;
+            }
+        });
+
+    </script>
+
+}

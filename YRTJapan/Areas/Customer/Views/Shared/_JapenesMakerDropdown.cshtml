@@ -1,0 +1,11 @@
+﻿@model List<DropDown>
+
+<ul class="makerCompanisList">
+    @foreach (var item in Model)
+    {
+        <li>
+            <img src="@item.Value">
+            <span>@item.Text</span>
+        </li>
+    }
+</ul>

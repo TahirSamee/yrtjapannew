@@ -1,0 +1,705 @@
+﻿@{
+    ViewData["Title"] = "Stock List";
+}
+
+@using YRTJapan.Core.Entities
+@model YRTJapan.Core.DropDownDataList
+@{
+    var selectedFromYear = ViewData["FromYear"]?.ToString();
+    var selectedToYear = ViewData["ToYear"]?.ToString();
+    var selectedFromPrice = ViewData["FromPrice"]?.ToString();
+    var selectedToPrice = ViewData["ToPrice"]?.ToString();
+    var selectedType = ViewData["Type"]?.ToString(); 
+    var selectedHomeTypeName = ViewData["HomeTypeName"]?.ToString();
+    var selectedOverPrice = ViewData["OverPrice"]?.ToString();
+    var selectedUnderPrice = ViewData["UnderPrice"]?.ToString(); 
+
+}
+<section class="search-wrapper pl-md-5 pl-lg-5 pl-0 pr-lg-5 pr-md-5 pr-0">
+    <div class="w-100">
+        @Html.Partial("_StockTabs")
+    </div>
+    <div class="w-100">
+        <form id="searchForm">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12 px-0 px-sm-3">
+                @* <input type="hidden" name="CurrentPage" value="1" />
+                <input type="hidden" name="ItemsPerPage" value="10" /> *@
+                <div class="row mx-auto">
+                    <!-- First form -->
+                    <input type="hidden" name="activeTab" id="activeTab" value="@ViewData["ActiveTab"]" />
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- First Row: 3 Dropdowns -->
+
+                        <div class="row mt-5">
+
+                            <div class="col-4 pr-0">
+                                @await Html.PartialAsync("_MakersDropdown", Model)
+                            </div>
+
+                            <div class="col-4 pr-0">
+                                <div id="modelsContainer">
+                                    @await Html.PartialAsync("_ModelsDropdown", Model.ListModels)
+                                </div>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <div id="modelCodesContainer">
+                                    <select id="ModelCode" name="ModelCode" class="form-control">
+                                        <option value="" class="text-dark">ALL MODEL CODE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+
+                                        <option value="">SELECT TYPE</option>
+
+                                    @foreach (var item in @Model.ListBodyTypes)
+                                        {
+                                        bool isSelected = item.Text == selectedType || item.Text == selectedHomeTypeName;
+                                        <option value="@item.Value" class="text-dark" selected="@(isSelected ? "selected" : null)"> @item.Text </option>
+                                        }
+                                    </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown" name="Engine">
+                                    <option value=" ">SELECT ENGINE CC</option>
+                                    <option value="660" class="text-dark">660 CC</option>
+                                    <option value="1000" class="text-dark">1000 CC</option>
+                                    <option value="1200" class="text-dark">1200 CC</option>
+                                    <option value="1300" class="text-dark">1300 CC</option>
+                                    <option value="1400" class="text-dark">1400 CC</option>
+                                    <option value="1500" class="text-dark">1500 CC</option>
+                                    <option value="1600" class="text-dark">1600 CC</option>
+                                    <option value="1800" class="text-dark">1800 CC</option>
+                                    <option value="2000" class="text-dark">2000 CC</option>
+                                    <option value="2200" class="text-dark">2200 CC</option>
+                                    <option value="2300" class="text-dark">2300 CC</option>
+                                    <option value="2400" class="text-dark">2400 CC</option>
+                                    <option value="2500" class="text-dark">2500 CC</option>
+                                    <option value="2700" class="text-dark">2700 CC</option>
+                                    <option value="3000" class="text-dark">3000 CC</option>
+                                    <option value="3500" class="text-dark">3500 CC</option>
+                                    <option value="3600" class="text-dark">3600 CC</option>
+                                    <option value="3700" class="text-dark">3700 CC</option>
+                                    <option value="4000" class="text-dark">4000 CC</option>
+                                    <option value="4200" class="text-dark">4200 CC</option>
+                                    <option value="4300" class="text-dark">4300 CC</option>
+                                    <option value="4500" class="text-dark">4500 CC</option>
+                                    <option value="4600" class="text-dark">4600 CC</option>
+                                    <option value="5000" class="text-dark">5000 CC</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown" name="Color">
+                                    <option value="">SELECT COLOR</option>
+                                    <option value="White" class="text-dark">White</option>
+                                    <option value="Pearl White" class="text-dark">Pearl White</option>
+                                    <option value="D Gray" class="text-dark">D Gray</option>
+                                    <option value="Blue" class="text-dark">Blue</option>
+                                    <option value="Black" class="text-dark">Black</option>
+                                    <option value="Silver" class="text-dark">Silver</option>
+                                    <option value="Black Pearl" class="text-dark">Black Pearl</option>
+                                    <option value="Red" class="text-dark">Red</option>
+                                    <option value="Ivory" class="text-dark">Ivory</option>
+                                    <option value="Gold" class="text-dark">Gold</option>
+                                    <option value="Brown" class="text-dark">Brown</option>
+                                    <option value="Green" class="text-dark">Green</option>
+                                    <option value="Pink" class="text-dark">Pink</option>
+                                    <option value="Beige" class="text-dark">Beige</option>
+                                    <option value="Yellow" class="text-dark">Yellow</option>
+                                    <option value="Purple" class="text-dark">Purple</option>
+                                    <option value="Khaki" class="text-dark">Khaki</option>
+                                    <option value="Wine" class="text-dark">Wine</option>
+
+                                    @* @foreach (var item in Model.ListCars) *@
+                                    @* { *@
+                                    @*     <option value="@item.COLOR" class="text-dark">@item.COLOR</option> *@
+                                    @* } *@
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Third Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown" name="Transmission">
+                                    <option value="">SELECT TRANSMISSION</option>
+                                    <option value="AT">AT</option>
+                                    <option value="IA">IA</option>
+                                    <option value="F5">F5</option>
+                                    <option value="FA">FA</option>
+                                    <option value="CA">CA</option>
+                                    <option value="5">5</option>
+                                    <option value="I5">I5</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT STEERING</option>
+                                    <option value="RHD" class="text-dark">Right Hand Drive</option>
+                                    <option value="LHD" class="text-dark">Left Hand Drive</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT SEATS</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Fourth Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="clearance"
+                                           id="clearance">
+                                    <label class="form-check-label" for="clearance">
+                                        Clearance
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="recommended"
+                                           id="recommended">
+                                    <label class="form-check-label" for="recommended">
+                                        Recommended
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="best-offers"
+                                           id="best-offers">
+                                    <label class="form-check-label" for="best-offers">
+                                        Best Offers
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="yrt-stock"
+                                           id="yrt-stock">
+                                    <label class="form-check-label" for="yrt-stock">
+                                        YRT Stock
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="dealer-stock"
+                                           id="dealer-stock">
+                                    <label class="form-check-label" for="dealer-stock">
+                                        Dealer Stock
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5th Row: 5 Dropdowns -->
+                        <div class="row main-btn-div mb-3">
+                            <div class="col-6 " style="width: 100% !important;">
+                                @* <a class="btn globalbtn globalbtn-black w-100" *@
+                                @*    style="line-height: 17px !important; height: 40px!important;" asp-area="Customer" asp-controller="Stock" asp-action="Index"> *@
+                                @*     SEARCH *@
+                                @*     ALL *@
+                                @* </a> *@
+                            </div>
+                            <div class="col-6 ">
+                                <div class="btn globalbtn w-100 text-center"
+                                     style="width: 100% !important;     line-height: 17px !important; height: 40px!important;  background-color: #fff !IMPORTANT; color: #000!important">
+                                    SHOW RESULTS <span style="color: #E30202; font-weight: 600;" id="totalnolots">@ViewData["TotalLots"]</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Second form -->
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- First Row: 3 Dropdowns -->
+                        <div class="row mt-5">
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="FromYear" id="FromYear">
+                                        <option value="">Year FROM</option>
+                                    @foreach (var item in Model.ListYears)
+                                    {
+                                        <option value="@item" class="text-dark" selected="@(@item == selectedFromYear ? "selected" : null)"> @item </option>
+                                    }
+                               </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="ToYear" id="ToYear">
+                                    <option value="">Year To</option>
+                                    @foreach (var item in Model.ListYears)
+                                    {
+                                        <option value="@item" class="text-dark" selected="@(@item == selectedToYear ? "selected" : null)"> @item </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" id="FromPrice" name="FromPrice">
+                                    <option value="">PRICE FROM</option>
+                                    @foreach (var item in Model.ListFromPrices)
+                                        {
+                                            bool isSelected = item.Value == selectedFromPrice || item.Value == selectedOverPrice;
+                                            <option value="@item.Value" class="text-dark" selected="@(isSelected ? "selected" : null)">
+                                                @item.Text
+                                            </option>
+                                        }
+                                </select>
+
+
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" id="ToPrice" name="ToPrice">
+
+                                            <option value="">PRICE TO</option>
+                                        @foreach (var item in Model.ListToPrices)
+                                        {
+                                            bool isSelected = item.Value == selectedToPrice || item.Value == selectedUnderPrice;
+                                            <option value="@item.Value" class="text-dark" selected="@(isSelected ? "selected" : null)">
+                                                @item.Text
+                                            </option>
+                                        }
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- Second Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="MilageFrom" id="select1">
+                                    <option value="">MILAGE FROM</option>
+                                    <option value="1">1 km</option>
+                                    <option value="20001">20001 km</option>
+                                    <option value="40001">40001 km</option>
+                                    <option value="60001">60001 km</option>
+                                    <option value="80001">80001 km</option>
+                                    <option value="100001">100001 km</option>
+                                    <option value="120001">120001 km</option>
+                                    <option value="140001">140001 km</option>
+                                    <option value="160001">160001 km</option>
+                                    <option value="180001">180001 km</option>
+                                    <option value="200001">200001 km</option>
+                                    <option value="220001">220001 km</option>
+                                    <option value="240001">240001 km</option>
+                                    <option value="260001">260001 km</option>
+                                    <option value="280001">280001 km</option>
+                                    <option value="300001">300001 km</option>
+
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="MilageTo">
+                                    <option value="">MILAGE To</option>
+                                    <option value="20000">20000 km</option>
+                                    <option value="40000">40000 km</option>
+                                    <option value="60000">60000 km</option>
+                                    <option value="80000">80000 km</option>
+                                    <option value="100000">100000 km</option>
+                                    <option value="120000">120000 km</option>
+                                    <option value="140000">140000 km</option>
+                                    <option value="160000">160000 km</option>
+                                    <option value="180000">180000 km</option>
+                                    <option value="200000">200000 km</option>
+                                    <option value="220000">220000 km</option>
+                                    <option value="240000">240000 km</option>
+                                    <option value="260000">260000 km</option>
+                                    <option value="280000">280000 km</option>
+                                    <option value="300000">300000 km</option>
+                                    <option value="300000">400000 km</option>
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">2WD/WD</option>
+                                    @* @foreach (var item in Model.ListCars) *@
+                                    @* { *@
+                                    @*     <option value="@item.PRIV" class="text-dark">@item.PRIV</option> *@
+                                    @* } *@
+                                    <option value="FF">FF</option>
+                                    <option value="FR">FR</option>
+                                    <option value="FULLTIME4WD">FULLTIME4WD</option>
+                                    <option value="PARTTIME4WD">PARTTIME4WD</option>
+                                    <option value="MIDSHIP">MIDSHIP</option>
+                                    <option value="RR">RR</option>
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">DOORS</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Third Row: 3 Dropdowns -->
+                        <div class="row">
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">COUNTRY CARS</option>
+                                    <option value="usa">Cars in USA</option>
+                                    <option value="jpn">Cars in Japan</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT DRIVE</option>
+                                    <option value="right">Right Hand</option>
+                                    <option value="left">Left Hand</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT FUEL</option>
+                                    @foreach (var item in Model.ListFuel)
+                                    {
+                                        <option value="@item.Value" class="text-dark">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Fourth Row: 4 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-12 pr-0">
+                                <input type="text" class="form-control custom-dropdown" name="SearchKeyword"
+                                       id="selectKeywords" placeholder="SEARCH KEYWORD">
+                            </div>
+                        </div>
+
+                        <!-- 5th Row: 5 Dropdowns -->
+                        <div class="row mb-3 main-btn-div2">
+                            <div class="col-lg-8 col-md-8 col-sm-12 pr-0">
+                                <a href="#" class="btn globalbtn w-100"
+                                   style="--btn-bg: #E30202;width: 100% !important;  line-height: 17px !important; height: 40px!important;" id="searchButton">SEARCH</a>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 pr-0">
+                                <a asp-area="Customer" asp-controller="Stock" asp-action="Index">
+                                    <div class="btn globalbtn w-100 text-center"
+                                         style="width: 100% !important; height: 40px!important;  line-height: 17px !important; background-color: #fff !important; color: #000!important;">
+                                        OR <span style="color: #E30202; font-weight: 600; text-decoration: underline;">RESET</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="w-100 px-2">
+        <div class="my-4">
+            <p class="mb-0 carsfound"><span id="totalCarsCount">@Convert.ToInt32(ViewData["TotalLots"])</span> <span>Cars found</span> </p>
+        </div>
+        @{
+            int currentPage = ViewData["CurrentPage"] != null ? Convert.ToInt32(ViewData["CurrentPage"]) : 1;
+            int totalLots = ViewData["TotalLots"] != null ? Convert.ToInt32(ViewData["TotalLots"]) : 0;
+            int itemsPerPage = 30;
+            int totalPages = (int)Math.Ceiling((double)totalLots / itemsPerPage);
+        }
+        @{
+            Html.RenderPartial("_CustomLoader");
+        }
+
+        <div class="w-100" id="searchResults">
+            @await Html.PartialAsync("_StockCars", Model.ListCars)
+        </div>
+        <div id="pagination">
+                @Html.Partial("_PaginationPartial", new Pagination { CurrentPage = currentPage, TotalPages = totalPages })
+        </div>
+
+    </div>
+</section>
+<!-- _InquiryModal.cshtml -->
+<div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inquiryModalLabel">Car Inquiry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              @await Html.PartialAsync("_InquiryModal")
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- _InquiryModal.cshtml -->
+<div class="modal fade" id="askForModal" tabindex="-1" aria-labelledby="askForModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="askForModalLabel">Ask For Price</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Html.PartialAsync("_AskForPriceModal")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    @section Scripts {
+        <script>
+            //fetch model on the base of makers
+            async function fetchModels(markaName) {
+                const url = '@Url.Action("GetModels", "Stock")' + '?markaName=' + encodeURIComponent(markaName);
+                const response = await fetch(url);
+                const content = await response.text();
+                const modelsContainer = document.getElementById('modelsContainer');
+                modelsContainer.innerHTML = content;
+                $(modelsContainer).find('select').select2();
+            }
+            //fetch modelcode on the base of modelname
+            async function fetchModelCodes(modelName) {
+                const url = '@Url.Action("GetModelCodes", "Stock")' + '?modelName=' + encodeURIComponent(modelName);
+                const response = await fetch(url);
+                const content = await response.text();
+                const modelCodesContainer = document.getElementById('modelCodesContainer');
+                modelCodesContainer.innerHTML = content;
+                $(modelCodesContainer).find('select').select2();
+            }
+            //search cars on the base of filters
+            $(document).ready(function () {
+                 $('.tab-link').click(function () {
+                var tabValue = $(this).attr('data-tab'); // Tab ki value lo
+                $('#activeTab').val(tabValue); // Hidden input field mein set karo
+                    });
+                $('#searchButton').click(function (event) {
+                    event.preventDefault();
+                    loadPage(1);
+                });
+            });
+            function loadPage(page) {
+                var formData = $('#searchForm').serializeArray();
+                               formData.push({ name: "page", value: page });
+                               formData.push({ name: "Tab", value: $('#activeTab').val() });
+                               
+                $.ajax({
+                       url: '@Url.Action("StockCars", "Stock")',
+                       type: 'POST',
+                       data: formData,
+                    beforeSend: function () {
+                        showLoader('Finding you car, please wait...');
+                    },
+                    success: function (result) {
+                        $('#searchResults').html(result.carListHtml);
+                        $('#pagination').html(result.paginationHtml);
+                        $('#totalnolots').html(result.totalLots);
+                        $("#viewTotalLots").html(result.totalLotsHtml);
+                        $('#totalCarsCount').html(result.totalLots);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    },
+                    complete: function () {
+                        hideLoader();
+                    }
+                });
+            }
+
+        </script>
+        <script>
+            function addToFavourites(imageLink, price,markaName, modelName, year,userId) {
+                $.ajax({
+                    url: '@Url.Action("AddToFavourites", "Stock")',
+                    type: "POST", 
+                    data: {
+                        ImageLink: imageLink,
+                        Price: price,
+                        MakeName:markaName,
+                        ModelName: modelName,
+                        Year: year,
+                        UserId:userId
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert("Failed to add to favourites.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred.");
+                    }
+                });
+            }
+        </script>
+
+    <script>
+        function openInquiryModal(name, model, year, price, id) {
+            $("#quotemake").val(name);
+            $("#quotemodel").val(model);
+            $("#quoteYear").val(year);
+            $("#quotePrice").val(parseInt(price));
+            $("#carId").val(id);
+            $("#inquiryModal").modal("show");
+        }
+        $(document).ready(function () {
+            $("#inquiryForm").submit(function (event) {
+                event.preventDefault();
+                        var country = $("#userCountry").val();
+
+                        if (!country) {
+                            toastr.warning("Please select a country", "Warning", {
+                                positionClass: "toast-top-right",
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return; 
+                        }
+                var formData = {
+                    Make: $("#quotemake").val(),
+                    Model: $("#quotemodel").val(),
+                    Year: parseInt($("#quoteYear").val()) || 0,
+                    Price: parseInt($("#quotePrice").val()) || 0,
+                    Email: $("#userEmail").val(),
+                    Message: $("#userMessage").val(),
+                    Country: $("#userCountry").val(),
+                    CarId: $("#carId").val(),
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SubmitInquiries", "Stock")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide Modal
+                            $("#inquiryModal").modal("hide");
+
+                            // Reset Form
+                            $("#inquiryForm")[0].reset();
+
+                            $("#userCountry").val("").change();
+                            toastr.success("Inquiry submitted successfully!", "Success", {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                showMethod: "fadeIn",  
+                                hideMethod: "fadeOut", 
+                                timeOut: 4000,         
+                                extendedTimeOut: 1000 
+                            });
+                        } else {
+                            toastr.error("Error submitting inquiry: " + response.message, "Error", {
+                                positionClass: "toast-top-right"
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", xhr.responseText);
+                        toastr.error("Server error: " + xhr.responseText, "Error", {
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
+            });
+
+            $("#askForm").submit(function (event) {
+                event.preventDefault();
+                        let country = $("#askForCountry").val();
+
+                        if (!country) {
+                            toastr.warning("Please select a country", "Warning", {
+                                positionClass: "toast-top-right",
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return;
+                        }
+                let askForValues = {
+                    Make: $("#hdfMake").val(),
+                    Model: $("#hdfModel").val(),
+                    Year: parseInt($("#hdfYear").val()) || 0,
+                    Name: $("#askTxtName").val(),
+                    Email: $("#asktxtEmail").val(),
+                    Phone: $("#askTxtPhone").val(),
+                    Country: country
+                };
+                $.ajax({
+                    url: '@Url.Action("SubmitAskForPrice", "Stock")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(askForValues),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide Modal
+                            $("#askForModal").modal("hide");
+
+                            // Reset Form
+                            $("#askForm")[0].reset();
+
+                            $("#askForCountry").val("").change();
+                            toastr.success("Request submitted successfully!", "Success", {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                showMethod: "fadeIn",
+                                hideMethod: "fadeOut",
+                                timeOut: 4000,
+                                extendedTimeOut: 1000
+                            });
+                        } else {
+                            toastr.error("Error submitting request: " + response.message, "Error", {
+                                positionClass: "toast-top-right"
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", xhr.responseText);
+                        toastr.error("Server error: " + xhr.responseText, "Error", {
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
+            });
+        });
+
+         function openAskForModal(make, model, year) {
+            $("#hdfMake").val(make);
+            $("#hdfModel").val(model);
+            $("#hdfYear").val(year);
+             $("#askTxtMake").val(make);
+            $("#askTxtModel").val(model);
+            $("#skTxtYear").val(year);
+            $("#askForModal").modal("show");
+        }
+
+    </script>
+        
+    }
+
+

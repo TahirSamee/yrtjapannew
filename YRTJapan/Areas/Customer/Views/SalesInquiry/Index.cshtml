@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "Sales Inquiry";
+}
+<section class="search-wrapper pl-5 pr-5 py-3 my-3" style="border-top: 1px solid black;">
+    <div class="row my-4 justify-content-between">
+        <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+            <h3 class="heading mb-3">Request a Quote</h3>
+        </div>
+    </div>
+    <div class="row my-1 justify-content-between">
+        <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+            <form class="my-4 p-sm-4 p-lg-5 p-5 d-flex flex-column justify-content-center align-items-center contact-form" style="background-color: #F7F7F7;">
+                <div class="row flex-wrap justify-content-between">
+                    <input type="text" id="quotemake" name="make" class="form-control" placeholder="Make *" required style="height: 53px; width: 48%;">
+                    <input type="text" id="quotemodel" name="model" class="form-control" placeholder="Model *" required style="height: 53px;width: 48%;">
+                </div>
+                <div class="row justify-content-between mt-3">
+                    <input type="text" id="quotedrivetype" name="drive_type" class="form-control" placeholder="Drive Type" style="height: 53px">
+                </div>
+                <div class="row justify-content-between mt-3">
+                    <input type="number" name="mfg_year" class="form-control" placeholder="Mfg. Year" style="height: 53px">
+                </div>
+                <div class="row justify-content-between mt-3">
+                    <input type="text" name="price" class="form-control" placeholder="Price (FOB)" style="height: 53px">
+                </div>
+                <div class="row justify-content-between mt-3">
+                    <textarea name="message" class="form-control" rows="4" placeholder="Type message here"
+                              style="width: 100%;" id="quotemessage"></textarea>
+                </div>
+                <input type="hidden" id="carId" name="carId" value="12345">
+                <div class="mt-4 row">
+                    <button type="submit" id="generalinquirybutton" class="btn btn-theme" style="width: 60%;--bg-color: #d60000;">Submit</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+            <div class="row flex-column justify-content-around align-items-center mt-4" style="height: 100%;">
+                <div class="row">
+                    <div class="d-flex justify-content-center align-items-center"
+                         style="background-color: #000; width: 60px; height: 60px;">
+                        <img src="../images/call.svg" />
+                    </div>
+                    <div class="pl-3">
+                        <p class="textcolor mb-0">telephone:</p>
+                        <p class="valuecolor mb-0">+81 90 1876 2811</p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="d-flex justify-content-center align-items-center"
+                         style="background-color: #000; width: 60px; height: 60px;">
+                        <img src="../images/message.svg" />
+                    </div>
+                    <div class="pl-3">
+                        <p class="textcolor mb-0">Email us at:</p>
+                        <p class="valuecolor mb-0">info@yrtjapan.com</p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="d-flex justify-content-center align-items-center"
+                         style="background-color: #000; width: 60px; height: 60px;">
+                        <img src="../images/location.svg" />
+                    </div>
+                    <div class="pl-3 col-10">
+                        <p class="textcolor mb-0">Address:</p>
+                        <p class="valuecolor mb-0">
+                            Isesaki SHI Sakai Higashi Arai
+                            718-1 gunma ken, 370-0101 Japan.
+                        </p>
+                    </div>
+                </div>
+                <div class="row align-items-center mt-3">
+                    @*                     <p class="mr-2 label mb-0" style="font-size: 15px; *@
+                    @* font-weight: 600;">Follow us at</p> *@
+                    @*                 <a href="https://www.facebook.com/profile.php?id=61569649042926" target="_blank"> *@
+                    @*                     <span><img class="mr-2" src="../images/facebook.svg" /></span> *@
+                    @*                 </a> *@
+
+                    @*                 <a href="https://wa.me/819018762811" target="_blank"><span><img src="images/soical_media/whatsapp.png"></span></a> *@
+
+                    @* <img class="mr-2" src="../images/instagram.svg" /> *@
+                    @* <img class="mr-2" src="../images/linkedin.svg" /> *@
+                    @* <img class="mr-2" src="../images/twitter.png" /> *@
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+                $("#generalinquirybutton").click(function (event) {
+                event.preventDefault();
+                alert("Are you ready to Submitting Form");
+
+                var formData = {
+                    FirstName: $("#quotefirstname").val(),
+                    LastName: $("#quotelastname").val(),
+                    Country: $("#quotecountry").val(),
+                    Email: $("#quoteemail").val(),
+                    PhoneNumber: $("#quotephone").val(),
+                    Message: $("#quotemessage").val(),
+                    CarId: $("#carId").val()
+                };
+
+                $.ajax({
+                    url: '@Url.Action("FreeQuote1", "GeneralInquiries")', // Make sure the controller/action name is correct
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            $("#get-free-quote-form")[0].reset(); // Reset the form
+                        } else {
+                            alert("Failed to submit quote request.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
