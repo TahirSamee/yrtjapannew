@@ -28,7 +28,7 @@
         color: #fff;
         border: none;
         padding: 8px 20px;
-        border-radius: 30px;
+        /* border-radius: 30px; */
         font-weight: 500;
         transition: 0.3s;
     }
@@ -41,11 +41,12 @@
         }
 
     .section-title {
-        border: 1px dashed #c10000;
-        padding-left: 12px;
-        margin-bottom: 20px;
+        /* border: 1px dashed #c10000; */
+ /*        padding-left: 12px; */
+        margin-bottom: 0px;
         font-weight: 600;
         font-size: 1.5rem;
+        text-align:start;
     }
 
     .review-card {
@@ -91,7 +92,7 @@
         border-radius: 5px !important;
         transition: background-color 0.2s ease;
         text-align: left;
-        border: 1px solid #c10000;
+        /* border: 1px solid #c10000; */
     }
 
         .accordion-button:hover {
@@ -105,7 +106,7 @@
         
     }
     .customercard{
-        border: 1px solid #c10000 !important;
+       /*  border: 1px solid #c10000 !important; */
     }
 
     
@@ -120,6 +121,7 @@
     </div>
 </header>
 <section class="p-2">
+  
     <div class="row m-0" id="searchResults">
         @foreach (var car in Model)
         {
@@ -250,10 +252,10 @@
 
 
 <!-- Intro Section -->
-<section class="py-3 bg-light text-center">
+<section class="py-3 bg-light">
     <div class="container">
-        <h2 class="text-red fw-bold mb-3">Drive Your Dream Car in Zambia</h2>
-        <p class="lead">We connect you to top Japanese car auctions, handle shipping, and deliver right to Zambia.</p>
+        <h2 class="section-title">Drive Your Dream Car in Zambia</h2>
+        <p>We connect you to top Japanese car auctions, handle shipping, and deliver right to Zambia.</p>
         <a href="#faqs" class="btn btn-red mt-3">Got Questions?</a>
     </div>
 </section>
@@ -281,7 +283,7 @@
     <div class="container">
         <h3 class="section-title">Secure & Fast Delivery to Zambia</h3>
         <p>We work with trusted logistics partners to ensure your car arrives safely and on time. Our shipping system guarantees a smooth and secure experience, no matter where in Zambia you are.</p>
-        <center>  <a href="#reviews" class="btn btn-red mt-3">Hear from our customers</a></center>
+      @*   <center>  <a href="#reviews" class="btn btn-red mt-3">Hear from our customers</a></center> *@
     </div>
 </section>
 
@@ -289,55 +291,162 @@
 <!-- Reviews -->
 <section class="bg-white py-4" id="reviews">
     <div class="container">
-        <h3 class="section-title">Customer Testimonials</h3>
+       
+            <h2 class="section-title text-center">Customer Testimonials</h2>
+       
 
         <!-- Review Card 1 -->
-        <div class="card customercard mb-3 shadow-sm p-3 border-0">
+        <div class="card customercard mb-3 shadow-sm p-3 border-0 review-card">
             <div class="row align-items-center g-0">
                 <div class="col-md-2">
-                    <img src="/images/reviews.jpg" alt="Ms. Jika N. Car" class="img-fluid rounded">
+                    <img src="/images/staruser.png" alt="Ms. Jika N. Car" class="img-fluid rounded">
                 </div>
                 <div class="col-md-10 ps-md-3">
                     <strong>1. Ms. Jika N. (Zambia)</strong>
+                    <div class="stars mb-2">
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-muted">&#9733;</span>
+                        <span class="text-muted">&#9733;</span>
+                    </div>
                     <p class="mb-0 small">
                         I am highly grateful to YRT for their continued assistance throughout the process.
                         My ordered vehicle has safely arrived in Zambia and I am happy to report that it is in top condition.
                         If anyone is in search of a reliable car trader in Zambia, I would suggest they connect with YRT Japan today.
                     </p>
+                    <div class="mt-3">
+                        <a href="/services" class="text-primary small">Learn More About Our Services</a> |
+                        <a href="/quote" class="text-primary small">Request a Quote</a> |
+                        <a href="/cars" class="text-primary small">View Our Cars</a>
+                    </div>
+                    <ul class="px-1 mt-3 d-flex justify-content-start">
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/facebook.png" alt="Facebook" style="max-width: 30px;">
+                            <a href="https://www.facebook.com/profile.php?id=61569649042926" target="_blank"><span>Facebook</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/instagram.png" alt="Instagram" style="max-width: 30px;">
+                            <a href="https://www.instagram.com/yrtjapan/" target="_blank"><span>Instagram</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/whatsapp.png" alt="Whatsapp" style="max-width: 30px;">
+                            <a href="https://wa.me/819018762811" target="_blank"><span>Whatsapp</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/viber.png" alt="Viber" style="max-width: 30px;">
+                            <a href="https://invite.viber.com/?number=819018762811" target="_blank"><span>Viber</span></a>
+                        </li>
+                        <li class="mb-2" style="margin-right:10px">
+                            <img src="/images/soical_media/line.png" alt="Line" style="max-width: 30px;">
+                            <a href="https://line.me/ti/p/~YOUR_LINE_ID" target="_blank"><span>Line</span></a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </div>
 
         <!-- Review Card 2 -->
-        <div class="card customercard mb-3 shadow-sm p-3 border-0">
+        <div class="card customercard mb-3 shadow-sm p-3 border-0 review-card">
             <div class="row align-items-center g-0">
                 <div class="col-md-2">
-                    <img src="/images/reviews.jpg" alt="Mr. Michael P. Car" class="img-fluid rounded">
+                    <img src="/images/staruser.png" alt="Mr. Michael P. Car" class="img-fluid rounded">
                 </div>
                 <div class="col-md-10 ps-md-3">
                     <strong>2. Mr. Michael P. (Zambia)</strong>
+                    <div class="stars mb-2">
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-muted">&#9733;</span>
+                        <span class="text-muted">&#9733;</span>
+                    </div>
                     <p class="mb-0 small">
                         Thanks to YRT Japan, I am now finally able to own and drive a fuel-efficient Japanese car.
                         The vehicle safely and quickly arrived in my town and I was able to take it out for a drive to see its performance.
                         I am forever indebted to YRT for delivering on its promise to find me a high performing used Japanese car.
                     </p>
+                    <div class="mt-3">
+                        <a href="/services" class="text-primary small">Learn More About Our Services</a> |
+                        <a href="/quote" class="text-primary small">Request a Quote</a> |
+                        <a href="/cars" class="text-primary small">View Our Cars</a>
+                    </div>
+                    <ul class="px-1 mt-3 d-flex justify-content-start">
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/facebook.png" alt="Facebook" style="max-width: 30px;">
+                            <a href="https://www.facebook.com/profile.php?id=61569649042926" target="_blank"><span>Facebook</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/instagram.png" alt="Instagram" style="max-width: 30px;">
+                            <a href="https://www.instagram.com/yrtjapan/" target="_blank"><span>Instagram</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/whatsapp.png" alt="Whatsapp" style="max-width: 30px;">
+                            <a href="https://wa.me/819018762811" target="_blank"><span>Whatsapp</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/viber.png" alt="Viber" style="max-width: 30px;">
+                            <a href="https://invite.viber.com/?number=819018762811" target="_blank"><span>Viber</span></a>
+                        </li>
+                        <li class="mb-2" style="margin-right:10px">
+                            <img src="/images/soical_media/line.png" alt="Line" style="max-width: 30px;">
+                            <a href="https://line.me/ti/p/~YOUR_LINE_ID" target="_blank"><span>Line</span></a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </div>
 
         <!-- Review Card 3 -->
-        <div class="card customercard mb-3 shadow-sm p-3 border-0">
+        <div class="card customercard mb-3 shadow-sm p-3 border-0 review-card">
             <div class="row align-items-center g-0">
                 <div class="col-md-2">
-                    <img src="/images/reviews.jpg" alt="Mr. Mutale N. Car" class="img-fluid rounded">
+                    <img src="/images/staruser.png" alt="Mr. Mutale N. Car" class="img-fluid rounded">
                 </div>
                 <div class="col-md-10 ps-md-3">
                     <strong>3. Mr. Mutale N. (Zambia)</strong>
+                    <div class="stars mb-2">
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-muted">&#9733;</span>
+                        <span class="text-muted">&#9733;</span>
+                    </div>
                     <p class="mb-0 small">
                         I always assumed that importing a used Japanese car in Zambia would require me to fill a lot of paperwork,
                         but thanks to YRT Japan, the process was a piece of cake. The car arrived this week and is exactly how it looked in the pictures.
                         I am very happy with the buying process.
                     </p>
+                    <div class="mt-3">
+                        <a href="/services" class="text-primary small">Learn More About Our Services</a> |
+                        <a href="/quote" class="text-primary small">Request a Quote</a> |
+                        <a href="/cars" class="text-primary small">View Our Cars</a>
+                    </div>
+                    <ul class="px-1 mt-3 d-flex justify-content-start">
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/facebook.png" alt="Facebook" style="max-width: 30px;">
+                            <a href="https://www.facebook.com/profile.php?id=61569649042926" target="_blank"><span>Facebook</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/instagram.png" alt="Instagram" style="max-width: 30px;">
+                            <a href="https://www.instagram.com/yrtjapan/" target="_blank"><span>Instagram</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/whatsapp.png" alt="Whatsapp" style="max-width: 30px;">
+                            <a href="https://wa.me/819018762811" target="_blank"><span>Whatsapp</span></a>
+                        </li>
+                        <li class="mb-2 me-3" style="margin-right:10px">
+                            <img src="/images/soical_media/viber.png" alt="Viber" style="max-width: 30px;">
+                            <a href="https://invite.viber.com/?number=819018762811" target="_blank"><span>Viber</span></a>
+                        </li>
+                        <li class="mb-2" style="margin-right:10px">
+                            <img src="/images/soical_media/line.png" alt="Line" style="max-width: 30px;">
+                            <a href="https://line.me/ti/p/~YOUR_LINE_ID" target="_blank"><span>Line</span></a>
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </div>
