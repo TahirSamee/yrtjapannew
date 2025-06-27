@@ -1,5 +1,16 @@
 ﻿@using YRTJapan.Core.Entities
-@model List<YRTJapan.Core.Entities.Car>
+@model YRTJapan.Core.DropDownDataList
+@{
+    ViewData["Title"] = "Buy used Japanese vehicles in Zambia only at YRT Japan!";
+    var selectedFromYear = ViewData["FromYear"]?.ToString();
+    var selectedToYear = ViewData["ToYear"]?.ToString();
+    var selectedFromPrice = ViewData["FromPrice"]?.ToString();
+    var selectedToPrice = ViewData["ToPrice"]?.ToString();
+    var selectedType = ViewData["Type"]?.ToString();
+    var selectedHomeTypeName = ViewData["HomeTypeName"]?.ToString();
+    var selectedOverPrice = ViewData["OverPrice"]?.ToString();
+    var selectedUnderPrice = ViewData["UnderPrice"]?.ToString();
+}
 @{
     ViewBag.Title = "Buy used Japanese vehicles in Zambia only at YRT Japan!";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -121,9 +132,395 @@
     </div>
 </header>
 <section class="p-2">
-  
+    <div class="w-100">
+        <form id="searchForm">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12 px-0 px-sm-3">
+                @* <input type="hidden" name="CurrentPage" value="1" />
+                <input type="hidden" name="ItemsPerPage" value="10" /> *@
+                <div class="row mx-auto">
+                    <!-- First form -->
+                    <input type="hidden" name="activeTab" id="activeTab" value="stock" />
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- First Row: 3 Dropdowns -->
+
+                        <div class="row mt-5">
+
+                            <div class="col-4 pr-0">
+                                @await Html.PartialAsync("_MakersDropdown", Model)
+                            </div>
+
+                            <div class="col-4 pr-0">
+                                <div id="modelsContainer">
+                                    @await Html.PartialAsync("_ModelsDropdown", Model.ListModels)
+                                </div>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <div id="modelCodesContainer">
+                                    <select id="ModelCode" name="ModelCode" class="form-control">
+                                        <option value="" class="text-dark">ALL MODEL CODE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+
+                                    <option value="">SELECT TYPE</option>
+
+                                    @foreach (var item in @Model.ListBodyTypes)
+                                    {
+                                        bool isSelected = item.Text == selectedType || item.Text == selectedHomeTypeName;
+                                        <option value="@item.Value" class="text-dark" selected="@(isSelected ? "selected" : null)"> @item.Text </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown" name="Engine">
+                                    <option value=" ">SELECT ENGINE CC</option>
+                                    <option value="660" class="text-dark">660 CC</option>
+                                    <option value="1000" class="text-dark">1000 CC</option>
+                                    <option value="1200" class="text-dark">1200 CC</option>
+                                    <option value="1300" class="text-dark">1300 CC</option>
+                                    <option value="1400" class="text-dark">1400 CC</option>
+                                    <option value="1500" class="text-dark">1500 CC</option>
+                                    <option value="1600" class="text-dark">1600 CC</option>
+                                    <option value="1800" class="text-dark">1800 CC</option>
+                                    <option value="2000" class="text-dark">2000 CC</option>
+                                    <option value="2200" class="text-dark">2200 CC</option>
+                                    <option value="2300" class="text-dark">2300 CC</option>
+                                    <option value="2400" class="text-dark">2400 CC</option>
+                                    <option value="2500" class="text-dark">2500 CC</option>
+                                    <option value="2700" class="text-dark">2700 CC</option>
+                                    <option value="3000" class="text-dark">3000 CC</option>
+                                    <option value="3500" class="text-dark">3500 CC</option>
+                                    <option value="3600" class="text-dark">3600 CC</option>
+                                    <option value="3700" class="text-dark">3700 CC</option>
+                                    <option value="4000" class="text-dark">4000 CC</option>
+                                    <option value="4200" class="text-dark">4200 CC</option>
+                                    <option value="4300" class="text-dark">4300 CC</option>
+                                    <option value="4500" class="text-dark">4500 CC</option>
+                                    <option value="4600" class="text-dark">4600 CC</option>
+                                    <option value="5000" class="text-dark">5000 CC</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown" name="Color">
+                                    <option value="">SELECT COLOR</option>
+                                    <option value="White" class="text-dark">White</option>
+                                    <option value="Pearl White" class="text-dark">Pearl White</option>
+                                    <option value="D Gray" class="text-dark">D Gray</option>
+                                    <option value="Blue" class="text-dark">Blue</option>
+                                    <option value="Black" class="text-dark">Black</option>
+                                    <option value="Silver" class="text-dark">Silver</option>
+                                    <option value="Black Pearl" class="text-dark">Black Pearl</option>
+                                    <option value="Red" class="text-dark">Red</option>
+                                    <option value="Ivory" class="text-dark">Ivory</option>
+                                    <option value="Gold" class="text-dark">Gold</option>
+                                    <option value="Brown" class="text-dark">Brown</option>
+                                    <option value="Green" class="text-dark">Green</option>
+                                    <option value="Pink" class="text-dark">Pink</option>
+                                    <option value="Beige" class="text-dark">Beige</option>
+                                    <option value="Yellow" class="text-dark">Yellow</option>
+                                    <option value="Purple" class="text-dark">Purple</option>
+                                    <option value="Khaki" class="text-dark">Khaki</option>
+                                    <option value="Wine" class="text-dark">Wine</option>
+
+                                    @* @foreach (var item in Model.ListCars) *@
+                                    @* { *@
+                                    @*     <option value="@item.COLOR" class="text-dark">@item.COLOR</option> *@
+                                    @* } *@
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Third Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown" name="Transmission">
+                                    <option value="">SELECT TRANSMISSION</option>
+                                    <option value="AT">AT</option>
+                                    <option value="IA">IA</option>
+                                    <option value="F5">F5</option>
+                                    <option value="FA">FA</option>
+                                    <option value="CA">CA</option>
+                                    <option value="5">5</option>
+                                    <option value="I5">I5</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT STEERING</option>
+                                    <option value="RHD" class="text-dark">Right Hand Drive</option>
+                                    <option value="LHD" class="text-dark">Left Hand Drive</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT SEATS</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Fourth Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="clearance"
+                                           id="clearance">
+                                    <label class="form-check-label" for="clearance">
+                                        Clearance
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="recommended"
+                                           id="recommended">
+                                    <label class="form-check-label" for="recommended">
+                                        Recommended
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="best-offers"
+                                           id="best-offers">
+                                    <label class="form-check-label" for="best-offers">
+                                        Best Offers
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="yrt-stock"
+                                           id="yrt-stock">
+                                    <label class="form-check-label" for="yrt-stock">
+                                        YRT Stock
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="checkbox" value="dealer-stock"
+                                           id="dealer-stock">
+                                    <label class="form-check-label" for="dealer-stock">
+                                        Dealer Stock
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5th Row: 5 Dropdowns -->
+                        <div class="row main-btn-div mb-3">
+                            <div class="col-6 " style="width: 100% !important;">
+                                @* <a class="btn globalbtn globalbtn-black w-100" *@
+                                @*    style="line-height: 17px !important; height: 40px!important;" asp-area="Customer" asp-controller="Stock" asp-action="Index"> *@
+                                @*     SEARCH *@
+                                @*     ALL *@
+                                @* </a> *@
+                            </div>
+                            <div class="col-6 ">
+                                <div class="btn globalbtn w-100 text-center"
+                                     style="width: 100% !important;     line-height: 17px !important; height: 40px!important;  background-color: #fff !IMPORTANT; color: #000!important">
+                                    SHOW RESULTS <span style="color: #E30202; font-weight: 600;" id="totalnolots">@ViewData["TotalLots"]</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Second form -->
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- First Row: 3 Dropdowns -->
+                        <div class="row mt-5">
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="FromYear" id="FromYear">
+                                    <option value="">Year FROM</option>
+                                    @foreach (var item in Model.ListYears)
+                                    {
+                                        <option value="@item" class="text-dark" selected="@(@item == selectedFromYear ? "selected" : null)"> @item </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="ToYear" id="ToYear">
+                                    <option value="">Year To</option>
+                                    @foreach (var item in Model.ListYears)
+                                    {
+                                        <option value="@item" class="text-dark" selected="@(@item == selectedToYear ? "selected" : null)"> @item </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" id="FromPrice" name="FromPrice">
+                                    <option value="">PRICE FROM</option>
+                                    @foreach (var item in Model.ListFromPrices)
+                                    {
+                                        bool isSelected = item.Value == selectedFromPrice || item.Value == selectedOverPrice;
+                                        <option value="@item.Value" class="text-dark" selected="@(isSelected ? "selected" : null)">
+                                            @item.Text
+                                        </option>
+                                    }
+                                </select>
+
+
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" id="ToPrice" name="ToPrice">
+
+                                    <option value="">PRICE TO</option>
+                                    @foreach (var item in Model.ListToPrices)
+                                    {
+                                        bool isSelected = item.Value == selectedToPrice || item.Value == selectedUnderPrice;
+                                        <option value="@item.Value" class="text-dark" selected="@(isSelected ? "selected" : null)">
+                                            @item.Text
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- Second Row: 3 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="MilageFrom" id="select1">
+                                    <option value="">MILAGE FROM</option>
+                                    <option value="1">1 km</option>
+                                    <option value="20001">20001 km</option>
+                                    <option value="40001">40001 km</option>
+                                    <option value="60001">60001 km</option>
+                                    <option value="80001">80001 km</option>
+                                    <option value="100001">100001 km</option>
+                                    <option value="120001">120001 km</option>
+                                    <option value="140001">140001 km</option>
+                                    <option value="160001">160001 km</option>
+                                    <option value="180001">180001 km</option>
+                                    <option value="200001">200001 km</option>
+                                    <option value="220001">220001 km</option>
+                                    <option value="240001">240001 km</option>
+                                    <option value="260001">260001 km</option>
+                                    <option value="280001">280001 km</option>
+                                    <option value="300001">300001 km</option>
+
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown" name="MilageTo">
+                                    <option value="">MILAGE To</option>
+                                    <option value="20000">20000 km</option>
+                                    <option value="40000">40000 km</option>
+                                    <option value="60000">60000 km</option>
+                                    <option value="80000">80000 km</option>
+                                    <option value="100000">100000 km</option>
+                                    <option value="120000">120000 km</option>
+                                    <option value="140000">140000 km</option>
+                                    <option value="160000">160000 km</option>
+                                    <option value="180000">180000 km</option>
+                                    <option value="200000">200000 km</option>
+                                    <option value="220000">220000 km</option>
+                                    <option value="240000">240000 km</option>
+                                    <option value="260000">260000 km</option>
+                                    <option value="280000">280000 km</option>
+                                    <option value="300000">300000 km</option>
+                                    <option value="300000">400000 km</option>
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">2WD/WD</option>
+                                    @* @foreach (var item in Model.ListCars) *@
+                                    @* { *@
+                                    @*     <option value="@item.PRIV" class="text-dark">@item.PRIV</option> *@
+                                    @* } *@
+                                    <option value="FF">FF</option>
+                                    <option value="FR">FR</option>
+                                    <option value="FULLTIME4WD">FULLTIME4WD</option>
+                                    <option value="PARTTIME4WD">PARTTIME4WD</option>
+                                    <option value="MIDSHIP">MIDSHIP</option>
+                                    <option value="RR">RR</option>
+                                </select>
+                            </div>
+                            <div class="col-3 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">DOORS</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Third Row: 3 Dropdowns -->
+                        <div class="row">
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">COUNTRY CARS</option>
+                                    <option value="usa">Cars in USA</option>
+                                    <option value="jpn">Cars in Japan</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT DRIVE</option>
+                                    <option value="right">Right Hand</option>
+                                    <option value="left">Left Hand</option>
+                                </select>
+                            </div>
+                            <div class="col-4 pr-0">
+                                <select class="form-control custom-dropdown">
+                                    <option value="">SELECT FUEL</option>
+                                    @foreach (var item in Model.ListFuel)
+                                    {
+                                        <option value="@item.Value" class="text-dark">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Fourth Row: 4 Dropdowns -->
+                        <div class="row my-3">
+                            <div class="col-12 pr-0">
+                                <input type="text" class="form-control custom-dropdown" name="SearchKeyword"
+                                       id="selectKeywords" placeholder="SEARCH KEYWORD">
+                            </div>
+                        </div>
+
+                        <!-- 5th Row: 5 Dropdowns -->
+                        <div class="row mb-3 main-btn-div2">
+                            <div class="col-lg-8 col-md-8 col-sm-12 pr-0">
+                                <a href="#" class="btn globalbtn w-100"
+                                   style="--btn-bg: #E30202;width: 100% !important;  line-height: 17px !important; height: 40px!important;" id="searchButton">SEARCH</a>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 pr-0">
+                                <a asp-area="Customer" asp-controller="Country" asp-action="Zambia">
+                                    <div class="btn globalbtn w-100 text-center"
+                                         style="width: 100% !important; height: 40px!important;  line-height: 17px !important; background-color: #fff !important; color: #000!important;">
+                                        OR <span style="color: #E30202; font-weight: 600; text-decoration: underline;">RESET</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    @Html.Partial("_CustomLoader")
     <div class="row m-0" id="searchResults">
-        @foreach (var car in Model)
+       
+        @foreach (var car in Model.ListCars)
         {
             <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-1">
                 <div class="card h-100 shadow-sm ">
@@ -179,9 +576,11 @@
                 </div>
             </div>
         }
+    
     </div>
 
     <!-- ✅ Custom Styled Pagination -->
+    <div id="pagination">
     <div class="pagebtncontainer d-flex justify-content-center w-100 my-2">
         @if (currentPage > 1)
         {
@@ -208,6 +607,7 @@
         {
             <a class="btn page-btn-red mr-1" href="@Url.Action("Zambia", new { page = currentPage + 1 })">>></a>
         }
+    </div>
     </div>
 </section>
 
@@ -307,8 +707,8 @@
                         <span class="text-warning">&#9733;</span>
                         <span class="text-warning">&#9733;</span>
                         <span class="text-warning">&#9733;</span>
-                        <span class="text-muted">&#9733;</span>
-                        <span class="text-muted">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
                     </div>
                     <p class="mb-0 small">
                         I am highly grateful to YRT for their continued assistance throughout the process.
@@ -316,9 +716,9 @@
                         If anyone is in search of a reliable car trader in Zambia, I would suggest they connect with YRT Japan today.
                     </p>
                     <div class="mt-3">
-                        <a href="/services" class="text-primary small">Learn More About Our Services</a> |
-                        <a href="/quote" class="text-primary small">Request a Quote</a> |
-                        <a href="/cars" class="text-primary small">View Our Cars</a>
+                        <a href="/Customer/WhyYrt" class="text-primary small">Learn More About Our Services</a> |
+                        <a href="/Customer/GeneralInquiries" class="text-primary small">Request a Quote</a> |
+                        <a href="/Customer/Stock" class="text-primary small">View Our Cars</a>
                     </div>
                     <ul class="px-1 mt-3 d-flex justify-content-start">
                         <li class="mb-2 me-3" style="margin-right:10px">
@@ -359,8 +759,8 @@
                         <span class="text-warning">&#9733;</span>
                         <span class="text-warning">&#9733;</span>
                         <span class="text-warning">&#9733;</span>
-                        <span class="text-muted">&#9733;</span>
-                        <span class="text-muted">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
                     </div>
                     <p class="mb-0 small">
                         Thanks to YRT Japan, I am now finally able to own and drive a fuel-efficient Japanese car.
@@ -368,9 +768,9 @@
                         I am forever indebted to YRT for delivering on its promise to find me a high performing used Japanese car.
                     </p>
                     <div class="mt-3">
-                        <a href="/services" class="text-primary small">Learn More About Our Services</a> |
-                        <a href="/quote" class="text-primary small">Request a Quote</a> |
-                        <a href="/cars" class="text-primary small">View Our Cars</a>
+                        <a href="/Customer/WhyYrt" class="text-primary small">Learn More About Our Services</a> |
+                        <a href="/Customer/GeneralInquiries" class="text-primary small">Request a Quote</a> |
+                        <a href="/Customer/Stock" class="text-primary small">View Our Cars</a>
                     </div>
                     <ul class="px-1 mt-3 d-flex justify-content-start">
                         <li class="mb-2 me-3" style="margin-right:10px">
@@ -411,8 +811,8 @@
                         <span class="text-warning">&#9733;</span>
                         <span class="text-warning">&#9733;</span>
                         <span class="text-warning">&#9733;</span>
-                        <span class="text-muted">&#9733;</span>
-                        <span class="text-muted">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
+                        <span class="text-warning">&#9733;</span>
                     </div>
                     <p class="mb-0 small">
                         I always assumed that importing a used Japanese car in Zambia would require me to fill a lot of paperwork,
@@ -420,9 +820,9 @@
                         I am very happy with the buying process.
                     </p>
                     <div class="mt-3">
-                        <a href="/services" class="text-primary small">Learn More About Our Services</a> |
-                        <a href="/quote" class="text-primary small">Request a Quote</a> |
-                        <a href="/cars" class="text-primary small">View Our Cars</a>
+                        <a href="/Customer/WhyYrt" class="text-primary small">Learn More About Our Services</a> |
+                        <a href="/Customer/GeneralInquiries" class="text-primary small">Request a Quote</a> |
+                        <a href="/Customer/Stock" class="text-primary small">View Our Cars</a>
                     </div>
                     <ul class="px-1 mt-3 d-flex justify-content-start">
                         <li class="mb-2 me-3" style="margin-right:10px">
@@ -540,24 +940,93 @@
             });
         });
         function loadPage(page) {
+            debugger
             var formData = $('#searchForm').serializeArray();
             formData.push({ name: "page", value: page });
             formData.push({ name: "Tab", value: $('#activeTab').val() });
 
             $.ajax({
-                url: '@Url.Action("StockCars", "Stock")',
+                url: '@Url.Action("StockCars", "Country")',
                 type: 'POST',
                 data: formData,
                 beforeSend: function () {
                     showLoader('Finding you car, please wait...');
                 },
-                success: function (result) {
-                    $('#searchResults').html(result.carListHtml);
-                    $('#pagination').html(result.paginationHtml);
-                    $('#totalnolots').html(result.totalLots);
-                    $("#viewTotalLots").html(result.totalLotsHtml);
-                    $('#totalCarsCount').html(result.totalLots);
-                },
+           success: function (result) {
+            $('#searchResults').empty();
+
+            $.each(result.cars, function (index, car) {
+                let imgUrl = car.images.replace('&h=50', '');
+                let hashIndex = imgUrl.indexOf('#');
+                imgUrl = hashIndex !== -1 ? imgUrl.slice(0, hashIndex) + '&w=320' + imgUrl.slice(hashIndex) : imgUrl + '&w=320';
+
+                let fob = car.fob > 0
+                    ? '$ ' + car.fob.toLocaleString()
+                    : `<a href="#" onclick="openAskForModal('${car.marka}', '${car.model}', '${car.year}')" class="text-danger small">Login/ASK FOR PRICE</a>`;
+
+                let total = car.finish && car.finish.trim() !== ''
+                    ? car.finish
+                    : `<a href="#" onclick="openAskForModal('${car.marka}', '${car.model}', '${car.year}')" class="text-danger small">Login/ASK FOR PRICE</a>`;
+
+                let cardHtml = `
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-1">
+                    <div class="card h-100 shadow-sm">
+                        <a href="/Customer/Stock/Details?id=${car.id}">
+                            <img src="${imgUrl}" class="card-img-top" alt="Car Image">
+                        </a>
+                        <div class="card-body d-flex flex-column p-2">
+                            <h6 class="card-title">${car.marka} ${car.model} ${car.year}</h6>
+                            <p class="mb-1"><strong>FOB:</strong> ${fob}</p>
+                            <p class="mb-2"><strong>Total:</strong> ${total}</p>
+                        </div>
+                        <div class="card-footer text-muted small d-flex flex-column p-2">
+                            <span><strong>Mileage:</strong> ${car.mileage} km</span>
+                            <span><strong>Engine:</strong> ${car.engine} cc</span>
+                            <div><strong>Transmission:</strong> ${car.trans}</div>
+                            <button class="btn btn-outline-primary btn-sm w-100 mt-2"
+                                onclick="openInquiryModal('${car.marka}', '${car.model}', '${car.year}', ${car.fob}, '${car.id}')">
+                                Inquire Now
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+                $('#searchResults').append(cardHtml);
+            });
+
+            // Set car counts
+            $('#totalnolots').text(result.totalLots);
+            $('#totalCarsCount').text(result.totalLots);
+            $("#viewTotalLots").html(`<span>${result.totalLots} Cars Found</span>`);
+            debugger
+            // Render pagination
+                    // Render pagination
+        let paginationHtml = '';
+        let currentPage = result.currentPage;
+        let totalPages = result.totalPages;
+
+        paginationHtml += '<div class="pagebtncontainer d-flex justify-content-center w-100 my-2">';
+
+        // Previous page button
+        if (currentPage > 1) {
+            paginationHtml += `<a class="btn page-btn mr-1" onclick="loadPage(${currentPage - 1})">&lt;&lt;</a>`;
+        }
+
+        // Loop all page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHtml += `<a class="btn page-btn ${i === currentPage ? 'page-btn-active' : ''} mr-1" onclick="loadPage(${i})">${i}</a>`;
+        }
+
+        // Next page button
+        if (currentPage < totalPages) {
+            paginationHtml += `<a class="btn page-btn-red mr-1" onclick="loadPage(${currentPage + 1})">&gt;&gt;</a>`;
+        }
+
+        paginationHtml += '</div>';
+
+        $('#pagination').html(paginationHtml);
+
+        }
+,
                 error: function (error) {
                     console.log('Error:', error);
                 },
@@ -566,182 +1035,176 @@
                 }
             });
         }
-
-    </script>
-    <script>
-        function addToFavourites(imageLink, price, markaName, modelName, year, userId) {
-            $.ajax({
-                url: '@Url.Action("AddToFavourites", "Stock")',
-                type: "POST",
-                data: {
-                    ImageLink: imageLink,
-                    Price: price,
-                    MakeName: markaName,
-                    ModelName: modelName,
-                    Year: year,
-                    UserId: userId
-                },
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
-                    } else {
-                        alert("Failed to add to favourites.");
-                    }
-                },
-                error: function () {
-                    alert("An error occurred.");
-                }
-            });
-        }
-    </script>
-
-    <script>
-        function openInquiryModal(name, model, year, price, id) {
-            $("#quotemake").val(name);
-            $("#quotemodel").val(model);
-            $("#quoteYear").val(year);
-            $("#quotePrice").val(parseInt(price));
-            $("#carId").val(id);
-            $("#inquiryModal").modal("show");
-        }
-        $(document).ready(function () {
-            $("#inquiryForm").submit(function (event) {
-                event.preventDefault();
-                var country = $("#userCountry").val();
-
-                if (!country) {
-                    toastr.warning("Please select a country", "Warning", {
-                        positionClass: "toast-top-right",
-                        closeButton: true,
-                        progressBar: true
-                    });
-                    return;
-                }
-                var formData = {
-                    Make: $("#quotemake").val(),
-                    Model: $("#quotemodel").val(),
-                    Year: parseInt($("#quoteYear").val()) || 0,
-                    Price: parseInt($("#quotePrice").val()) || 0,
-                    Email: $("#userEmail").val(),
-                    Message: $("#userMessage").val(),
-                    Country: $("#userCountry").val(),
-                    CarId: $("#carId").val(),
-                };
-
-                $.ajax({
-                    url: '@Url.Action("SubmitInquiries", "Stock")',
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(formData),
-                    headers: {
-                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            // Hide Modal
-                            $("#inquiryModal").modal("hide");
-
-                            // Reset Form
-                            $("#inquiryForm")[0].reset();
-
-                            $("#userCountry").val("").change();
-                            toastr.success("Inquiry submitted successfully!", "Success", {
-                                closeButton: true,
-                                progressBar: true,
-                                positionClass: "toast-top-right",
-                                showMethod: "fadeIn",
-                                hideMethod: "fadeOut",
-                                timeOut: 4000,
-                                extendedTimeOut: 1000
-                            });
-                        } else {
-                            toastr.error("Error submitting inquiry: " + response.message, "Error", {
-                                positionClass: "toast-top-right"
-                            });
+                function addToFavourites(imageLink, price, markaName, modelName, year, userId) {
+                    $.ajax({
+                        url: '@Url.Action("AddToFavourites", "Stock")',
+                        type: "POST",
+                        data: {
+                            ImageLink: imageLink,
+                            Price: price,
+                            MakeName: markaName,
+                            ModelName: modelName,
+                            Year: year,
+                            UserId: userId
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                            } else {
+                                alert("Failed to add to favourites.");
+                            }
+                        },
+                        error: function () {
+                            alert("An error occurred.");
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.log("Error:", xhr.responseText);
-                        toastr.error("Server error: " + xhr.responseText, "Error", {
-                            positionClass: "toast-top-right"
-                        });
-                    }
-                });
-            });
-
-            $("#askForm").submit(function (event) {
-                event.preventDefault();
-                let country = $("#askForCountry").val();
-
-                if (!country) {
-                    toastr.warning("Please select a country", "Warning", {
-                        positionClass: "toast-top-right",
-                        closeButton: true,
-                        progressBar: true
                     });
-                    return;
                 }
-                let askForValues = {
-                    Make: $("#hdfMake").val(),
-                    Model: $("#hdfModel").val(),
-                    Year: parseInt($("#hdfYear").val()) || 0,
-                    Name: $("#askTxtName").val(),
-                    Email: $("#asktxtEmail").val(),
-                    Phone: $("#askTxtPhone").val(),
-                    Country: country
-                };
-                $.ajax({
-                    url: '@Url.Action("SubmitAskForPrice", "Stock")',
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(askForValues),
-                    headers: {
-                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            // Hide Modal
-                            $("#askForModal").modal("hide");
+                           function openInquiryModal(name, model, year, price, id) {
+                    $("#quotemake").val(name);
+                    $("#quotemodel").val(model);
+                    $("#quoteYear").val(year);
+                    $("#quotePrice").val(parseInt(price));
+                    $("#carId").val(id);
+                    $("#inquiryModal").modal("show");
+                }
+                $(document).ready(function () {
+                    $("#inquiryForm").submit(function (event) {
+                        event.preventDefault();
+                        var country = $("#userCountry").val();
 
-                            // Reset Form
-                            $("#askForm")[0].reset();
-
-                            $("#askForCountry").val("").change();
-                            toastr.success("Request submitted successfully!", "Success", {
-                                closeButton: true,
-                                progressBar: true,
+                        if (!country) {
+                            toastr.warning("Please select a country", "Warning", {
                                 positionClass: "toast-top-right",
-                                showMethod: "fadeIn",
-                                hideMethod: "fadeOut",
-                                timeOut: 4000,
-                                extendedTimeOut: 1000
+                                closeButton: true,
+                                progressBar: true
                             });
-                        } else {
-                            toastr.error("Error submitting request: " + response.message, "Error", {
-                                positionClass: "toast-top-right"
-                            });
+                            return;
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.log("Error:", xhr.responseText);
-                        toastr.error("Server error: " + xhr.responseText, "Error", {
-                            positionClass: "toast-top-right"
-                        });
-                    }
-                });
-            });
-        });
+                        var formData = {
+                            Make: $("#quotemake").val(),
+                            Model: $("#quotemodel").val(),
+                            Year: parseInt($("#quoteYear").val()) || 0,
+                            Price: parseInt($("#quotePrice").val()) || 0,
+                            Email: $("#userEmail").val(),
+                            Message: $("#userMessage").val(),
+                            Country: $("#userCountry").val(),
+                            CarId: $("#carId").val(),
+                        };
 
-        function openAskForModal(make, model, year) {
-            $("#hdfMake").val(make);
-            $("#hdfModel").val(model);
-            $("#hdfYear").val(year);
-            $("#askTxtMake").val(make);
-            $("#askTxtModel").val(model);
-            $("#skTxtYear").val(year);
-            $("#askForModal").modal("show");
-        }
-       
+                        $.ajax({
+                            url: '@Url.Action("SubmitInquiries", "Stock")',
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            headers: {
+                                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    // Hide Modal
+                                    $("#inquiryModal").modal("hide");
+
+                                    // Reset Form
+                                    $("#inquiryForm")[0].reset();
+
+                                    $("#userCountry").val("").change();
+                                    toastr.success("Inquiry submitted successfully!", "Success", {
+                                        closeButton: true,
+                                        progressBar: true,
+                                        positionClass: "toast-top-right",
+                                        showMethod: "fadeIn",
+                                        hideMethod: "fadeOut",
+                                        timeOut: 4000,
+                                        extendedTimeOut: 1000
+                                    });
+                                } else {
+                                    toastr.error("Error submitting inquiry: " + response.message, "Error", {
+                                        positionClass: "toast-top-right"
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("Error:", xhr.responseText);
+                                toastr.error("Server error: " + xhr.responseText, "Error", {
+                                    positionClass: "toast-top-right"
+                                });
+                            }
+                        });
+                    });
+
+                    $("#askForm").submit(function (event) {
+                        event.preventDefault();
+                        let country = $("#askForCountry").val();
+
+                        if (!country) {
+                            toastr.warning("Please select a country", "Warning", {
+                                positionClass: "toast-top-right",
+                                closeButton: true,
+                                progressBar: true
+                            });
+                            return;
+                        }
+                        let askForValues = {
+                            Make: $("#hdfMake").val(),
+                            Model: $("#hdfModel").val(),
+                            Year: parseInt($("#hdfYear").val()) || 0,
+                            Name: $("#askTxtName").val(),
+                            Email: $("#asktxtEmail").val(),
+                            Phone: $("#askTxtPhone").val(),
+                            Country: country
+                        };
+                        $.ajax({
+                            url: '@Url.Action("SubmitAskForPrice", "Stock")',
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(askForValues),
+                            headers: {
+                                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    // Hide Modal
+                                    $("#askForModal").modal("hide");
+
+                                    // Reset Form
+                                    $("#askForm")[0].reset();
+
+                                    $("#askForCountry").val("").change();
+                                    toastr.success("Request submitted successfully!", "Success", {
+                                        closeButton: true,
+                                        progressBar: true,
+                                        positionClass: "toast-top-right",
+                                        showMethod: "fadeIn",
+                                        hideMethod: "fadeOut",
+                                        timeOut: 4000,
+                                        extendedTimeOut: 1000
+                                    });
+                                } else {
+                                    toastr.error("Error submitting request: " + response.message, "Error", {
+                                        positionClass: "toast-top-right"
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("Error:", xhr.responseText);
+                                toastr.error("Server error: " + xhr.responseText, "Error", {
+                                    positionClass: "toast-top-right"
+                                });
+                            }
+                        });
+                    });
+                });
+
+                function openAskForModal(make, model, year) {
+                    $("#hdfMake").val(make);
+                    $("#hdfModel").val(model);
+                    $("#hdfYear").val(year);
+                    $("#askTxtMake").val(make);
+                    $("#askTxtModel").val(model);
+                    $("#skTxtYear").val(year);
+                    $("#askForModal").modal("show");
+                }
     </script>
+   
 
 }
