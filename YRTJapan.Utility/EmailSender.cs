@@ -76,14 +76,18 @@ namespace YRTJapan.Utility
         {
             SmtpClient smtpClient = new SmtpClient(_smtp.MAIL_SMTP_SERVER, _smtp.MAIL_PORT);
             smtpClient.Credentials = new NetworkCredential(_smtp.MAIL_USERNAME, _smtp.MAIL_PASSWORD);
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.EnableSsl = true;
+            smtpClient.Timeout = 2000000;
+            smtpClient.UseDefaultCredentials = false;
+        
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_smtp.MAIL_FROM);
             mailMessage.To.Add(toEmail); // Replace with the recipient's email address
             mailMessage.Subject = subject;
             mailMessage.Body = htmlMessage;
             mailMessage.IsBodyHtml = true;
-
+        
             try
             {
                 smtpClient.Send(mailMessage);

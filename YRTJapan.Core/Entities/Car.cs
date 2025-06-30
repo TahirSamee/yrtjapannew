@@ -37,7 +37,14 @@ namespace YRTJapan.Core.Entities
         public string IMAGES { get; set; }
         public string TAG2 { get; set; }
         public List<string> IMAGES_LIST { get; set; }
+        public List<CarImage>  carImages { get; set; }
     }
- 
+    public class CarImage
+    {
+        public int ID { get; set; }
+        public string CarID { get; set; }
+        public string ImageUrl { get; set; }
+    }
+
 
 }

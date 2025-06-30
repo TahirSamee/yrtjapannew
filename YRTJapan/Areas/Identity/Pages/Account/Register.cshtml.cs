@@ -20,6 +20,8 @@ using NuGet.Common;
 using MimeKit;
 using YRTJapan.DataAccess.Data;
 using YRTJapan.UI.Services;
+using System.Net.Mail;
+using System.Net;
 
 namespace YRTJapan.Areas.Identity.Pages.Account
 {
@@ -167,29 +169,36 @@ namespace YRTJapan.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, StaticDetails.ROLE_CUSTOMER);
                     }
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //var userId = await _userManager.GetUserIdAsync(user);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                    //    protocol: Request.Scheme);
 
-                    string emailBody = $"<p>Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.</p>";
+                    //string emailBody = $"<p>Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.</p>";
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email", emailBody);
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email", emailBody);
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
+                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //{
+                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    //}
+                    //else
+                    //{
+                    //    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //    return LocalRedirect(returnUrl);
+                    //}
+
+                    // Send admin notification email
+                    string emailBody = $"<p>New Customer registered!</p><p><strong>Email:</strong> {Input.Email}</p><p><strong>Full Name:</strong> {Input.FullName}</p>";
+                    await _emailSender.SendEmailAsync("info@yrtjapan.com", "New Customer", emailBody);
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {
