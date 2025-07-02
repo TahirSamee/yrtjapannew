@@ -12,7 +12,7 @@ using YRTJapan.DataAccess.Repository.IRepository;
 
 namespace YRTJapan.DataAccess.Repository
 {
-    internal class StockRepository : IStock
+    public class StockRepository : IStock
     {
         private readonly string _connectionString;
         private readonly string _imageFolderPath;

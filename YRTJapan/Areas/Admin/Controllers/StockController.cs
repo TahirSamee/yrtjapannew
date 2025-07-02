@@ -36,12 +36,12 @@ namespace YRTJapan.UI.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Car car, List<IFormFile> files)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 car.ID = Guid.NewGuid().ToString(); // Generate primary key
                 _stockRepo.AddCar(car, files);
                 return RedirectToAction(nameof(Index));
-            }
+           // }
 
             return View(car);
         }

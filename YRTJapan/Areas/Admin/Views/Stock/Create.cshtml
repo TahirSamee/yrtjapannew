@@ -1,33 +1,136 @@
-﻿@model Car
+﻿@using YRTJapan.Core.Entities
+@model Car
 @{
     ViewData["Title"] = "Add New Car";
 }
 
-<h2>Add New Car</h2>
+<h2>Add Stock</h2>
 
 <form asp-action="Create" enctype="multipart/form-data" method="post">
-    <div class="form-group">
-        <label>LOT</label>
-        <input asp-for="LOT" class="form-control" />
+    <div class="row p-5">
+        @* Generate one input per field *@
+        <div class="col-md-4 mb-2">
+            <label>LOT</label>
+            <input asp-for="LOT" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>AUCTION_TYPE</label>
+            <input asp-for="AUCTION_TYPE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>AUCTION_DATE</label>
+            <input asp-for="AUCTION_DATE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>AUCTION</label>
+            <input asp-for="AUCTION" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>MARKA_ID</label>
+            <input asp-for="MARKA_ID" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>MODEL_ID</label>
+            <input asp-for="MODEL_ID" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>MARKA_NAME</label>
+            <input asp-for="MARKA_NAME" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>MODEL_NAME</label>
+            <input asp-for="MODEL_NAME" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>YEAR</label>
+            <input asp-for="YEAR" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>TOWN</label>
+            <input asp-for="TOWN" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>ENG_V</label>
+            <input asp-for="ENG_V" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>PW</label>
+            <input asp-for="PW" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>KUZOV</label>
+            <input asp-for="KUZOV" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>GRADE</label>
+            <input asp-for="GRADE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>COLOR</label>
+            <input asp-for="COLOR" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>KPP</label>
+            <input asp-for="KPP" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>KPP_TYPE</label>
+            <input asp-for="KPP_TYPE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>PRIV</label>
+            <input asp-for="PRIV" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>MILEAGE</label>
+            <input asp-for="MILEAGE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>EQUIP</label>
+            <input asp-for="EQUIP" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>RATE</label>
+            <input asp-for="RATE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>START</label>
+            <input asp-for="START" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>FINISH</label>
+            <input asp-for="FINISH" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>STATUS</label>
+            <input asp-for="STATUS" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>TIME</label>
+            <input asp-for="TIME" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>AVG_PRICE</label>
+            <input asp-for="AVG_PRICE" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>AVG_STRING</label>
+            <input asp-for="AVG_STRING" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>IMAGES (optional comma list)</label>
+            <input asp-for="IMAGES" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>TAG2</label>
+            <input asp-for="TAG2" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>Upload Images</label>
+            <input type="file" name="files" class="form-control" multiple />
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>AUCTION_TYPE</label>
-        <input asp-for="AUCTION_TYPE" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label>AUCTION_DATE</label>
-        <input asp-for="AUCTION_DATE" class="form-control" />
-    </div>
-
-    <!-- Add other fields as needed... -->
-
-    <div class="form-group">
-        <label>Upload Images</label>
-        <input type="file" name="files" class="form-control" multiple />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back</a>
 </form>
