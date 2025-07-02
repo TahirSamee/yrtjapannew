@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Car>
+@{
+    ViewData["Title"] = "Car List";
+}
+
+<h2>Car List</h2>
+<a asp-action="Create" class="btn btn-success mb-3">Add Car</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>LOT</th>
+            <th>Model</th>
+            <th>Color</th>
+            <th>Images</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var car in Model)
+        {
+            <tr>
+                <td>@car.LOT</td>
+                <td>@car.MODEL_NAME</td>
+                <td>@car.COLOR</td>
+                <td>
+                    @if (car.carImages != null && car.carImages.Any())
+                    {
+                        <img src="@car.carImages.First().ImageUrl" width="100" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@car.ID" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@car.ID" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

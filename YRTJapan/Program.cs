@@ -33,6 +33,8 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IApiService, ApiService>();
+builder.Services.AddScoped<IStock, StockRepository>();
+
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddScoped<IDataService, DataService>();
