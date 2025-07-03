@@ -45,7 +45,7 @@
 <h2>Stock</h2>
 <a asp-action="Create" class="btn btn-success mb-3">Add New Car</a>
 
-<div class="table-responsive p-5">
+<div class="table-responsive ">
     <table class="table table-bordered table-responsive table-striped table-sm">
         <thead class="thead-dark">
             <tr>
@@ -92,7 +92,11 @@
                     <td>
                         @if (car.carImages != null && car.carImages.Any())
                         {
-                            <img src="@car.carImages.First().ImageUrl" width="100" />
+                            foreach (var item in car.carImages)
+                            {
+                                <img src="@item.ImageUrl" width="100" />
+                            }
+                          
                         }
                     </td>
                     <td>

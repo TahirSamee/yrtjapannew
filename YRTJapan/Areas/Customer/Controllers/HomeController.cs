@@ -30,7 +30,8 @@ namespace YRTJapan.Areas.Customer.Controllers
         private readonly IDataService _dataService;
         private readonly ApplicationDbContext _context;
         private readonly ICompositeViewEngine _viewEngine;
-        public HomeController(ILogger<HomeController> logger, IProductRepository productRepo, IShoppingCartRepository shoppingCartRepo, IDataService dataService, ApplicationDbContext context, ICompositeViewEngine viewEngine)
+        private readonly IStock _stockRepo;
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepo, IShoppingCartRepository shoppingCartRepo, IDataService dataService, ApplicationDbContext context, ICompositeViewEngine viewEngine, IStock stockRepo)
         {
             _logger = logger;
             _productRepo = productRepo;
@@ -38,6 +39,7 @@ namespace YRTJapan.Areas.Customer.Controllers
             _dataService = dataService;
             _context = context;
             _viewEngine = viewEngine;
+            _stockRepo = stockRepo;
         }
 
         public async Task<IActionResult> Index()
@@ -46,14 +48,17 @@ namespace YRTJapan.Areas.Customer.Controllers
             var response = new DropDownDataList();
             var makersList = await _dataService.GetMakersAsync();
             var carList = await _dataService.GetCarsAsync();
+            var carsfromadmincreated = _stockRepo.GetAllCars();
+            //carList.Clear();
+            //carList = carsfromadmincreated;
+            carList.AddRange(carsfromadmincreated);
             carList = carList
                         .Where(car => int.TryParse(car.YEAR, out int carYear) && carYear <= DateTime.Now.Year && car.ID != "qml4jD38zfdWHY3")
                         .Select(car =>
                         {
                             car.FOBPriceInUSD = CurrencyConverterLive.GetConvertedTotalBiggerPrice(car.AVG_PRICE, car.FINISH).Result;
                             return car;
-                        })
-                        .ToList();
+                        }).ToList();
             var searchModel = new CarSearchViewModel
             {
             };

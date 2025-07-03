@@ -48,9 +48,25 @@
                             imageUrl += "&w=320";
                         }
                     }
-                    <a href='/Customer/Stock/Details?id=@car.ID'>
-                    <img src="@imageUrl" class="card-img-top" alt="...">
-                    </a>
+
+                    @if (car.carImages != null && car.carImages.Count > 0)
+                    {
+                        foreach (var item in car.carImages)
+                        {
+                            <a href='/Customer/Stock/Details?id=@car.ID'>
+                                <img src="@item.ImageUrl" class="card-img-top" alt="...">
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a href='/Customer/Stock/Details?id=@car.ID'>
+                            <img src="@imageUrl" class="card-img-top" alt="...">
+                        </a>
+                    }
+                   
+
+
                     <div class="card-body p-1">
                         <a href='/Customer/Stock/Details?id=@car.ID' class="card-title mb-0">@car.MODEL_NAME</a>
                         <p class="card-text mb-2">Model @car.YEAR</p>
