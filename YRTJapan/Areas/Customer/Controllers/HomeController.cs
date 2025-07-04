@@ -48,10 +48,10 @@ namespace YRTJapan.Areas.Customer.Controllers
             var response = new DropDownDataList();
             var makersList = await _dataService.GetMakersAsync();
             var carList = await _dataService.GetCarsAsync();
-            var carsfromadmincreated = _stockRepo.GetAllCars();
+            //var carsfromadmincreated = _stockRepo.GetAllCars();
             //carList.Clear();
             //carList = carsfromadmincreated;
-            carList.AddRange(carsfromadmincreated);
+            //carList.AddRange(carsfromadmincreated);
             carList = carList
                         .Where(car => int.TryParse(car.YEAR, out int carYear) && carYear <= DateTime.Now.Year && car.ID != "qml4jD38zfdWHY3")
                         .Select(car =>
