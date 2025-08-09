@@ -1,0 +1,28 @@
+﻿@using YRTJapan.Core;
+
+@model List<Model>
+
+@{
+    var selectedModel = ViewData["ModelName"]?.ToString();
+}
+
+<select id="ModelName" name="ModelName" onchange="fetchModelCodes(this.value)" class="form-control">
+    <option value="" class="text-dark">All Model</option>
+
+    @foreach (var carModel in Model)
+    {
+        <option value="@carModel.model_name" class="text-dark" selected="@(carModel.model_name == selectedModel ? "selected" : null)">
+            @carModel.model_name (@carModel.TAG1)
+        </option>
+
+    }
+</select>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var selectedModel = '@selectedModel';
+        if (selectedModel) {
+            fetchModelCodes(selectedModel);
+        }
+    });
+</script>

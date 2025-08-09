@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Car Inquiry";
+}
+<section class="search-wrapper pm-5 mb-5 my-5 pm-5 pl-5 pr-lg-5 pr-md-5 pr-0">
+    <div class="w-100">
+        @Html.Partial("_StockTabs")
+    </div>
+        <div class="row my-4 justify-content-between">
+            <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+                <h3 class="heading mb-3">Send in an inquiry</h3>
+            </div>
+
+        </div>
+    <div class="row my-4 justify-content-between">
+            <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+                <form class="my-4 p-sm-4 p-lg-5 p-5 d-flex flex-column justify-content-center align-items-center contact-form" style="background-color: #F7F7F7;">
+                    <div class="row flex-wrap justify-content-between">
+                        <input type="text" name="make" class="form-control" placeholder="Make *" required style="height: 53px; width: 48%;">
+                        <input type="text" name="model" class="form-control" placeholder="Model *" required style="height: 53px;width: 48%;">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="text" name="drive_type" class="form-control" placeholder="Drive Type" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="number" name="mfg_year" class="form-control" placeholder="Mfg. Year" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="text" name="price" class="form-control" placeholder="Price (FOB)" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="file" name="vehicle_image" class="form-control" accept="image/*" style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Type message here (0 / 500)" maxlength="500" style="width: 100%;"></textarea>
+                    </div>
+                </form>
+            </div>
+
+        
+            <div class="col-12 col-md-6 col-sm-12 col-lg-6">
+                <form class="my-4 p-sm-4 p-lg-5 p-5 d-flex flex-column justify-content-center align-items-center contact-form" style="background-color: #F7F7F7;">
+                    <div class="row flex-wrap justify-content-between">
+                        <input type="text" name="firstname" class="form-control" placeholder="First Name"
+                               style="height: 53px; width: 48%;">
+                        <input type="text" name="lastname" class="form-control" placeholder="Last Name"
+                               style="height: 53px;width: 48%;">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email Address"
+                               style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <input type="text" name="phone" class="form-control" placeholder="Phone Number"
+                               style="height: 53px">
+                    </div>
+                    <div class="row justify-content-between mt-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Type message here"
+                                  style="width: 100%;" id=""></textarea>
+                        @* <label class="d-flex align-items-center" *@
+                        @*        style=" font-weight: 400; text-transform:uppercase"> *@
+                        @*     <input type="checkbox" *@
+                        @*            name="remember" class="form-check mr-1" placeholder="Type here" *@
+                        @*            style="height: 26px;">Stock Inquiry *@
+                        @* </label> *@
+                    </div>
+                    <div class="mt-4 row">
+                        <button type="submit" class="btn btn-theme" style="width: 60%;--bg-color: #d60000;">Submit Message</button>
+                    </div>
+                </form>
+            </div>
+
+    </div>
+</section>

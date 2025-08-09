@@ -1,0 +1,11 @@
+﻿@using YRTJapan.Core;
+
+@model List<ModelCode>
+
+<select id="ModelCode" name="ModelCode" class="form-control">
+    <option value="" class="text-dark">ALL MODEL CODE</option>
+      @foreach (var carModelCode in Model)  
+     {  
+          <option value="@carModelCode.kuzov" class="text-dark">@carModelCode.kuzov </option>  
+      } 
+</select>

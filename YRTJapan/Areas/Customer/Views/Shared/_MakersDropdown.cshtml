@@ -1,0 +1,36 @@
+﻿@using YRTJapan.Core
+@model DropDownDataList
+
+@{
+    var selectedMarka = ViewData["MarkaName"]?.ToString();
+    var selectedHomeMarka = ViewData["HomeMarkaName"]?.ToString();
+    var selectedModel = ViewData["ModelName"]?.ToString();
+}
+
+<select id="MarkaName" name="MarkaName" onchange="fetchModels(this.value)" class="form-control">
+           <option class="text-dark" value="">Select Make</option>
+    @foreach (var maker in Model.ListMakers)
+    {
+        bool isSelected = @maker.marka_name == selectedMarka || @maker.marka_name == selectedHomeMarka;
+        <option class="text-dark" value="@maker.marka_name" selected="@(isSelected ? "selected" : null)">
+            @maker.marka_name
+        </option>
+    }
+</select>
+ 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var selectedMake = '@selectedMarka';
+        var selectedHomeMake = '@selectedHomeMarka';
+        var selectedModel ='@selectedModel';
+        if(!selectedModel){
+           if (selectedMake) {
+            fetchModels(selectedMake);
+           }
+           if (selectedHomeMake) {
+            fetchModels(selectedHomeMake);
+           }
+        }
+    });
+</script>
+

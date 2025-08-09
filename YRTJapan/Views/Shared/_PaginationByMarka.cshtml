@@ -1,0 +1,20 @@
+﻿@using YRTJapan.Core.Entities;
+
+@model Pagination
+
+<div class="pagebtncontainer d-flex justify-content-center w-100 my-5">
+    @if (Model.CurrentPage > 1)
+    {
+        <a class="btn page-btn mr-1" href="#" onclick="loadPageWithMarka(@(Model.CurrentPage - 1), '@Model.HomeMarkaName')"> &lt;&lt; </a>
+    }
+
+    @for (int i = Math.Max(1, Model.CurrentPage - 6); i <= Math.Min(Model.TotalPages, Math.Max(13, Model.CurrentPage + 6)); i++)
+    {
+        <a class="btn page-btn @(i == Model.CurrentPage ? "page-btn-active" : "") mr-1" href="#" onclick="loadPageWithMarka(@i, '@Model.HomeMarkaName')">@i</a>
+    }
+
+    @if (Model.CurrentPage < Model.TotalPages)
+    {
+        <a class="btn page-btn-red mr-1" href="#" onclick="loadPageWithMarka(@(Model.CurrentPage + 1), '@Model.HomeMarkaName')">>></a>
+    }
+</div>

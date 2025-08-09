@@ -1,0 +1,140 @@
+﻿@using YRTJapan.Core.Entities
+@model IEnumerable<Car>
+@{
+    ViewData["Title"] = "Car List";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+<style>
+    table.dataTable thead {
+        background-color: black;
+        margin-right: 20px;
+    }
+
+        table.dataTable thead th {
+            color: #c31919;
+        }
+
+    table.dataTable tbody {
+        margin-right: 20px;
+    }
+
+        table.dataTable tbody td {
+            font-size: 12px;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .dataTables_length {
+        margin-left: 20px;
+    }
+
+    .dataTables_filter {
+        margin-right: 20px;
+    }
+</style>
+<div style="margin-left:75%"><partial name="_LoginPartial" /></div>
+<div style="margin-left:15px;margin-right:15px">
+    <h2>Stock</h2>
+    <a asp-action="Create" class="btn btn-success mb-3">Add New Car</a>
+
+    <div class="table-responsive ">
+        <table class="table table-bordered table-responsive table-striped table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>LOT</th>
+                    <th>AUCTION_TYPE</th>
+                    <th>AUCTION_DATE</th>
+                    <th>AUCTION</th>
+                    <th>MARKA</th>
+                    <th>MODEL</th>
+                    <th>YEAR</th>
+                    <th>TOWN</th>
+                    <th>ENG_V</th>
+                    <th>PW</th>
+                    <th>KUZOV</th>
+                    <th>GRADE</th>
+                    <th>COLOR</th>
+                    <th>KPP</th>
+                    <th>MILEAGE</th>
+                    <th>STATUS</th>
+                    <th>IMAGE</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var car in Model)
+                {
+                    <tr>
+                        <td>@car.LOT</td>
+                        <td>@car.AUCTION_TYPE</td>
+                        <td>@car.AUCTION_DATE</td>
+                        <td>@car.AUCTION</td>
+                        <td>@car.MARKA_NAME</td>
+                        <td>@car.MODEL_NAME</td>
+                        <td>@car.YEAR</td>
+                        <td>@car.TOWN</td>
+                        <td>@car.ENG_V</td>
+                        <td>@car.PW</td>
+                        <td>@car.KUZOV</td>
+                        <td>@car.GRADE</td>
+                        <td>@car.COLOR</td>
+                        <td>@car.KPP</td>
+                        <td>@car.MILEAGE</td>
+                        <td>@car.STATUS</td>
+                        <td style="min-width: 120px;">
+                            @if (car.carImages != null && car.carImages.Any())
+                            {
+                                var carouselId = $"carousel_{car.ID}";
+
+                                <div id="@carouselId" class="carousel slide" data-ride="carousel" data-interval="2000">
+                                    <div class="carousel-inner">
+                                        @for (int i = 0; i < car.carImages.Count; i++)
+                                        {
+                                            var image = car.carImages[i];
+                                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                                <img src="@image.ImageUrl" class="d-block " style="max-width:100px; height:100px;" />
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @if (car.carImages.Count > 1)
+                                    {
+                                        <a class="carousel-control-prev" href="#@carouselId" role="button" data-slide="prev" style="width:20px;">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:black;"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#@carouselId" role="button" data-slide="next" style="width:20px;">
+                                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:black;"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@car.ID" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@car.ID" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+

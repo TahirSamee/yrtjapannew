@@ -1,0 +1,315 @@
+﻿@model List<string>
+
+@{
+    string mainImage = "";
+    if (Model.Count > 0)
+    {
+        mainImage = Model[0].Replace("&h=50", "");
+    }
+}
+<style>
+    /* Gallery layout */
+    .main_image {
+        position: relative;
+        margin: auto;
+    }
+
+        .main_image img {
+            object-fit: contain;
+        }
+
+    .other_images_ulli {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+        .other_images_ulli li {
+            cursor: pointer;
+        }
+
+    .arrow {
+        cursor: pointer;
+        font-size: 2em;
+        user-select: none;
+        position: absolute;
+        top: 40%;
+        transform: translateY(0%);
+        background: rgba(255,255,255,0.7);
+        padding: 5px;
+    }
+
+    .left-arrow {
+        left: 0;
+    }
+
+    .right-arrow {
+        right: 0;
+    }
+
+    /* Magnifier lens */
+    .img-magnifier-glass {
+        position: absolute;
+        border: 3px solid #000;
+        border-radius: 50%;
+        cursor: none;
+        width: 200px;
+        height: 200px;
+        display: none;
+        background-repeat: no-repeat;
+    }
+
+    /* Modal overlay – full-screen semi-transparent background */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8); /* dark backdrop */
+        display: flex; /* center contents */
+        align-items: center;
+        justify-content: center;
+        opacity: 0; /* start invisible */
+        pointer-events: none; /* ignore clicks when hidden */
+        transition: opacity 0.3s ease; /* fade transition effect */
+    }
+
+        /* Modal visible state (fade-in) */
+        .modal.show {
+            opacity: 1;
+            pointer-events: auto; /* enable clicks when shown */
+        }
+
+    /* Full-size image in modal */
+    .modal-img {
+        max-width: 90%;
+        max-height: 90%;
+        box-shadow: 0 0 15px #000; /* slight shadow for contrast */
+    }
+
+    /* Close button (X) styling */
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: thirty eight px;
+        font-size: 38px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s; /* hover transition */
+    }
+
+        .close:hover {
+            color: #bbb; /* slight color change on hover */
+        }
+
+    /* Responsive: make sure modal image scales on small screens */
+    @@media (max-width: 600px) {
+        .modal-img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+</style>
+
+<div id="mainimgpdf" class="main_image">
+    <a href="#" data-gallery="">
+        <img src="@mainImage" alt="main-car" id="large_img" class="img-responsive center-block" />
+    </a>
+    <!-- Left Arrow -->
+    <span class="arrow left-arrow">&#10094;</span>
+    <!-- Right Arrow -->
+    <span class="arrow right-arrow">&#10095;</span>
+
+    <ul class="other_images_ulli">
+        @foreach (var imgUrl in Model.Skip(1))
+        {
+            <li>
+                <a href="#" data-gallery="">
+                    <img class="img-responsive lazy"
+                         data-src="@imgUrl"
+                         src="~/images/dummyNoImage.png"
+                         alt="car-img"
+                         loading="lazy" />
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+<div id="imageModal" class="modal">
+    <!-- Close button -->
+    <span class="close">&times;</span>
+    <!-- Full-size image to display in modal -->
+    <img id="modalImage" class="modal-img" src="" alt="Full Size Image">
+</div>
+
+<script>
+    // Lazy-load images for thumbnails
+    document.addEventListener('DOMContentLoaded', () => {
+        const lazyImages = document.querySelectorAll('img.lazy');
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.getAttribute('data-src');
+                        img.removeAttribute('data-src');
+                        img.classList.remove('lazy');
+                        obs.unobserve(img);
+                    }
+                });
+            });
+            lazyImages.forEach(img => observer.observe(img));
+        } else {
+            lazyImages.forEach(img => {
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+                img.classList.remove('lazy');
+            });
+        }
+
+        // --- Image Navigation & Zoom Functionality ---
+        const mainImg = document.getElementById('large_img');
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        const thumbNodes = document.querySelectorAll('.other_images_ulli li img');
+
+        // Build an array of all images (main + thumbnails)
+        let allImages = [];
+        if(mainImg && mainImg.src)
+            allImages.push(mainImg.src);
+        thumbNodes.forEach(img => {
+            // Use src attribute (after lazy-loading) or fallback to data-src
+            let url = img.getAttribute('data-src');
+            if(url) {
+                allImages.push(url);
+            }
+        });
+        let currentIndex = 0;
+
+        function showImage(index) {
+            if(index < 0) { index = allImages.length - 1; }
+            if(index >= allImages.length) { index = 0; }
+            currentIndex = index;
+            // For the first image (index 0) apply the replacement as before
+            let newSrc = allImages[index];
+            if(index === 0) {
+                newSrc = newSrc.replace("&h=50", "");
+            }
+            mainImg.src = newSrc;
+            // updateLensBackground();
+        }
+
+        // rightArrow.addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     showImage(currentIndex + 1);
+        // });
+
+            if (rightArrow) {
+              rightArrow.addEventListener('click', function(e) {
+                e.preventDefault();
+                showImage(currentIndex + 1);      // Show the next image (as in your existing code)
+                positionRightArrow();             // Recalculate arrow position for the new image
+                // Note: The 'load' event will fire as well, further ensuring correct position after the image fully loads
+              });
+            }
+
+
+        leftArrow.addEventListener('click', (e) => {
+            e.preventDefault();
+            showImage(currentIndex - 1);
+        });
+        thumbNodes.forEach((img, idx) => {
+            img.parentElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Thumbnails start from index 1 in allImages array
+                showImage(idx + 1);
+            });
+        });
+
+
+        // Get elements
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.querySelector('.close');
+
+        // When the main image is clicked, open the modal
+        mainImg.addEventListener('click', () => {
+          const fullImgSrc = mainImg.getAttribute('src');  // large image URL
+          modalImg.src = fullImgSrc;
+          modalImg.alt = mainImg.alt || "Full Size Image";       // copy alt text for accessibility
+          modal.classList.add('show');    // show the modal (fade-in via CSS)
+        });
+
+        // When the close button (×) is clicked, close the modal
+        closeBtn.addEventListener('click', () => {
+          modal.classList.remove('show'); // hide the modal (will fade out)
+        });
+
+        // Also close the modal if user clicks outside the image (on the overlay)
+        window.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('show');
+          }
+        });
+
+
+
+        // --- Magnifier Zoom ---
+        // const lens = document.createElement('div');
+        // lens.className = 'img-magnifier-glass';
+        // document.getElementById('mainimgpdf').appendChild(lens);
+        // const zoomLevel = 2; // Set your zoom level here
+
+        // function updateLensBackground() {
+        //     lens.style.backgroundImage = "url('" + mainImg.src + "')";
+        //     lens.style.backgroundSize = (mainImg.width * zoomLevel) + "px " + (mainImg.height * zoomLevel) + "px";
+        // }
+
+        // // Show lens on hover
+        // document.getElementById('mainimgpdf').addEventListener('mouseenter', function(e) {
+        //     lens.style.display = 'block';
+        //     updateLensBackground();
+        // });
+        //     // Hide magnifier when hovering over the thumbnails list for better UX
+        // document.querySelector('.other_images_ulli').addEventListener('mouseenter', function() {
+        //     lens.style.display = 'none';
+        // });
+
+        // // Hide lens on mouse leave
+        // document.getElementById('mainimgpdf').addEventListener('mouseleave', function(e) {
+        //     lens.style.display = 'none';
+        // });
+        // // Move lens with mouse
+        // document.getElementById('mainimgpdf').addEventListener('mousemove', moveLens);
+
+        // function moveLens(e) {
+        //     e.preventDefault();
+        //     const rect = mainImg.getBoundingClientRect();
+        //     // Get cursor position relative to image
+        //     const x = e.clientX - rect.left;
+        //     const y = e.clientY - rect.top;
+        //     const lensWidth = lens.offsetWidth / 2;
+        //     const lensHeight = lens.offsetHeight / 2;
+        //     let posX = x - lensWidth;
+        //     let posY = y - lensHeight;
+        //     // Bound the lens within the image
+        //     if(posX < 0) posX = 0;
+        //     if(posY < 0) posY = 0;
+        //     if(posX > mainImg.width - lens.offsetWidth) posX = mainImg.width - lens.offsetWidth;
+        //     if(posY > mainImg.height - lens.offsetHeight) posY = mainImg.height - lens.offsetHeight;
+        //     lens.style.left = posX + "px";
+        //     lens.style.top = posY + "px";
+        //     // Set background position of lens for zoom effect
+        //     const bgPosX = -((x * zoomLevel) - lensWidth);
+        //     const bgPosY = -((y * zoomLevel) - lensHeight);
+        //     lens.style.backgroundPosition = bgPosX + "px " + bgPosY + "px";
+        // }
+    });
+</script>

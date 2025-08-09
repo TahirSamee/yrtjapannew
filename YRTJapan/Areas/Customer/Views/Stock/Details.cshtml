@@ -1,0 +1,616 @@
+﻿@{
+    ViewData["Title"] = "Stock Detail";
+}
+
+@using YRTJapan.Core.Entities
+@model Car
+<section class="search-wrapper staffcon  staffcon-main ">
+
+    <div class="row">
+        <div class="col col-lg-8 col-md-12">
+            <h1 class="stkdetail_heading">
+                @Model.YEAR @Model.MARKA_NAME @Model.MODEL_NAME
+                <strong>
+                    @* <span class="redCol">Now On Sale</span> *@
+                </strong>
+            </h1>
+        </div>
+        <div class="col-lg-4 d-flex col-md-12">
+            <div class="col-9 text-end">
+                <span>FOB:</span>
+                <strong>
+                    <span id="price_local_detail" class="redCol">@(Model.FOBPriceInUSD > 0 ? $"${Model.FOBPriceInUSD.ToString("N0")}" : "Login/ASK FOR PRICE")</span>
+                </strong>
+            </div>
+
+            <div class="col-3">
+                @await Html.PartialAsync("_CurrencyConverterPartial", "price_local_detail")
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-lg-7 col-md-12">
+            <div class="stock_first">
+                @await Html.PartialAsync("_CarImagesPartial", Model.IMAGES_LIST)
+                <div class="container mt-4 clearfix">
+                    <h2 class="mb-3">Accessories</h2>
+                    <div class="d-flex ">
+                        <div class="table-responsive" style="max-width: 600px;">
+                            <!-- Table width control -->
+                            <table class="table table-bordered">
+                                <thead class="table-dark" style="background-color: #E30202 !important;border-color: #E30202 !important;">
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Features</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Comfort</strong></td>
+                                        <td>@Model.EQUIP</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Other Features</strong></td>
+                                        <td>@Model.KPP @Model.PRIV </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Other Selling Points</strong></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-5  col-md-12 pt-3 pr-0">
+            <!-- First Sub Row (66% Split) -->
+            <div class="row w-100">
+                <div class="col-1g-6 col-md-6 col-sm-12 col-12">
+                    <div class="font_14 pull-left">
+                        <span class="sp sp-location tooltip" aria-label="Stock Location"></span> Japan
+
+                        <a href="#" id="printLink" class="darkgray_color" style="padding-left: 10px; color: red;">
+                            <span class="sp sp-print"></span> Print
+                        </a>
+
+                        <a href="#" id="pdfLink" class="darkgray_color" style="padding-left: 10px; color: red;">
+                            <span class="sp sp-pdf"></span> PDF
+                        </a>
+                    </div>
+                </div>
+                <div class="col-1g-6 col-md-6 col-sm-12 col-12">
+                </div>
+            </div>
+            <!-- third Sub Row (66% Split) -->
+            <div class="row w-100">
+                <div class="col col-pad">
+                    <div class="container mt-5 px-0">
+                        <div class="table-responsive">
+                            <table id="contentToConvert" class="table table-stock table-bordered text-center">
+                                <thead class="table-dark table-col">
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Details</th>
+                                        <th>Attribute</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 12 rows with 4 columns each -->
+                                    <tr>
+                                        <td>Make</td>
+                                        <td>@Model.MARKA_NAME</td>
+                                        <td>Year/Month</td>
+                                        <td>@Model.YEAR</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Model</td>
+                                        <td>@Model.MODEL_NAME</td>
+                                        <td>Model Code</td>
+                                        <td>@Model.KUZOV</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Engine</td>
+                                        <td>@Model.ENG_V CC</td>
+                                        <td>Mileage</td>
+                                        <td>@Model.MILEAGE KM</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Color</td>
+                                        <td>@Model.COLOR</td>
+                                        <td>Grade</td>
+                                        <td>@Model.GRADE</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4WD/2WD</td>
+                                        <td>@Model.PRIV</td>
+                                        <td>Transmission</td>
+                                        <td>@Model.KPP</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--  Sub Row (66% Split) -->
+            <div class="row w-100">
+                <div class="col col-pad">
+                    <form id="get-free-quote-form" class="p-4 border rounded shadow-sm bg-light">
+                        <h2 class="mb-4 he-size">Get Free Quote</h2>
+
+                        <!-- Name Field -->
+                        <div class="mb-3">
+
+                            <input type="text" id="quotename" name="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
+
+                        <!-- Country Dropdown -->
+                        <div class="mb-3">
+                            @await Component.InvokeAsync("CountriesDropdown", new
+                                {
+                                    selectId = "quotecountry",
+                                    selectName = "quotecountry",
+                                    isSelect2 = false
+                                })
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+
+                            <input type="email" id="quoteemail" name="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div class="mb-3">
+
+                            <input type="tel" id="quotephone" name="phone" class="form-control" placeholder="Enter your phone number" required>
+                        </div>
+
+                        <!-- Message Field -->
+                        <div class="mb-3">
+
+                            <textarea id="quotemessage" name="quotemessage" class="form-control" rows="4" placeholder="Enter your message" required></textarea>
+                        </div>
+                        <input type="hidden" id="carId" name="carId" value="12345">
+                        <!-- Submit Button -->
+                        <button id="inquirybutton" class="btn btn-primary buton w-100">Get a Free Quote</button>
+                    </form>
+                </div>
+
+            </div>
+            <!--  Sub Row (66% Split) -->
+            <div class="row w-100">
+                <div class="col">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    @section Scripts {
+        <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("printLink").addEventListener("click", function(e) {
+                        e.preventDefault();
+                        PrintSection();
+                    });
+                    document.getElementById("pdfLink").addEventListener("click", function(e) {
+                        e.preventDefault();
+                        // showLoader('Creating your pdf, please wait...');
+                        CreateAndDownloadPdf();
+                    });
+                });
+
+                window.PrintSection = function () {
+                    var content = document.querySelector('.search-wrapper');
+                    if (content) {
+                        var printWindow = window.open('', '', 'height=600,width=800');
+                        printWindow.document.open();
+                        printWindow.document.write('<html><head><title>Print</title>');
+                        printWindow.document.write('<link href="/css/bootstrap.css" rel="stylesheet" type="text/css">');
+                        printWindow.document.write('<link href="/css/responsive.css" rel="stylesheet" type="text/css">');
+                        printWindow.document.write('<link href="/css/style.css" rel="stylesheet" type="text/css">');
+                        // Injected a style
+                        printWindow.document.write('<style>');
+                        printWindow.document.write('@@media print {');
+                        printWindow.document.write(' .left-arrow, .right-arrow, .btn-inq, #get-free-quote-form, #printLink, #pdfLink, a.com_cart.slow5.slow-p, a.com_campare.slow5, form[name="currform"] { display: none !important; }');
+                        printWindow.document.write('  thead.table-dark { background-color: #E30202 !important; border-color: #E30202 !important; }');
+                        printWindow.document.write('  thead.table-dark.table-col { background-color: #d60000; color: #fff; }');
+                        printWindow.document.write('}');
+                        printWindow.document.write('</style>');
+                        // Injected a script
+                        printWindow.document.write('<script>');
+                        printWindow.document.write('document.addEventListener("DOMContentLoaded", function(){');
+                        printWindow.document.write('var spans = document.querySelectorAll("span.sp.sp-location.tooltip");');
+                        printWindow.document.write('spans.forEach(function(span){');
+                        printWindow.document.write('var next = span.nextSibling;');
+                        printWindow.document.write('if(next && next.nodeType === Node.TEXT_NODE && next.nodeValue.includes("Japan")) {');
+                        printWindow.document.write('next.nodeValue = next.nodeValue.replace("Japan", "").trim();');
+                        printWindow.document.write('}');
+                        printWindow.document.write('});');
+                        printWindow.document.write('});');
+                        printWindow.document.write('<\/script>');
+                        printWindow.document.write('</head><body>');
+                        printWindow.document.write(content.outerHTML);
+                        // var contentClone = content.cloneNode(true); // Clone the content to avoid modifying the original DOM
+                        // var scripts = contentClone.querySelectorAll('script');
+                        // scripts.forEach(script => script.remove()); // Remove injected scripts
+                        // printWindow.document.write(contentClone.outerHTML);
+                        printWindow.document.write('</body></html>');
+                        printWindow.document.close();
+                        printWindow.focus();
+
+                        // Wait for the new window to load its content (including CSS) before printing.
+                        printWindow.onload = function () {
+                            printWindow.print();
+                            printWindow.close();
+                        };
+
+                        // Fallback: if onload isn't triggered reliably, use a timeout.
+                        setTimeout(function () {
+                            if (!printWindow.closed) {
+                                printWindow.print();
+                                printWindow.close();
+                            }
+                        }, 1000);
+                    }
+                };
+                
+                // Helper function to load an image with proper CORS handling using a callback.
+                window.createImageWithCORS = function(src, callback) {
+                  const img = new Image();
+                  img.crossOrigin = "anonymous"; // Set before setting src.
+                  img.onload = function() {
+                    callback(null, img);
+                  };
+                  img.onerror = function(err) {
+                    callback(err, null);
+                  };
+                  img.src = src;
+                };
+
+                // Helper function to convert an image element to a base64 data URL.
+                window.getImageDataURL = function (imgElement) {
+                  if (!imgElement) return null;
+                  const canvas = document.createElement('canvas');
+                  canvas.width = imgElement.naturalWidth || imgElement.width;
+                  canvas.height = imgElement.naturalHeight || imgElement.height;
+                  const ctx = canvas.getContext('2d');
+                  ctx.drawImage(imgElement, 0, 0);
+                  try {
+                    return canvas.toDataURL('image/png');
+                  } catch (e) {
+                    console.error("Unable to convert canvas to data URL. Likely a CORS issue:", e);
+                    return null;
+                  }
+                };
+
+                // Wrap createImageWithCORS into a Promise so we can load images asynchronously.
+                function getImageDataURLAsync(src) {
+                  return new Promise((resolve, reject) => {
+                    window.createImageWithCORS(src, function(err, img) {
+                      if (err) {
+                        reject(err);
+                      } else {
+                        const dataUrl = window.getImageDataURL(img);
+                        resolve(dataUrl);
+                      }
+                    });
+                  });
+                }
+
+
+                            // Main function to create and download the PDF.
+            window.CreateAndDownloadPdf = function () {
+              // 1. Extract dynamic data from the HTML document.
+              const titleElement = document.querySelector('h1.stkdetail_heading');
+              const carTitle = titleElement ? titleElement.innerText.trim() : '';
+
+              const priceElement = document.getElementById('price_local_detail');
+              const fobPriceText = priceElement ? priceElement.innerText.trim() : '';
+              const fobLabel = fobPriceText ? `FOB Price: ${fobPriceText}` : '';
+
+              // Get the logo and main image elements.
+              const logoImgElement = document.querySelector('img[alt="logo"]') || document.querySelector('.logo img');
+              const mainImgElement = document.getElementById('large_img');
+
+              // Get the src URLs of the images.
+              const logoSrc = logoImgElement ? logoImgElement.src : null;
+              const mainImgSrc = mainImgElement ? mainImgElement.src : null;
+
+              // Use your proxy endpoint to fetch images from the third-party server.
+              // Assuming your MVC proxy endpoint is at '/ImageProxy/Proxy'
+                          const proxiedLogoSrc = logoSrc ? `/Customer/ImageProxy/Proxy?url=${encodeURIComponent(logoSrc)}` : null;
+            const proxiedMainImgSrc = mainImgSrc ? `/Customer/ImageProxy/Proxy?url=${encodeURIComponent(mainImgSrc)}` : null;
+
+              // 2. Load images asynchronously using getImageDataURLAsync.
+              Promise.all([
+                getImageDataURLAsync(proxiedLogoSrc),
+                getImageDataURLAsync(proxiedMainImgSrc)
+              ])
+              .then(function(imageDataURLs) {
+                const logoDataURL = imageDataURLs[0];
+                const mainImgDataURL = imageDataURLs[1];
+
+                // Extract Attributes table data.
+                const attrTable = document.getElementById('contentToConvert');
+                let attributesTableBody = [];
+                if (attrTable) {
+                  const rows = attrTable.querySelectorAll('tbody tr');
+                  rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length === 4) {
+                      const attr1 = cells[0].innerText.trim();
+                      const detail1 = cells[1].innerText.trim();
+                      const attr2 = cells[2].innerText.trim();
+                      const detail2 = cells[3].innerText.trim();
+                      if (attr1 || detail1 || attr2 || detail2) {
+                        attributesTableBody.push([
+                          { text: attr1, alignment: 'center' },
+                          { text: detail1, alignment: 'center' },
+                          { text: attr2, alignment: 'center' },
+                          { text: detail2, alignment: 'center' }
+                        ]);
+                      }
+                    }
+                  });
+                }
+                // Prepend header row for attributes table.
+                attributesTableBody.unshift([
+                  { text: 'Attribute', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Details', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Attribute', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Details', style: 'tableHeader', alignment: 'center' }
+                ]);
+
+                // Extract Category/Features table data (for Accessories).
+                let featuresTableBody = [];
+                const accessoriesHeading = document.querySelector('h2.mb-3'); // "Accessories" heading.
+                if (accessoriesHeading) {
+                  const featuresTable = accessoriesHeading.nextElementSibling?.querySelector('table');
+                  if (featuresTable) {
+                    const rows = featuresTable.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                      const cells = row.querySelectorAll('td');
+                      if (cells.length === 2) {
+                        const category = cells[0].innerText.trim();
+                        const features = cells[1].innerText.trim();
+                        featuresTableBody.push([
+                          { text: category, alignment: 'center' },
+                          { text: features, alignment: 'center' }
+                        ]);
+                      }
+                    });
+                  }
+                }
+                // Prepend header row for features table.
+                featuresTableBody.unshift([
+                  { text: 'Category', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Features', style: 'tableHeader', alignment: 'center' }
+                ]);
+
+                // 3. Define the pdfMake document definition.
+                const docDefinition = {
+                  pageSize: 'A4',
+                  pageMargins: [40, 60, 40, 60],
+                  header: {
+                    columns: [
+                      // Company Logo on the left.
+                      logoDataURL ? { image: logoDataURL, fit: [60, 60], width: 80 } : { width: 80 },
+                      // Car details on the right.
+                      {
+                        stack: [
+                          { text: carTitle, style: 'headerTitle', margin: [0, 5, 100, 2] },
+                          { text: fobLabel, style: 'fobLabel', margin: [0, 0, 100, 2] }
+                        ],
+                        alignment: 'center'
+                      }
+                    ],
+                    margin: [40, 20, 40, 0]
+                  },
+                  footer: function(currentPage, pageCount) {
+                    return {
+                      columns: [
+                        { text: '+81 90 1876 2811', alignment: 'center', margin: [0, 5, 0, 0] },
+                        { text: 'info@yrtjapan.com', alignment: 'center', margin: [0, 5, 0, 0] },
+                        { text: 'Isesaki SHI Sakai Higashi Arai 718-1 gunma ken, 370-0101 Japan', alignment: 'center', margin: [0, 5, 0, 0] }
+                      ],
+                      margin: [40, 0, 40, 20]
+                    };
+                  },
+                  content: [
+                    // Main Car Image.
+                    mainImgDataURL ? {
+                      image: mainImgDataURL,
+                      width: 300,
+                      alignment: 'center',
+                      margin: [0, 0, 0, 10]
+                    } : {},
+                    // Attributes table.
+                    {
+                      table: {
+                        headerRows: 1,
+                        widths: ['*', '*', '*', '*'],
+                        body: attributesTableBody
+                      },
+                      layout: {
+                        fillColor: function (rowIndex, node, columnIndex) {
+                          return rowIndex === 0 ? '#E30202' : null;
+                        },
+                        hLineColor: function(i, node) { return '#CCCCCC'; },
+                        vLineColor: function(i, node) { return '#CCCCCC'; }
+                      },
+                      margin: [0, 0, 0, 15]
+                    },
+                    // Accessories heading.
+                    { text: 'Accessories', style: 'subheader', margin: [0, 5, 0, 5] },
+                    // Features (Category & Features) table.
+                    {
+                      table: {
+                        headerRows: 1,
+                        widths: ['*', '*'],
+                        body: featuresTableBody
+                      },
+                      layout: {
+                        fillColor: function (rowIndex, node, columnIndex) {
+                          return rowIndex === 0 ? '#E30202' : null;
+                        },
+                        hLineColor: function(i, node) { return '#CCCCCC'; },
+                        vLineColor: function(i, node) { return '#CCCCCC'; }
+                      },
+                      margin: [0, 0, 0, 15]
+                    }
+                  ],
+                  styles: {
+                    headerTitle: {
+                      fontSize: 14,
+                      bold: true,
+                      alignment: 'center'
+                    },
+                    fobLabel: {
+                      fontSize: 12,
+                      color: '#E30202',
+                      alignment: 'center',
+                      noWrap: false
+                    },
+                    subheader: {
+                      fontSize: 12,
+                      bold: true
+                    },
+                    tableHeader: {
+                      fillColor: '#E30202',
+                      color: 'white',
+                      bold: true
+                    }
+                  }
+                };
+
+                // Sanitize the car title (replace spaces with underscores)
+                var sanitizedTitle = carTitle.replace(/\s+/g, '_');
+                // Remove any non-numeric characters from the price
+                var sanitizedPrice = fobPriceText.replace(/[^0-9]/g, '');
+                // Get the current timestamp
+                var nowTicks = new Date().getTime();
+                // Construct the file name: Year_Make_Model_Price_DateTimeNowTicks.pdf
+                var pdfFileName = sanitizedTitle + '_' + sanitizedPrice + '_' + nowTicks + '.pdf';
+
+                // 4. Generate and download the PDF using pdfMake.
+                pdfMake.createPdf(docDefinition).download(pdfFileName);
+                // hideLoader();
+              })
+              .catch(function(err) {
+                console.error("Error generating PDF:", err);
+                // hideLoader();
+              });
+            };
+
+                        // Function to position the right arrow 10px from the right edge of the current image
+            function positionRightArrow() {
+              const mainImg = document.getElementById('large_img');
+              const rightArrow = document.querySelector('.right-arrow');
+              if (!mainImg || !rightArrow) return;  // Safety check
+
+              // Calculate the image’s current position and width
+              const imgOffsetLeft = mainImg.offsetLeft;
+              const imgWidth = mainImg.offsetWidth;
+              const arrowWidth = rightArrow.offsetWidth;
+
+              // Compute the left position for the right arrow so that its right edge is 10px from the image's right edge
+              let arrowLeft = imgOffsetLeft + imgWidth - arrowWidth - 0;
+              if (arrowLeft < 0) arrowLeft = 0;  // Ensure it doesn't go beyond the left side in extreme cases
+
+              // Apply the positioning to the right arrow
+              rightArrow.style.left = arrowLeft + 'px';
+              rightArrow.style.right = 'auto';  // Override right alignment to use the left value
+            }
+
+            // Reposition the right arrow on window resize
+            window.addEventListener('resize', positionRightArrow);
+
+            // Reposition the right arrow after each new image loads
+            const mainImgElement = document.getElementById('large_img');
+            if (mainImgElement) {
+              mainImgElement.addEventListener('load', positionRightArrow);
+            }
+
+            // (Optional) Call once on page load to position correctly for the initial image
+            positionRightArrow();
+
+
+
+        </script>
+        <script>
+            $(document).ready(function () {
+                    $("#inquirybutton").click(function (event) {
+                    event.preventDefault();
+                    alert("Are you ready to Submitting Form");
+
+                    var formData = {
+                        Name: $("#quotename").val(),
+                        Country: $("#quotecountry").val(),
+                        Email: $("#quoteemail").val(),
+                        PhoneNumber: $("#quotephone").val(),
+                        Message: $("#quotemessage").val(),
+                        CarId: $("#carId").val()
+                    };
+
+                    $.ajax({
+                        url: '@Url.Action("FreeQuote1", "Stock")', // Make sure the controller/action name is correct
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(formData),
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                                $("#get-free-quote-form")[0].reset(); // Reset the form
+                            } else {
+                                alert("Failed to submit quote request.");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Error: " + xhr.responseText);
+                        }
+                    });
+                });
+
+                $("#sendInquiry").click(function () {
+                    $("#quotename").focus();
+                });
+
+                function addToFavourites(imageLink, price,markaName, modelName, year,userId) {
+                    $.ajax({
+                        url: '@Url.Action("AddToFavourites", "Stock")',
+                        type: "POST",
+                        data: {
+                            ImageLink: imageLink,
+                            Price: price,
+                            MakeName:markaName,
+                            ModelName: modelName,
+                            Year: year,
+                            UserId:userId
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+                            } else {
+                                alert("Failed to add to favourites.");
+                            }
+                        },
+                        error: function () {
+                            alert("An error occurred.");
+                        }
+                    });
+                }
+
+            });
+        </script>
+    }
+
+</section>

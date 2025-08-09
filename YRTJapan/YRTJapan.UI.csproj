@@ -1,0 +1,131 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\**" />
+    <Content Remove="Controllers\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <None Remove="Controllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Customer\AboutUsController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="PagedList" Version="1.17.0" />
+    <PackageReference Include="PagedList.Core" Version="1.17.4" />
+    <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Customer\Views\Faq\" />
+    <Folder Include="wwwroot\images\product\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\font-awesome\flag-icons-master\flag-icons.scss" />
+    <None Include="wwwroot\font-awesome\flag-icons-master\README.md" />
+    <None Include="wwwroot\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\font-awesome\less\animated.less" />
+    <None Include="wwwroot\font-awesome\less\bordered-pulled.less" />
+    <None Include="wwwroot\font-awesome\less\core.less" />
+    <None Include="wwwroot\font-awesome\less\fixed-width.less" />
+    <None Include="wwwroot\font-awesome\less\font-awesome.less" />
+    <None Include="wwwroot\font-awesome\less\icons.less" />
+    <None Include="wwwroot\font-awesome\less\larger.less" />
+    <None Include="wwwroot\font-awesome\less\list.less" />
+    <None Include="wwwroot\font-awesome\less\mixins.less" />
+    <None Include="wwwroot\font-awesome\less\path.less" />
+    <None Include="wwwroot\font-awesome\less\rotated-flipped.less" />
+    <None Include="wwwroot\font-awesome\less\screen-reader.less" />
+    <None Include="wwwroot\font-awesome\less\stacked.less" />
+    <None Include="wwwroot\font-awesome\less\variables.less" />
+    <None Include="wwwroot\font-awesome\scss\font-awesome.scss" />
+    <None Include="wwwroot\font-awesome\scss\_animated.scss" />
+    <None Include="wwwroot\font-awesome\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\font-awesome\scss\_core.scss" />
+    <None Include="wwwroot\font-awesome\scss\_fixed-width.scss" />
+    <None Include="wwwroot\font-awesome\scss\_icons.scss" />
+    <None Include="wwwroot\font-awesome\scss\_larger.scss" />
+    <None Include="wwwroot\font-awesome\scss\_list.scss" />
+    <None Include="wwwroot\font-awesome\scss\_mixins.scss" />
+    <None Include="wwwroot\font-awesome\scss\_path.scss" />
+    <None Include="wwwroot\font-awesome\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\font-awesome\scss\_screen-reader.scss" />
+    <None Include="wwwroot\font-awesome\scss\_stacked.scss" />
+    <None Include="wwwroot\font-awesome\scss\_variables.scss" />
+    <None Include="wwwroot\images\Country_Flags\Autrailia.svg" />
+    <None Include="wwwroot\images\Country_Flags\Canada.svg" />
+    <None Include="wwwroot\images\Country_Flags\Cyprus.svg" />
+    <None Include="wwwroot\images\Country_Flags\India.svg" />
+    <None Include="wwwroot\images\Country_Flags\Nigeria.svg" />
+    <None Include="wwwroot\images\Country_Flags\Pakistan.svg" />
+    <None Include="wwwroot\images\Country_Flags\Saudia.svg" />
+    <None Include="wwwroot\images\Country_Flags\SouthAfrica.svg" />
+    <None Include="wwwroot\images\Country_Flags\UAE.svg" />
+    <None Include="wwwroot\images\Country_Flags\USA.svg" />
+    <None Include="wwwroot\images\global_makers\Audi.svg" />
+    <None Include="wwwroot\images\global_makers\BMW.svg" />
+    <None Include="wwwroot\images\global_makers\Chevrolet.svg" />
+    <None Include="wwwroot\images\global_makers\Ford.svg" />
+    <None Include="wwwroot\images\global_makers\Jaguar.svg" />
+    <None Include="wwwroot\images\global_makers\Jeep.svg" />
+    <None Include="wwwroot\images\global_makers\KIA.svg" />
+    <None Include="wwwroot\images\global_makers\land.svg" />
+    <None Include="wwwroot\images\global_makers\MercedesBenz.svg" />
+    <None Include="wwwroot\images\global_makers\Peugeot.svg" />
+    <None Include="wwwroot\images\global_makers\Renault.svg" />
+    <None Include="wwwroot\images\global_makers\Ssangyong.svg" />
+    <None Include="wwwroot\images\global_makers\Volkswagen.svg" />
+    <None Include="wwwroot\images\global_makers\Volvo.svg" />
+    <None Include="wwwroot\images\makers\Daihatsu.svg" />
+    <None Include="wwwroot\images\makers\Hino.svg" />
+    <None Include="wwwroot\images\makers\Honda.svg" />
+    <None Include="wwwroot\images\makers\Isuzu.svg" />
+    <None Include="wwwroot\images\makers\Lexus.svg" />
+    <None Include="wwwroot\images\makers\mazda.svg" />
+    <None Include="wwwroot\images\makers\Mitsubishi.svg" />
+    <None Include="wwwroot\images\makers\nissan.svg" />
+    <None Include="wwwroot\images\makers\Subaru.svg" />
+    <None Include="wwwroot\images\makers\suzuki.svg" />
+    <None Include="wwwroot\images\makers\Toyota.svg" />
+    <None Include="wwwroot\images\search_by_shape\Convertible.svg" />
+    <None Include="wwwroot\images\search_by_shape\Coupe.svg" />
+    <None Include="wwwroot\images\search_by_shape\Hatchback.svg" />
+    <None Include="wwwroot\images\search_by_shape\MiniVan.svg" />
+    <None Include="wwwroot\images\search_by_shape\Pickup.svg" />
+    <None Include="wwwroot\images\search_by_shape\Sedan.svg" />
+    <None Include="wwwroot\images\search_by_shape\SUV.svg" />
+    <None Include="wwwroot\images\search_by_shape\Van.svg" />
+    <None Include="wwwroot\images\soical_media\facebook.svg" />
+    <None Include="wwwroot\images\soical_media\instagram.svg" />
+    <None Include="wwwroot\images\soical_media\linkedin.svg" />
+    <None Include="wwwroot\images\soical_media\twitter.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YRTJapan.Core\YRTJapan.Core.csproj" />
+    <ProjectReference Include="..\YRTJapan.DataAccess\YRTJapan.DataAccess.csproj" />
+    <ProjectReference Include="..\YRTJapan.Utility\YRTJapan.Utility.csproj" />
+  </ItemGroup>
+
+</Project>

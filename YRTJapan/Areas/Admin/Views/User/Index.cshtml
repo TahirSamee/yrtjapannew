@@ -1,0 +1,110 @@
+﻿@model IEnumerable<YRTJapan.Core.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div style="margin-left:75%"><partial name="_LoginPartial" /></div>
+<h2 style="margin-left:20px">Users</h2>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+<style>
+    table.dataTable thead {
+        background-color: black;
+        margin-right: 20px;
+    }
+
+        table.dataTable thead th {
+            color: #c31919;
+        }
+
+    table.dataTable tbody {
+        margin-right: 20px;
+    }
+
+        table.dataTable tbody td {
+            font-size: 12px;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .dataTables_length {
+        margin-left: 20px;
+    }
+
+    .dataTables_filter {
+        margin-right: 20px;
+    }
+</style>
+
+<table id="usersTable" class="display ml-2">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#usersTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "@Url.Action("LoadData", "User", new { area = "Admin" })",
+                "type": "POST"
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "userName" },
+                { "data": "email" },
+                {
+                    "data": null,
+                    "sortable": false,
+                    "render": function (data, type, row) {
+                        return `
+                            <button class="btn btn-warning btn-sm" onclick="openEditUserModal(${data.id}, '${row.userName}', '${row.email}')">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteUser(${data.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        `;
+                    }
+                }
+            ],
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true
+        });
+    });
+
+    function openEditUserModal(id, userName, email) {
+        // Your logic to open and populate the edit modal
+    }
+
+    function deleteUser(id) {
+        // Your logic to delete the user
+    }
+</script>

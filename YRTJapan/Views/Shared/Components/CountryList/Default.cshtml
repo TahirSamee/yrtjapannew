@@ -1,0 +1,10 @@
+﻿<ul class="dropdown-menu countryDropDownList" id="countryDropdown" style="max-height: 300px;overflow-y: auto">
+    @foreach (var item in Model as List<Country>)
+    {
+        <li>
+            <a href="#" data-country="@item.Code.ToLower()">
+                <i class="fi fi-@item.Code.ToLower()" aria-hidden="true"></i> @item.Name
+            </a>
+        </li>
+    }
+</ul>

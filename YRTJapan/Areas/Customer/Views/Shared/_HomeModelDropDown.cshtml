@@ -1,0 +1,14 @@
+﻿@using YRTJapan.Core;
+
+@model List<Model>
+@{
+    var models = Model ?? new List<Model>();
+}
+
+<select id="ModelName" name="ModelName" class="form-control">
+    <option value="" class="text-dark">Select Model</option>
+    @foreach (var carModel in models)
+    {
+        <option value="@carModel.model_name" class="text-dark">@carModel.model_name</option>
+    }
+</select>

@@ -1,0 +1,276 @@
+﻿@{
+    ViewData["Title"] = "Why YRT?";
+}
+<section class="search-wrapper py-5" style="background-color: #faf2f3;">
+    <div class="container">
+        <!-- Heading -->
+        <div class="text-center mb-5">
+            <h2 class="section-title">Why Choose YRT</h2>
+            <p class="section-subtitle">
+                Choose YRT for a hassle-free, trustworthy, and satisfying car-buying experience.
+            </p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="row g-4 justify-content-center">
+            <!-- Card 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <img src="../images/assistance.svg" alt="Experts">
+                    </div>
+                    <h5>Assistance from Experts in the Field</h5>
+                    <p>
+                        Our experienced and knowledgeable staff is dedicated to providing personalized support
+                        throughout your buying journey. From selecting your desired car to navigating import
+                        regulations, we are here to guide you every step of the way.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <img src="../images/white-car.svg" alt="Stock">
+                    </div>
+                    <h5>Extensive Stock to Make Your Selection</h5>
+                    <p>
+                        We offer a wide range of high-quality vehicles from auction houses and dealer stocks. Can't find your dream car?
+                        <a href="/Customer/Contact">Let us know</a> — we’ll help you locate it.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <img src="../images/process.svg" alt="Transparent Process">
+                    </div>
+                    <h5>Transparent Process</h5>
+                    <p>
+                        YRT ensures transparency with detailed information on your car: photos, specifications, and history, so you can make an informed decision with confidence.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-12 col-md-6 col-lg-4 mt-2">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <img src="../images/documentation.svg" alt="Shipping">
+                    </div>
+                    <h5>Reliable Shipping and Documentation</h5>
+                    <p>
+                        After purchase, we handle all documentation and shipping. Our trusted global carriers ensure your car arrives safely and on time.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col-12 col-md-6 col-lg-4 mt-2">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <img src="../images/matter.svg" alt="Customer First">
+                    </div>
+                    <h5>To Us, All Your Wants Matter</h5>
+                    <p>
+                        Your satisfaction is our top priority. We address your concerns with care and ensure a seamless, tailored buying experience from start to finish.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="text-center mt-5">
+            <img src="../images/yrt-logo.png" class="img-fluid" style="width: 220px;" alt="YRT Logo">
+        </div>
+    </div>
+</section>
+
+<style>
+    .search-wrapper {
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .section-title {
+        color: #d0021b;
+        font-weight: 700;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background-color: #fff;
+        border: 2px solid #d0021b;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(208, 2, 27, 0.05);
+        text-align: center;
+        transition: all 0.3s ease-in-out;
+        height: 100%;
+    }
+
+        .feature-card:hover {
+            box-shadow: 0 20px 35px rgba(208, 2, 27, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .feature-card h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #d0021b;
+            margin-top: 1.2rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .feature-card a {
+            color: #d0021b;
+            font-weight: 500;
+            text-decoration: underline;
+        }
+
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        background-color: #d0021b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(208, 2, 27, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .icon-wrapper img {
+            width: 35px;
+            height: 35px;
+        }
+
+    .feature-card:hover .icon-wrapper {
+        transform: scale(1.1);
+    }
+</style>
+
+@* <section class="search-wrapper pm-5 mt-5 pm-5 pl-5 pr-lg-5 pr-md-5 pr-0">
+    <div class="row ">
+        <div class="col-12 col-lg-12 px-0 px-lg-3">
+            <h3 class="heading text-center mb-3">why choose yrt</h3>
+            <p class="col-12 col-sm-9 col-md-5 col-lg-5 mx-auto text-center mb-4">
+                Choose YRT for a hassle-free, trustworthy, and satisfying car-buying experience.
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-5 pt-5">
+        <div class="row justify-content-between">
+
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3 position-relative mb-sm-5 mb-5 mb-md-0 mb-lg-0 mt-5">
+                <div class="boxcontainer d-flex flex-column justify-content-end justify-content-center px-3">
+                    <h3 class="boxcontainerHeading">Assistance from Experts in the Field</h3>
+                    <p class="boxcontainerPara mt-4">
+                        Our experienced and knowledgeable staff is dedicated to providing personalized support
+                        throughout your buying journey. From selecting your desired car to navigating import
+                        regulations, we are here to guide you every step of the way.
+                    </p>
+                </div>
+                <div class="redCon d-flex align-items-center justify-content-center">
+                    <img src="../images/assistance.svg" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3 position-relative mt-5 mt-md-0 mt-lg-0 mb-5 mb-md-0 mb-lg-0 mb-sm-5 mt-sm-5">
+                <div class="boxcontainer d-flex flex-column justify-content-end justify-content-center px-3"
+                     style="border-color: #000;">
+                    <h3 class="boxcontainerHeading">Extensive Stock to Make Your Selection</h3>
+                    <p class="boxcontainerPara mt-4">
+                        At YRT, we offer a wide range of high-quality vehicles sourced from Auction houses and
+                        dealer stocks. Whether you are looking for a specific model or exploring various
+                        options,
+                        our inventory and auction access ensure you find the perfect car to meet
+                        your desires. If
+                        you are unable to find your desired vehicle, kindly <a class="containerlink" asp-area="Customer" asp-controller="Contact" asp-action="Index">
+                            inform
+                            us
+                        </a>. We can locate a vehicle that
+                        meets your requirements
+                    </p>
+                </div>
+                <div class="redCon d-flex align-items-center justify-content-center">
+                    <img src="../images/white-car.svg" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3 position-relative mt-md-5 mt-lg-5  mb-sm-5 mb-5 mb-md-0 mb-lg-0 mt-sm-5 mt-5">
+                <div class="boxcontainer d-flex flex-column justify-content-center px-3">
+                    <h3 class="boxcontainerHeading">
+                        Transparent
+                        Process
+                    </h3>
+                    <p class="boxcontainerPara mt-4">
+                        YRT believes in clear communication and transparency. You'll receive detailed
+                        information
+                        on your car, including photos, specifications, and history, so you can confidently make
+                        an
+                        informed decision from the comfort of your home.
+                    </p>
+                </div>
+                <div class="redCon d-flex align-items-center justify-content-center">
+                    <img src="../images/process.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 pt-5 justify-content-between">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3  mt-5 mt-md-0 mt-lg-0 mb-sm-5 mt-sm-5 mb-5 mb-md-0 mb-lg-0 position-relative">
+                <div class="boxcontainer d-flex flex-column justify-content-center px-3">
+                    <h3 class="boxcontainerHeading">Reliable Shipping and Meticulous Documentation</h3>
+                    <p class="boxcontainerPara mt-4">
+                        Once you make your purchase, YRT handles all the necessary documentation and shipping
+                        logistics. We partner with world-renowned and deeply trusted carriers to ensure
+                        your car reaches you safely and on time.
+                    </p>
+                </div>
+                <div class="redCon d-flex align-items-center justify-content-center">
+                    <img src="../images/documentation.svg" alt="">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3  mt-5 mt-md-0 mt-lg-0 mb-sm-5 mt-sm-5 mb-5 mb-md-0 mb-lg-0 position-relative">
+                <div class="boxcontainer d-flex flex-column justify-content-center px-3">
+                    <h3 class="boxcontainerHeading"> To Us, All Your Wants Matter</h3>
+                    <p class="boxcontainerPara mt-4">
+                        At YRT your satisfaction is our top priority. We go the extra mile to address your
+                        concerns,
+                        answer your queries precisely, and ensure a seamless buying experience. With YRT, you
+                        can
+                        trust that your needs come first.
+                    </p>
+                </div>
+                <div class="redCon d-flex align-items-center justify-content-center">
+                    <img src="../images/matter.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-5 col-lg-5">
+                <div class="bottomlogo d-flex justify-content-center align-items-center">
+                    <img src="../images/yrt-logo.png" style="width: 300px;object-fit: contain;" class="d-block img-fluid mt-5" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div></div>
+
+</section> *@

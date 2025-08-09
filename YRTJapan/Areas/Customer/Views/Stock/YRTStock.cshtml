@@ -1,0 +1,416 @@
+﻿@using YRTJapan.Core.Entities
+@model YRTJapan.Core.DropDownDataList
+@{
+    var selectedFromYear = ViewData["FromYear"]?.ToString();
+    var selectedToYear = ViewData["ToYear"]?.ToString();
+    var selectedFromPrice = ViewData["FromPrice"]?.ToString();
+    var selectedToPrice = ViewData["ToPrice"]?.ToString();
+    var selectedType = ViewData["Type"]?.ToString();
+    var selectedHomeTypeName = ViewData["HomeTypeName"]?.ToString();
+    var selectedOverPrice = ViewData["OverPrice"]?.ToString();
+    var selectedUnderPrice = ViewData["UnderPrice"]?.ToString();
+
+}
+
+<section class="search-wrapper pl-md-5 pl-lg-5 pl-0 pr-lg-5 pr-md-5 pr-0">
+    
+@foreach (var car in Model.ListCars)
+{
+    <div class="cardContainer w-100 mt-4">
+        <div class="sec-1" style="width: 31%;">
+            @{
+                string imageUrl = car.IMAGES.Replace("&h=50", "");
+                int hashIndex = imageUrl.IndexOf("#");
+                imageUrl = hashIndex != -1 ? imageUrl.Insert(hashIndex, "&w=320") : imageUrl + "&w=320";
+            }
+
+
+            @if (car.carImages != null && car.carImages.Count > 0)
+            {
+                var carouselId = "carousel_" + car.ID; // unique ID per card
+                <div id="@carouselId" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int k = 0; k < car.carImages.Count; k++)
+                        {
+                            var img = car.carImages[k];
+                            <div class="carousel-item @(k == 0 ? "active" : "")">
+                                <a href='/Customer/Stock/Details?id=@car.ID'>
+                                    <img src="@img.ImageUrl" class="d-block cardConImage" alt="Car Image">
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    @if (car.carImages.Count > 1)
+                    {
+                        <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    }
+                </div>
+            }
+            else
+            {
+                <a href='/Customer/Stock/Details?id=@car.ID'>
+                    <img src="@imageUrl" class="cardConImage" alt="...">
+                </a>
+            }
+
+            @*   <a href='/Customer/Stock/Details?id=@car.ID'>
+        <img src="@imageUrl" alt="Car Image" class="cardConImage">
+        </a> *@
+        </div>
+
+        <div class="sec-2" style="width: 66%;">
+            <div class="stockquantity d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div class="new"><p>New Arrival</p></div>
+                </div>
+                <a href="javascript:void(0);" class="d-flex align-items-center favouriteblock"
+                   onclick="addToFavourites('@imageUrl', @car.FOBPriceInUSD, '@car.MARKA_NAME', '@car.MODEL_NAME', @car.YEAR, '@car.ID')">
+                    <img src="../../images/red-heart.svg" alt="Favourite">
+                    <p class="mb-0 favourite ml-2">Add to favourites</p>
+                </a>
+            </div>
+
+            <div class="carheader d-flex mt-4 align-items-center justify-content-between">
+                <p class="cardheader mb-0">@car.MARKA_NAME @car.MODEL_NAME @car.YEAR</p>
+                <div class="d-flex align-items-center">
+                    <p class="mb-0 inventory">Inventory locked in</p>
+                    <img src="../../images/red-dot.png" class="mx-2" style="width: 24px; height: 17px;" alt="">
+                </div>
+            </div>
+
+            <div class="sec-3 d-flex mt-3 align-items-center justify-content-between">
+                <div class="part-1" style="width: 33%;">
+                    <div class="d-flex align-items-center">
+                        <p class="price mr-1 mb-0">FOB:</p>
+                        <p class="priceQ mb-0">
+                            @if (car.FOBPriceInUSD > 0)
+                            {
+                                @("$ " + car.FOBPriceInUSD.ToString("N0"))
+                            }
+                            else
+                            {
+                                <button style="font-size:12px !important" class="btn-inquire mt-2"
+                                        onclick="openAskForModal('@car.MARKA_NAME', '@car.MODEL_NAME', '@car.YEAR')">
+                                    Login/ASK FOR PRICE
+                                </button>
+                            }
+
+                        </p>
+
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="price mr-1 mb-0">Total Price:</p>
+                        <p class="priceQ mb-0">
+                            @if (!string.IsNullOrWhiteSpace(@car.FINISH))
+                            {
+                                @car.FINISH
+                            }
+                            else
+                            {
+                                <button style="font-size:12px !important" class="btn-inquire mt-2"
+                                        onclick="openAskForModal('@car.MARKA_NAME', '@car.MODEL_NAME', '@car.YEAR')">
+                                    Login/ASK FOR PRICE
+                                </button>
+                            }
+
+                        </p>
+                    </div>
+                    <button class="btn-inquire mt-2" onclick="openInquiryModal('@car.MARKA_NAME', '@car.MODEL_NAME', '@car.YEAR', @car.FOBPriceInUSD, '@car.ID')">Inquire Now</button>
+                </div>
+
+                <div class="part-1" style="width: 65%;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Mileage</p></div>
+                        <div class="carfunc d-flex align-items-center justify-content-center" style="background: #000;"><p class="mb-0">Engine</p></div>
+                        <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Transmission</p></div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-2">
+                        <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.MILEAGE km</p></div>
+                        <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.ENG_V cc</p></div>
+                        <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.KPP</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</section>
+<!-- _InquiryModal.cshtml -->
+<div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inquiryModalLabel">Car Inquiry</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Html.PartialAsync("_InquiryModal")
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- _InquiryModal.cshtml -->
+<div class="modal fade" id="askForModal" tabindex="-1" aria-labelledby="askForModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="askForModalLabel">Ask For Price</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                @await Html.PartialAsync("_AskForPriceModal")
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        //fetch model on the base of makers
+        async function fetchModels(markaName) {
+            const url = '@Url.Action("GetModels", "Stock")' + '?markaName=' + encodeURIComponent(markaName);
+            const response = await fetch(url);
+            const content = await response.text();
+            const modelsContainer = document.getElementById('modelsContainer');
+            modelsContainer.innerHTML = content;
+            $(modelsContainer).find('select').select2();
+        }
+        //fetch modelcode on the base of modelname
+        async function fetchModelCodes(modelName) {
+            const url = '@Url.Action("GetModelCodes", "Stock")' + '?modelName=' + encodeURIComponent(modelName);
+            const response = await fetch(url);
+            const content = await response.text();
+            const modelCodesContainer = document.getElementById('modelCodesContainer');
+            modelCodesContainer.innerHTML = content;
+            $(modelCodesContainer).find('select').select2();
+        }
+        //search cars on the base of filters
+        $(document).ready(function () {
+            $('.tab-link').click(function () {
+                var tabValue = $(this).attr('data-tab'); // Tab ki value lo
+                $('#activeTab').val(tabValue); // Hidden input field mein set karo
+            });
+            $('#searchButton').click(function (event) {
+                event.preventDefault();
+                loadPage(1);
+            });
+        });
+        function loadPage(page) {
+            var formData = $('#searchForm').serializeArray();
+            formData.push({ name: "page", value: page });
+            formData.push({ name: "Tab", value: $('#activeTab').val() });
+            // formData.push({ name: "HomeSearch", value: $('#txthomesearch').val() });
+
+            $.ajax({
+                url: '@Url.Action("StockCars", "Stock")',
+                type: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    showLoader('Finding you car, please wait...');
+                },
+                success: function (result) {
+                    $('#searchResults').html(result.carListHtml);
+                    $('#pagination').html(result.paginationHtml);
+                    $('#totalnolots').html(result.totalLots);
+                    $("#viewTotalLots").html(result.totalLotsHtml);
+                    $('#totalCarsCount').html(result.totalLots);
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                },
+                complete: function () {
+                    hideLoader();
+                }
+            });
+        }
+
+    </script>
+    <script>
+        function addToFavourites(imageLink, price, markaName, modelName, year, userId) {
+            $.ajax({
+                url: '@Url.Action("AddToFavourites", "Stock")',
+                type: "POST",
+                data: {
+                    ImageLink: imageLink,
+                    Price: price,
+                    MakeName: markaName,
+                    ModelName: modelName,
+                    Year: year,
+                    UserId: userId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                    } else {
+                        alert("Failed to add to favourites.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred.");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function openInquiryModal(name, model, year, price, id) {
+            $("#quotemake").val(name);
+            $("#quotemodel").val(model);
+            $("#quoteYear").val(year);
+            $("#quotePrice").val(parseInt(price));
+            $("#carId").val(id);
+            $("#inquiryModal").modal("show");
+        }
+        $(document).ready(function () {
+            $("#inquiryForm").submit(function (event) {
+                event.preventDefault();
+                var country = $("#userCountry").val();
+
+                if (!country) {
+                    toastr.warning("Please select a country", "Warning", {
+                        positionClass: "toast-top-right",
+                        closeButton: true,
+                        progressBar: true
+                    });
+                    return;
+                }
+                var formData = {
+                    Make: $("#quotemake").val(),
+                    Model: $("#quotemodel").val(),
+                    Year: parseInt($("#quoteYear").val()) || 0,
+                    Price: parseInt($("#quotePrice").val()) || 0,
+                    Email: $("#userEmail").val(),
+                    Message: $("#userMessage").val(),
+                    Country: $("#userCountry").val(),
+                    CarId: $("#carId").val(),
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SubmitInquiries", "Stock")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide Modal
+                            $("#inquiryModal").modal("hide");
+
+                            // Reset Form
+                            $("#inquiryForm")[0].reset();
+
+                            $("#userCountry").val("").change();
+                            toastr.success("Inquiry submitted successfully!", "Success", {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                showMethod: "fadeIn",
+                                hideMethod: "fadeOut",
+                                timeOut: 4000,
+                                extendedTimeOut: 1000
+                            });
+                        } else {
+                            toastr.error("Error submitting inquiry: " + response.message, "Error", {
+                                positionClass: "toast-top-right"
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", xhr.responseText);
+                        toastr.error("Server error: " + xhr.responseText, "Error", {
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
+            });
+
+            $("#askForm").submit(function (event) {
+                event.preventDefault();
+                let country = $("#askForCountry").val();
+
+                if (!country) {
+                    toastr.warning("Please select a country", "Warning", {
+                        positionClass: "toast-top-right",
+                        closeButton: true,
+                        progressBar: true
+                    });
+                    return;
+                }
+                let askForValues = {
+                    Make: $("#hdfMake").val(),
+                    Model: $("#hdfModel").val(),
+                    Year: parseInt($("#hdfYear").val()) || 0,
+                    Name: $("#askTxtName").val(),
+                    Email: $("#asktxtEmail").val(),
+                    Phone: $("#askTxtPhone").val(),
+                    Country: country
+                };
+                $.ajax({
+                    url: '@Url.Action("SubmitAskForPrice", "Stock")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(askForValues),
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide Modal
+                            $("#askForModal").modal("hide");
+
+                            // Reset Form
+                            $("#askForm")[0].reset();
+
+                            $("#askForCountry").val("").change();
+                            toastr.success("Request submitted successfully!", "Success", {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                showMethod: "fadeIn",
+                                hideMethod: "fadeOut",
+                                timeOut: 4000,
+                                extendedTimeOut: 1000
+                            });
+                        } else {
+                            toastr.error("Error submitting request: " + response.message, "Error", {
+                                positionClass: "toast-top-right"
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error:", xhr.responseText);
+                        toastr.error("Server error: " + xhr.responseText, "Error", {
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
+            });
+        });
+
+        function openAskForModal(make, model, year) {
+            $("#hdfMake").val(make);
+            $("#hdfModel").val(model);
+            $("#hdfYear").val(year);
+            $("#askTxtMake").val(make);
+            $("#askTxtModel").val(model);
+            $("#skTxtYear").val(year);
+            $("#askForModal").modal("show");
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+}
