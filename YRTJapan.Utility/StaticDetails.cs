@@ -277,19 +277,58 @@ namespace YRTJapan.Utility
             }
             if (!string.IsNullOrEmpty(carSearch.SearchKeyword))
             {
-                query.Append(" and (marka_name like '%" + carSearch.SearchKeyword + "%'" +
-                            " or model_name like '%" + carSearch.SearchKeyword + "%'" +
-                            " or year like '%" + carSearch.SearchKeyword + "%'" +
-                            " or kuzov like '%" + carSearch.SearchKeyword + "%')");
+                var words = carSearch.SearchKeyword.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var word in words)
+                {
+                    query.Append(" AND (");
+                    query.Append($"marka_name LIKE '%{word}%'");
+                    query.Append($" OR model_name LIKE '%{word}%'");
+                    query.Append($" OR kuzov LIKE '%{word}%'");
+                    query.Append($" OR eng_v LIKE '%{word}%'");
+                    query.Append($" OR mileage LIKE '%{word}%'");
+                    query.Append($" OR color LIKE '%{word}%'");
+                    query.Append($" OR grade LIKE '%{word}%'");
+                    query.Append($" OR priv LIKE '%{word}%'");
+                    query.Append($" OR kpp LIKE '%{word}%'");
+                    query.Append($" OR year LIKE '%{word}%'");
+                    query.Append(")");
+                }
+                //query.Append(" and (marka_name like '%" + carSearch.SearchKeyword + "%'" +
+                //            " or model_name like '%" + carSearch.SearchKeyword + "%'" +
+                //            " or year like '%" + carSearch.SearchKeyword + "%'" +
+                //            " or kuzov like '%" + carSearch.SearchKeyword + "%')");
                 //query.Append(" and (marka_name like '%" + carSearch.SearchKeyword + "%' or model_name like '%" + carSearch.SearchKeyword + "%')");
             }
             if (!string.IsNullOrEmpty(carSearch.HomeSearch))
             {
-                query.Append(" and (marka_name like '%" + carSearch.HomeSearch + "%'" +
-                             " or model_name like '%" + carSearch.HomeSearch + "%'" +
-                             " or year like '%" + carSearch.HomeSearch + "%'" +
-                             " or kuzov like '%" + carSearch.HomeSearch + "%')");
+                var words = carSearch.HomeSearch.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var word in words)
+                {
+                    query.Append(" AND (");
+                    query.Append($"marka_name LIKE '%{word}%'");
+                    query.Append($" OR model_name LIKE '%{word}%'");
+                    query.Append($" OR kuzov LIKE '%{word}%'");
+                    query.Append($" OR eng_v LIKE '%{word}%'");
+                    query.Append($" OR mileage LIKE '%{word}%'");
+                    query.Append($" OR color LIKE '%{word}%'");
+                    query.Append($" OR grade LIKE '%{word}%'");
+                    query.Append($" OR priv LIKE '%{word}%'");
+                    query.Append($" OR kpp LIKE '%{word}%'");
+                    query.Append($" OR year LIKE '%{word}%'");
+                    query.Append(")");
+                }
             }
+
+
+            //if (!string.IsNullOrEmpty(carSearch.HomeSearch))
+            //{
+            //    query.Append(" and (marka_name like '%" + carSearch.HomeSearch + "%'" +
+            //                 " or model_name like '%" + carSearch.HomeSearch + "%'" +
+            //                 " or year like '%" + carSearch.HomeSearch + "%'" +
+            //                 " or kuzov like '%" + carSearch.HomeSearch + "%')");
+            //}
 
 
             //if (!string.IsNullOrEmpty(carSearch.HomeSearch))
@@ -516,20 +555,57 @@ namespace YRTJapan.Utility
             }
             if (!string.IsNullOrEmpty(carSearch.SearchKeyword))
             {
-                query.Append(" and (marka_name like '%" + carSearch.SearchKeyword + "%'" +
-                             " or model_name like '%" + carSearch.SearchKeyword + "%'" +
-                             " or year like '%" + carSearch.SearchKeyword + "%'" +
-                             " or kuzov like '%" + carSearch.SearchKeyword + "%')");
+                var words = carSearch.SearchKeyword.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var word in words)
+                {
+                    query.Append(" AND (");
+                    query.Append($"marka_name LIKE '%{word}%'");
+                    query.Append($" OR model_name LIKE '%{word}%'");
+                    query.Append($" OR kuzov LIKE '%{word}%'");
+                    query.Append($" OR eng_v LIKE '%{word}%'");
+                    query.Append($" OR mileage LIKE '%{word}%'");
+                    query.Append($" OR color LIKE '%{word}%'");
+                    query.Append($" OR grade LIKE '%{word}%'");
+                    query.Append($" OR priv LIKE '%{word}%'");
+                    query.Append($" OR kpp LIKE '%{word}%'");
+                    query.Append($" OR year LIKE '%{word}%'");
+                    query.Append(")");
+                }
+                //query.Append(" and (marka_name like '%" + carSearch.SearchKeyword + "%'" +
+                //             " or model_name like '%" + carSearch.SearchKeyword + "%'" +
+                //             " or year like '%" + carSearch.SearchKeyword + "%'" +
+                //             " or kuzov like '%" + carSearch.SearchKeyword + "%')");
                 //query.Append(" and (marka_name like '%" + carSearch.SearchKeyword + "%' or model_name like '%" + carSearch.SearchKeyword + "%')");
             }
             if (!string.IsNullOrEmpty(carSearch.HomeSearch))
             {
-                query.Append(" and (marka_name like '%" + carSearch.HomeSearch + "%'" +
-                             " or model_name like '%" + carSearch.HomeSearch + "%'" +
-                             " or year like '%" + carSearch.HomeSearch + "%'" +
-                             " or kuzov like '%" + carSearch.HomeSearch + "%')");
-                //query.Append(" and (marka_name like '%" + carSearch.HomeSearch + "%' or model_name like '%" + carSearch.HomeSearch + "%')");
+                var words = carSearch.HomeSearch.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var word in words)
+                {
+                    query.Append(" AND (");
+                    query.Append($"marka_name LIKE '%{word}%'");
+                    query.Append($" OR model_name LIKE '%{word}%'");
+                    query.Append($" OR kuzov LIKE '%{word}%'");
+                    query.Append($" OR eng_v LIKE '%{word}%'");
+                    query.Append($" OR mileage LIKE '%{word}%'");
+                    query.Append($" OR color LIKE '%{word}%'");
+                    query.Append($" OR grade LIKE '%{word}%'");
+                    query.Append($" OR priv LIKE '%{word}%'");
+                    query.Append($" OR kpp LIKE '%{word}%'");
+                    query.Append($" OR year LIKE '%{word}%'");
+                    query.Append(")");
+                }
             }
+            //if (!string.IsNullOrEmpty(carSearch.HomeSearch))
+            //{
+            //    query.Append(" and (marka_name like '%" + carSearch.HomeSearch + "%'" +
+            //                 " or model_name like '%" + carSearch.HomeSearch + "%'" +
+            //                 " or year like '%" + carSearch.HomeSearch + "%'" +
+            //                 " or kuzov like '%" + carSearch.HomeSearch + "%')");
+            //    //query.Append(" and (marka_name like '%" + carSearch.HomeSearch + "%' or model_name like '%" + carSearch.HomeSearch + "%')");
+            //}
             return query.ToString();
         }
         public static List<Maker> ToMakers(List<Car> response)
