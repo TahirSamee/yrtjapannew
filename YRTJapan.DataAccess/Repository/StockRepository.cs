@@ -40,40 +40,42 @@ VALUES (@ID, @LOT, @AUCTION_TYPE, @AUCTION_DATE, @AUCTION, @MARKA_ID, @MODEL_ID,
                 using (var cmd = new SqlCommand(insertQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("@ID", car.ID);
-                    cmd.Parameters.AddWithValue("@LOT", car.LOT);
-                    cmd.Parameters.AddWithValue("@AUCTION_TYPE", car.AUCTION_TYPE);
-                    cmd.Parameters.AddWithValue("@AUCTION_DATE", car.AUCTION_DATE);
-                    cmd.Parameters.AddWithValue("@AUCTION", car.AUCTION);
-                    cmd.Parameters.AddWithValue("@MARKA_ID", car.MARKA_ID);
-                    cmd.Parameters.AddWithValue("@MODEL_ID", car.MODEL_ID);
-                    cmd.Parameters.AddWithValue("@MARKA_NAME", car.MARKA_NAME);
-                    cmd.Parameters.AddWithValue("@MODEL_NAME", car.MODEL_NAME);
+
+                    // Convert nulls to DBNull.Value
+                    cmd.Parameters.AddWithValue("@LOT", (object?)car.LOT ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AUCTION_TYPE", (object?)car.AUCTION_TYPE ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AUCTION_DATE", (object?)car.AUCTION_DATE ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AUCTION", (object?)car.AUCTION ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MARKA_ID", (object?)car.MARKA_ID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MODEL_ID", (object?)car.MODEL_ID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MARKA_NAME", (object?)car.MARKA_NAME ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MODEL_NAME", (object?)car.MODEL_NAME ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@YEAR", car.YEAR);
-                    cmd.Parameters.AddWithValue("@TOWN", car.TOWN);
+                    cmd.Parameters.AddWithValue("@TOWN", (object?)car.TOWN ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@ENG_V", car.ENG_V);
-                    cmd.Parameters.AddWithValue("@PW", car.PW);
-                    cmd.Parameters.AddWithValue("@KUZOV", car.KUZOV);
+                    cmd.Parameters.AddWithValue("@PW", (object?)car.PW ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@KUZOV", (object?)car.KUZOV ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@GRADE", car.GRADE);
                     cmd.Parameters.AddWithValue("@COLOR", car.COLOR);
-                    cmd.Parameters.AddWithValue("@KPP", car.KPP);
-                    cmd.Parameters.AddWithValue("@KPP_TYPE", car.KPP_TYPE);
-                    cmd.Parameters.AddWithValue("@PRIV", car.PRIV);
+                    cmd.Parameters.AddWithValue("@KPP", (object?)car.KPP ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@KPP_TYPE", (object?)car.KPP_TYPE ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@PRIV", (object?)car.PRIV ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@MILEAGE", car.MILEAGE);
-                    cmd.Parameters.AddWithValue("@EQUIP", car.EQUIP);
-                    cmd.Parameters.AddWithValue("@RATE", car.RATE);
+                    cmd.Parameters.AddWithValue("@EQUIP", (object?)car.EQUIP ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@RATE", (object?)car.RATE ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@START", car.START);
                     cmd.Parameters.AddWithValue("@FINISH", car.FINISH);
-                    cmd.Parameters.AddWithValue("@STATUS", car.STATUS);
-                    cmd.Parameters.AddWithValue("@TIME", car.TIME);
-                    cmd.Parameters.AddWithValue("@AVG_PRICE", car.AVG_PRICE);
-                    cmd.Parameters.AddWithValue("@AVG_STRING", car.AVG_STRING);
-                    cmd.Parameters.AddWithValue("@IMAGES", car.IMAGES ?? "");
-                    cmd.Parameters.AddWithValue("@TAG2", car.TAG2 ?? "");
+                    cmd.Parameters.AddWithValue("@STATUS", (object?)car.STATUS ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@TIME", (object?)car.TIME ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AVG_PRICE", (object?)car.AVG_PRICE ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AVG_STRING", (object?)car.AVG_STRING ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IMAGES", (object?)car.IMAGES ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@TAG2", (object?)car.TAG2 ?? DBNull.Value);
 
                     cmd.ExecuteNonQuery();
                 }
 
-                // Save images
+                // ---- Save Images ----
                 if (imageFiles != null)
                 {
                     foreach (var file in imageFiles)
@@ -88,7 +90,9 @@ VALUES (@ID, @LOT, @AUCTION_TYPE, @AUCTION_DATE, @AUCTION, @MARKA_ID, @MODEL_ID,
 
                         string imageUrl = "/car-images/" + fileName;
 
-                        var imgCmd = new SqlCommand("INSERT INTO CarImages (CarID, ImageUrl) VALUES (@CarID, @ImageUrl)", conn);
+                        var imgCmd = new SqlCommand(
+                            "INSERT INTO CarImages (CarID, ImageUrl) VALUES (@CarID, @ImageUrl)", conn);
+
                         imgCmd.Parameters.AddWithValue("@CarID", car.ID);
                         imgCmd.Parameters.AddWithValue("@ImageUrl", imageUrl);
                         imgCmd.ExecuteNonQuery();
@@ -96,6 +100,76 @@ VALUES (@ID, @LOT, @AUCTION_TYPE, @AUCTION_DATE, @AUCTION, @MARKA_ID, @MODEL_ID,
                 }
             }
         }
+
+        //        public void AddCar(Car car, List<IFormFile> imageFiles)
+        //        {
+        //            using (SqlConnection conn = new SqlConnection(_connectionString))
+        //            {
+        //                conn.Open();
+
+        //                var insertQuery = @"
+        //INSERT INTO Car (ID, LOT, AUCTION_TYPE, AUCTION_DATE, AUCTION, MARKA_ID, MODEL_ID, MARKA_NAME, MODEL_NAME, YEAR, TOWN, ENG_V, PW, KUZOV, GRADE, COLOR, KPP, KPP_TYPE, PRIV, MILEAGE, EQUIP, RATE, START, FINISH, STATUS, TIME, AVG_PRICE, AVG_STRING, IMAGES, TAG2)
+        //VALUES (@ID, @LOT, @AUCTION_TYPE, @AUCTION_DATE, @AUCTION, @MARKA_ID, @MODEL_ID, @MARKA_NAME, @MODEL_NAME, @YEAR, @TOWN, @ENG_V, @PW, @KUZOV, @GRADE, @COLOR, @KPP, @KPP_TYPE, @PRIV, @MILEAGE, @EQUIP, @RATE, @START, @FINISH, @STATUS, @TIME, @AVG_PRICE, @AVG_STRING, @IMAGES, @TAG2)";
+
+        //                using (var cmd = new SqlCommand(insertQuery, conn))
+        //                {
+        //                    cmd.Parameters.AddWithValue("@ID", car.ID);
+        //                    cmd.Parameters.AddWithValue("@LOT", car.LOT);
+        //                    cmd.Parameters.AddWithValue("@AUCTION_TYPE", car.AUCTION_TYPE);
+        //                    cmd.Parameters.AddWithValue("@AUCTION_DATE", car.AUCTION_DATE);
+        //                    cmd.Parameters.AddWithValue("@AUCTION", car.AUCTION);
+        //                    cmd.Parameters.AddWithValue("@MARKA_ID", car.MARKA_ID);
+        //                    cmd.Parameters.AddWithValue("@MODEL_ID", car.MODEL_ID);
+        //                    cmd.Parameters.AddWithValue("@MARKA_NAME", car.MARKA_NAME);
+        //                    cmd.Parameters.AddWithValue("@MODEL_NAME", car.MODEL_NAME);
+        //                    cmd.Parameters.AddWithValue("@YEAR", car.YEAR);
+        //                    cmd.Parameters.AddWithValue("@TOWN", car.TOWN);
+        //                    cmd.Parameters.AddWithValue("@ENG_V", car.ENG_V);
+        //                    cmd.Parameters.AddWithValue("@PW", car.PW);
+        //                    cmd.Parameters.AddWithValue("@KUZOV", car.KUZOV);
+        //                    cmd.Parameters.AddWithValue("@GRADE", car.GRADE);
+        //                    cmd.Parameters.AddWithValue("@COLOR", car.COLOR);
+        //                    cmd.Parameters.AddWithValue("@KPP", car.KPP);
+        //                    cmd.Parameters.AddWithValue("@KPP_TYPE", car.KPP_TYPE);
+        //                    cmd.Parameters.AddWithValue("@PRIV", car.PRIV);
+        //                    cmd.Parameters.AddWithValue("@MILEAGE", car.MILEAGE);
+        //                    cmd.Parameters.AddWithValue("@EQUIP", car.EQUIP);
+        //                    cmd.Parameters.AddWithValue("@RATE", car.RATE);
+        //                    cmd.Parameters.AddWithValue("@START", car.START);
+        //                    cmd.Parameters.AddWithValue("@FINISH", car.FINISH);
+        //                    cmd.Parameters.AddWithValue("@STATUS", car.STATUS);
+        //                    cmd.Parameters.AddWithValue("@TIME", car.TIME);
+        //                    cmd.Parameters.AddWithValue("@AVG_PRICE", car.AVG_PRICE);
+        //                    cmd.Parameters.AddWithValue("@AVG_STRING", car.AVG_STRING);
+        //                    cmd.Parameters.AddWithValue("@IMAGES", car.IMAGES ?? "");
+        //                    cmd.Parameters.AddWithValue("@TAG2", car.TAG2 ?? "");
+
+        //                    cmd.ExecuteNonQuery();
+        //                }
+
+        //                // Save images
+        //                if (imageFiles != null)
+        //                {
+        //                    foreach (var file in imageFiles)
+        //                    {
+        //                        string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+        //                        string savePath = Path.Combine(_imageFolderPath, fileName);
+
+        //                        using (var stream = new FileStream(savePath, FileMode.Create))
+        //                        {
+        //                            file.CopyTo(stream);
+        //                        }
+
+        //                        string imageUrl = "/car-images/" + fileName;
+
+        //                        var imgCmd = new SqlCommand("INSERT INTO CarImages (CarID, ImageUrl) VALUES (@CarID, @ImageUrl)", conn);
+        //                        imgCmd.Parameters.AddWithValue("@CarID", car.ID);
+        //                        imgCmd.Parameters.AddWithValue("@ImageUrl", imageUrl);
+        //                        imgCmd.ExecuteNonQuery();
+        //                    }
+        //                }
+        //            }
+        //        }
 
         // ✅ READ
         public List<Car> GetAllCars()

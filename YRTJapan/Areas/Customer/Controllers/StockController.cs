@@ -494,6 +494,13 @@ namespace YRTJapan.UI.Areas.Customer.Controllers
 
             return View(response);
         }
+        public async Task<IActionResult> YRTStockDetails(string id)
+        {
+
+            var cars = await _dataService.GetAllCars();
+            Car result= cars.FirstOrDefault(x=>x.ID==id);
+            return View(result);
+        }
 
     }
 }

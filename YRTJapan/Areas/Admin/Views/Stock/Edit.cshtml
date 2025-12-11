@@ -6,8 +6,8 @@
 }
 
 <style>
-    .select2-container--default .select2-selection--single {
-        height: 40px !important;
+    .hide-field {
+        display: none !important;
     }
 </style>
 
@@ -20,49 +20,52 @@
         <input type="hidden" asp-for="ID" />
 
         <div class="row">
-            <div class="col-md-4 mb-2">
+
+            <!-- HIDDEN FIELDS (Same as Create Page) -->
+            <div class="col-md-4 mb-2 hide-field">
                 <label>LOT</label>
                 <input asp-for="LOT" class="form-control" />
             </div>
 
-            <div class="col-md-4 mb-2">
+            <div class="col-md-4 mb-2 hide-field">
                 <label>AUCTION_TYPE</label>
                 <input asp-for="AUCTION_TYPE" class="form-control" />
             </div>
 
-            <div class="col-md-4 mb-2">
+            <div class="col-md-4 mb-2 hide-field">
                 <label>AUCTION_DATE</label>
                 <input asp-for="AUCTION_DATE" type="date" class="form-control" />
             </div>
 
-            <div class="col-md-4 mb-2">
+            <div class="col-md-4 mb-2 hide-field">
                 <label>AUCTION</label>
                 <input asp-for="AUCTION" class="form-control" />
             </div>
 
-            <div class="col-md-4 mb-2">
+            <div class="col-md-4 mb-2 hide-field">
                 <label>MARKA_ID</label>
                 <input asp-for="MARKA_ID" class="form-control" />
             </div>
 
-            <div class="col-md-4 mb-2">
+            <div class="col-md-4 mb-2 hide-field">
                 <label>MODEL_ID</label>
                 <input asp-for="MODEL_ID" class="form-control" />
             </div>
 
+            <!-- VISIBLE REQUIRED FIELDS (Same as Create Page) -->
             <div class="col-md-4 mb-2">
-                <label>MARKA_NAME</label>
-                <input asp-for="MARKA_NAME" class="form-control" />
+                <label>Marka Name</label>
+                <input asp-for="MARKA_NAME" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>MODEL_NAME</label>
-                <input asp-for="MODEL_NAME" class="form-control" />
+                <label>Model Name</label>
+                <input asp-for="MODEL_NAME" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>YEAR</label>
-                <select asp-for="YEAR" class="form-control">
+                <label>Year</label>
+                <select asp-for="YEAR" class="form-control" required>
                     @for (int year = DateTime.Now.Year; year >= 1980; year--)
                     {
                         <option value="@year">@year</option>
@@ -70,106 +73,42 @@
                 </select>
             </div>
 
-
             <div class="col-md-4 mb-2">
-                <label>TOWN</label>
-                <input asp-for="TOWN" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>ENG_V (cc)</label>
-                <input asp-for="ENG_V" type="number" class="form-control" />
+                <label>Engine CC</label>
+                <input asp-for="ENG_V" type="number" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>PW</label>
-                <input asp-for="PW" class="form-control" />
+                <label>Grade</label>
+                <input asp-for="GRADE" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>KUZOV</label>
-                <input asp-for="KUZOV" class="form-control" />
+                <label>Color</label>
+                <input asp-for="COLOR" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>GRADE</label>
-                <input asp-for="GRADE" class="form-control" />
+                <label>Mileage</label>
+                <input asp-for="MILEAGE" type="number" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>COLOR</label>
-                <input asp-for="COLOR" class="form-control" />
+                <label>FOB Price</label>
+                <input asp-for="START" type="number" class="form-control" required />
             </div>
 
             <div class="col-md-4 mb-2">
-                <label>KPP</label>
-                <input asp-for="KPP" class="form-control" />
+                <label>Total Price</label>
+                <input asp-for="FINISH" type="number" class="form-control" required />
             </div>
 
-            <div class="col-md-4 mb-2">
-                <label>KPP_TYPE</label>
-                <input asp-for="KPP_TYPE" class="form-control" />
+            <div class="col-md-12 mb-2">
+                <label>Other Selling Points</label>
+                <textarea asp-for="EQUIP" class="form-control" rows="3"></textarea>
             </div>
 
-            <div class="col-md-4 mb-2">
-                <label>PRIV</label>
-                <input asp-for="PRIV" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>MILEAGE (km)</label>
-                <input asp-for="MILEAGE" type="number" min="0" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>EQUIP</label>
-                <input asp-for="EQUIP" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>RATE</label>
-                <input asp-for="RATE" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>START Price</label>
-                <input asp-for="START" type="number" step="any" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>FINISH Price</label>
-                <input asp-for="FINISH" type="number" step="any" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>STATUS</label>
-                <input asp-for="STATUS" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>TIME</label>
-                <input asp-for="TIME" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>AVG_PRICE</label>
-                <input asp-for="AVG_PRICE" type="number" step="any" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>AVG_STRING</label>
-                <input asp-for="AVG_STRING" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2" hidden>
-                <label>IMAGES (comma-separated)</label>
-                <textarea asp-for="IMAGES" class="form-control" rows="2"></textarea>
-            </div>
-
-            <div class="col-md-4 mb-2">
-                <label>TAG2</label>
-                <input asp-for="TAG2" class="form-control" />
-            </div>
+            <!-- EXISTING IMAGES -->
             <div class="col-md-12 mb-3">
                 <label>Existing Images</label>
                 <div class="row">
@@ -177,8 +116,8 @@
                     {
                         foreach (var img in Model.carImages)
                         {
-                            <div class="col-md-3 text-center mb-2">
-                                <img src="@img.ImageUrl" class="img-thumbnail" style="height: 120px;" />
+                            <div class="col-md-2 text-center p-1">
+                                <img src="@img.ImageUrl" class="img-thumbnail" style="height: 200px;" />
                                 <div>
                                     <input type="checkbox" name="deleteImages" value="@img.ImageUrl" /> Remove
                                 </div>
@@ -192,10 +131,73 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-2">
+            <!-- UPLOAD NEW IMAGES -->
+            <div class="col-md-12 mb-2">
                 <label>Upload Images</label>
-                <input type="file" name="files" class="form-control" multiple />
+                <input type="file" name="files" class="" multiple />
             </div>
+
+            <!-- MORE HIDDEN FIELDS (Same as Create Page) -->
+            <div class="col-md-4 mb-2 hide-field">
+                <label>PW</label>
+                <input asp-for="PW" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>KUZOV</label>
+                <input asp-for="KUZOV" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>KPP</label>
+                <input asp-for="KPP" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>KPP_TYPE</label>
+                <input asp-for="KPP_TYPE" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>PRIV</label>
+                <input asp-for="PRIV" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>RATE</label>
+                <input asp-for="RATE" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>STATUS</label>
+                <input asp-for="STATUS" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>TIME</label>
+                <input asp-for="TIME" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>AVG_PRICE</label>
+                <input asp-for="AVG_PRICE" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>AVG_STRING</label>
+                <input asp-for="AVG_STRING" class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>IMAGES</label>
+                <textarea asp-for="IMAGES" class="form-control"></textarea>
+            </div>
+
+            <div class="col-md-4 mb-2 hide-field">
+                <label>TAG2</label>
+                <input asp-for="TAG2" class="form-control" />
+            </div>
+
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Update</button>

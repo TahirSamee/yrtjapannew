@@ -34,8 +34,9 @@
                         {
                             var img = car.carImages[k];
                             <div class="carousel-item @(k == 0 ? "active" : "")">
-                                <a href='/Customer/Stock/Details?id=@car.ID'>
-                                    <img src="@img.ImageUrl" class="d-block cardConImage" alt="Car Image">
+                                    <a href='/Customer/Stock/YRTStockDetails?id=@car.ID'>
+
+                                        <img src="@img.ImageUrl" class="d-block cardConImage" alt="Car Image" style="object-fit:contain!important">
                                 </a>
                             </div>
                         }
@@ -53,16 +54,17 @@
                     }
                 </div>
             }
-            else
+            @* else
             {
                 <a href='/Customer/Stock/Details?id=@car.ID'>
                     <img src="@imageUrl" class="cardConImage" alt="...">
                 </a>
-            }
+            } *@
 
             @*   <a href='/Customer/Stock/Details?id=@car.ID'>
         <img src="@imageUrl" alt="Car Image" class="cardConImage">
         </a> *@
+        
         </div>
 
         <div class="sec-2" style="width: 66%;">
