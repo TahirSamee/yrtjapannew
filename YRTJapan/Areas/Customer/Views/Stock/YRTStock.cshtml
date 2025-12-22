@@ -34,22 +34,24 @@
                         {
                             var img = car.carImages[k];
                             <div class="carousel-item @(k == 0 ? "active" : "")">
-                                    <a href='/Customer/Stock/YRTStockDetails?id=@car.ID'>
-
-                                        <img src="@img.ImageUrl" class="d-block cardConImage" alt="Car Image" style="object-fit:contain!important">
-                                </a>
+                                    @if (!string.IsNullOrEmpty(img.ImageUrl))
+                                    {
+                                        <a href='/Customer/Stock/YRTStockDetails?id=@car.ID'>
+                                            <img src="@img.ImageUrl" class="d-block cardConImage" alt="@car.MARKA_NAME @car.MODEL_NAME @car.YEAR" style="object-fit:cover!important;background: #a9a9a92b;">
+                                        </a>
+                                    }
                             </div>
                         }
                     </div>
                     @if (car.carImages.Count > 1)
                     {
-                        <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
+                            <button class="carousel-control-prev" type="button" style="opacity:1.5;width:5%" data-bs-target="#@carouselId" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true" style="height:30px;width:30px"></span>
+                            <span class="visually-hidden"></span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
+                            <button class="carousel-control-next" type="button" style="opacity:1.5;width:5%" data-bs-target="#@carouselId" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true" style="height:30px;width:30px"></span>
+                            <span class="visually-hidden"></span>
                         </button>
                     }
                 </div>
@@ -68,12 +70,12 @@
         </div>
 
         <div class="sec-2" style="width: 66%;">
-            <div class="stockquantity d-flex justify-content-between">
-                <div class="d-flex align-items-center">
+            <div class="stockquantity d-flex justify-content-end">
+               @*  <div class="d-flex align-items-center">
                     <div class="new"><p>New Arrival</p></div>
-                </div>
+                </div> *@
                 <a href="javascript:void(0);" class="d-flex align-items-center favouriteblock"
-                   onclick="addToFavourites('@imageUrl', @car.FOBPriceInUSD, '@car.MARKA_NAME', '@car.MODEL_NAME', @car.YEAR, '@car.ID')">
+                       onclick="addToFavourites('@imageUrl', @car.START, '@car.MARKA_NAME', '@car.MODEL_NAME', @car.YEAR, '@car.ID')">
                     <img src="../../images/red-heart.svg" alt="Favourite">
                     <p class="mb-0 favourite ml-2">Add to favourites</p>
                 </a>
@@ -92,9 +94,9 @@
                     <div class="d-flex align-items-center">
                         <p class="price mr-1 mb-0">FOB:</p>
                         <p class="priceQ mb-0">
-                            @if (car.FOBPriceInUSD > 0)
+                                @if (Convert.ToDecimal(car.START) > 0)
                             {
-                                @("$ " + car.FOBPriceInUSD.ToString("N0"))
+                                    @("$ " + Convert.ToDecimal(car.START).ToString("N0"))
                             }
                             else
                             {
