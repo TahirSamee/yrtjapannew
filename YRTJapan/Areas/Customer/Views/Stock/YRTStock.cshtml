@@ -11,6 +11,8 @@
     var selectedOverPrice = ViewData["OverPrice"]?.ToString();
     var selectedUnderPrice = ViewData["UnderPrice"]?.ToString();
 
+
+
 }
 
 <section class="search-wrapper pl-md-5 pl-lg-5 pl-0 pr-lg-5 pr-md-5 pr-0">
@@ -88,10 +90,30 @@
         </div>
 
         <div class="sec-2" style="width: 66%;">
-            <div class="stockquantity d-flex justify-content-end">
-              @*   <div class="d-flex align-items-center">
-                    <div class="new"><p>New Arrival</p></div>
-                </div> *@
+            <div class="stockquantity d-flex justify-content-between">
+                    
+                       @{
+                        DateTime carTime;
+                        bool isNewArrival = false;
+
+                        if (DateTime.TryParseExact(
+                        car.TIME,
+                        "yyyy-MM-dd",
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.None,
+                        out carTime))
+                        {
+                            isNewArrival = (DateTime.Now - carTime).TotalDays <= 2;
+                        }
+                    }
+                    <div class="d-flex align-items-center">
+                    @if (isNewArrival)
+                    {
+                        
+                            <div class="new"><p>New Arrival</p></div>
+                       
+                    }
+                    </div>
                 <a href="javascript:void(0);" class="d-flex align-items-center favouriteblock"
                        onclick="addToFavourites('@imageUrl', @car.START, '@car.MARKA_NAME', '@car.MODEL_NAME', @car.YEAR, '@car.ID')">
                     <img src="../../images/red-heart.svg" alt="Favourite">
@@ -130,7 +152,7 @@
                     <div class="d-flex align-items-center">
                         <p class="price mr-1 mb-0">Total Price:</p>
                         <p class="priceQ mb-0">
-                            @if (!string.IsNullOrWhiteSpace(@car.FINISH))
+                                @if (Convert.ToDecimal(car.FINISH)>0)
                             {
                                 @car.FINISH
                             }
@@ -149,14 +171,16 @@
 
                 <div class="part-1" style="width: 65%;">
                     <div class="d-flex align-items-center justify-content-between">
+                            <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Grade</p></div>
                         <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Mileage</p></div>
                         <div class="carfunc d-flex align-items-center justify-content-center" style="background: #000;"><p class="mb-0">Engine</p></div>
-                        <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Grade</p></div>
+                        
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
+                            <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.GRADE</p></div>
                         <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.MILEAGE km</p></div>
                         <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.ENG_V cc</p></div>
-                        <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.KPP</p></div>
+                           
                     </div>
                 </div>
             </div>

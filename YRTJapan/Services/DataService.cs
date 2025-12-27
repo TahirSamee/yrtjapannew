@@ -254,7 +254,7 @@ namespace YRTJapan.UI.Services
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                var cmd = new SqlCommand("SELECT * FROM Car", conn);
+                var cmd = new SqlCommand("SELECT * FROM Car order by TIME desc", conn);
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -283,8 +283,16 @@ namespace YRTJapan.UI.Services
                             MILEAGE = reader["MILEAGE"].ToString(),
                             EQUIP = reader["EQUIP"].ToString(),
                             RATE = reader["RATE"].ToString(),
-                            START = reader["START"].ToString(),
-                            FINISH = reader["FINISH"].ToString(),
+                            START = reader["START"] == DBNull.Value ||
+        string.IsNullOrWhiteSpace(reader["START"].ToString())
+        ? "0"
+        : reader["START"].ToString(),
+
+                            FINISH = reader["FINISH"] == DBNull.Value ||
+         string.IsNullOrWhiteSpace(reader["FINISH"].ToString())
+         ? "0"
+         : reader["FINISH"].ToString(),
+
                             STATUS = reader["STATUS"].ToString(),
                             TIME = reader["TIME"].ToString(),
                             AVG_PRICE = reader["AVG_PRICE"].ToString(),

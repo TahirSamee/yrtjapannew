@@ -37,15 +37,7 @@
                 <input asp-for="AUCTION" class="form-control" />
             </div>
 
-            <div class="col-md-4 mb-2 hide-field">
-                <label>MARKA_ID</label>
-                <input asp-for="MARKA_ID" class="form-control" />
-            </div>
-
-            <div class="col-md-4 mb-2 hide-field">
-                <label>MODEL_ID</label>
-                <input asp-for="MODEL_ID" class="form-control" />
-            </div>
+           
 
             <!-- VISIBLE REQUIRED FIELDS -->
             <div class="col-md-4 mb-2">
@@ -69,35 +61,43 @@
                     }
                 </select>
             </div>
+            <div class="col-md-4 mb-2">
+                <label>Model Code</label>
+                <input asp-for="MARKA_ID" class="form-control" />
+            </div>
 
             <div class="col-md-4 mb-2">
+                <label>Chassis</label>
+                <input asp-for="MODEL_ID" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-2">
                 <label>Engine CC</label>
-                <input asp-for="ENG_V" type="number" class="form-control" required />
+                <input asp-for="ENG_V" type="number" class="form-control"  />
             </div>
 
             <div class="col-md-4 mb-2">
                 <label>Grade</label>
-                <input asp-for="GRADE" class="form-control" required />
+                <input asp-for="GRADE" class="form-control"  />
             </div>
 
             <div class="col-md-4 mb-2">
                 <label>Color</label>
-                <input asp-for="COLOR" class="form-control" required />
+                <input asp-for="COLOR" class="form-control"  />
             </div>
 
             <div class="col-md-4 mb-2">
                 <label>Mileage</label>
-                <input asp-for="MILEAGE" type="number" class="form-control" required />
+                <input asp-for="MILEAGE" type="number" class="form-control"  />
             </div>
 
             <div class="col-md-4 mb-2">
                 <label>FOB Price</label>
-                <input asp-for="START" type="number" class="form-control" required />
+                <input asp-for="START" type="number" class="form-control"  />
             </div>
 
             <div class="col-md-4 mb-2">
                 <label>Total Price</label>
-                <input asp-for="FINISH" type="number" class="form-control" required />
+                <input asp-for="FINISH" type="number" class="form-control"  />
             </div>
 
             <div class="col-md-12 mb-2">

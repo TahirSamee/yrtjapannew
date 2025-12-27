@@ -50,23 +50,23 @@ VALUES (@ID, @LOT, @AUCTION_TYPE, @AUCTION_DATE, @AUCTION, @MARKA_ID, @MODEL_ID,
                     cmd.Parameters.AddWithValue("@MODEL_ID", (object?)car.MODEL_ID ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@MARKA_NAME", (object?)car.MARKA_NAME ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@MODEL_NAME", (object?)car.MODEL_NAME ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@YEAR", car.YEAR);
+                    cmd.Parameters.AddWithValue("@YEAR", (object?)car.YEAR ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@TOWN", (object?)car.TOWN ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@ENG_V", car.ENG_V);
+                    cmd.Parameters.AddWithValue("@ENG_V", (object?)car.ENG_V ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@PW", (object?)car.PW ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@KUZOV", (object?)car.KUZOV ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@GRADE", car.GRADE);
-                    cmd.Parameters.AddWithValue("@COLOR", car.COLOR);
+                    cmd.Parameters.AddWithValue("@GRADE", (object?)car.GRADE ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@COLOR", (object?)car.COLOR ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@KPP", (object?)car.KPP ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@KPP_TYPE", (object?)car.KPP_TYPE ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@PRIV", (object?)car.PRIV ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@MILEAGE", car.MILEAGE);
+                    cmd.Parameters.AddWithValue("@MILEAGE", (object?)car.MILEAGE ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@EQUIP", (object?)car.EQUIP ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@RATE", (object?)car.RATE ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@START", car.START);
-                    cmd.Parameters.AddWithValue("@FINISH", car.FINISH);
+                    cmd.Parameters.AddWithValue("@START", (object?)car.START ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@FINISH", (object?)car.FINISH ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@STATUS", (object?)car.STATUS ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@TIME", (object?)car.TIME ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@TIME", DateTime.Now.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@AVG_PRICE", (object?)car.AVG_PRICE ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@AVG_STRING", (object?)car.AVG_STRING ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@IMAGES", (object?)car.IMAGES ?? DBNull.Value);
@@ -350,7 +350,6 @@ UPDATE Car SET
     START = @START,
     FINISH = @FINISH,
     STATUS = @STATUS,
-    TIME = @TIME,
     AVG_PRICE = @AVG_PRICE,
     AVG_STRING = @AVG_STRING,
     IMAGES = @IMAGES,
@@ -384,7 +383,7 @@ WHERE ID = @ID";
                     cmd.Parameters.AddWithValue("@START", car.START ?? "");
                     cmd.Parameters.AddWithValue("@FINISH", car.FINISH ?? "");
                     cmd.Parameters.AddWithValue("@STATUS", car.STATUS ?? "");
-                    cmd.Parameters.AddWithValue("@TIME", car.TIME ?? "");
+                 //   cmd.Parameters.AddWithValue("@TIME", car.TIME ?? "");
                     cmd.Parameters.AddWithValue("@AVG_PRICE", car.AVG_PRICE ?? "");
                     cmd.Parameters.AddWithValue("@AVG_STRING", car.AVG_STRING ?? "");
                     cmd.Parameters.AddWithValue("@IMAGES", car.IMAGES ?? "");
