@@ -1,6 +1,7 @@
 ﻿@using YRTJapan.Core.Entities
 @model YRTJapan.Core.DropDownDataList
 @{
+    ViewData["Title"] = "YRT Stock";
     var selectedFromYear = ViewData["FromYear"]?.ToString();
     var selectedToYear = ViewData["ToYear"]?.ToString();
     var selectedFromPrice = ViewData["FromPrice"]?.ToString();
@@ -22,10 +23,27 @@
                 string imageUrl = car.IMAGES.Replace("&h=50", "");
                 int hashIndex = imageUrl.IndexOf("#");
                 imageUrl = hashIndex != -1 ? imageUrl.Insert(hashIndex, "&w=320") : imageUrl + "&w=320";
-            }
+                    @if (car.carImages != null && car.carImages.Count > 0)
+                    {
+                        var img = car.carImages[0];
+                        @if (!string.IsNullOrEmpty(img.ImageUrl))
+                        {
+                            <a href='/Customer/Stock/YRTStockDetails?id=@car.ID'>
+                                <img src="@img.ImageUrl" class="d-block cardConImage" alt="@car.MARKA_NAME @car.MODEL_NAME @car.YEAR" style="object-fit:cover!important;background: #a9a9a92b;">
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a href='/Customer/Stock/YRTStockDetails?id=@car.ID'>
+                            <img src="/car-images/nofoto.gif" class="d-block cardConImage" alt="@car.MARKA_NAME @car.MODEL_NAME @car.YEAR" style="object-fit:cover!important;background: #a9a9a92b;">
+                        </a>
+                        
+                    }
+                }
 
 
-            @if (car.carImages != null && car.carImages.Count > 0)
+          @*   @if (car.carImages != null && car.carImages.Count > 0)
             {
                 var carouselId = "carousel_" + car.ID; // unique ID per card
                 <div id="@carouselId" class="carousel slide" data-bs-ride="carousel">
@@ -55,7 +73,7 @@
                         </button>
                     }
                 </div>
-            }
+            } *@
             @* else
             {
                 <a href='/Customer/Stock/Details?id=@car.ID'>
@@ -71,7 +89,7 @@
 
         <div class="sec-2" style="width: 66%;">
             <div class="stockquantity d-flex justify-content-end">
-               @*  <div class="d-flex align-items-center">
+              @*   <div class="d-flex align-items-center">
                     <div class="new"><p>New Arrival</p></div>
                 </div> *@
                 <a href="javascript:void(0);" class="d-flex align-items-center favouriteblock"
@@ -133,7 +151,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Mileage</p></div>
                         <div class="carfunc d-flex align-items-center justify-content-center" style="background: #000;"><p class="mb-0">Engine</p></div>
-                        <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Transmission</p></div>
+                        <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Grade</p></div>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
                         <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.MILEAGE km</p></div>

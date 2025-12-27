@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "YRT Stock Detail";
+
 }
 
 
@@ -33,7 +34,7 @@
             <div class="stock_first">
                 <div class="stock_first">
                     @* YRTStock-style carousel *@
-                    @if (Model.carImages != null && Model.carImages.Count > 0)
+                    @* @if (Model.carImages != null && Model.carImages.Count > 0)
                     {
                         var carouselId = "carousel_" + Model.ID; // unique ID per card
                         <div id="@carouselId" class="carousel slide" data-bs-ride="carousel">
@@ -66,9 +67,14 @@
                                 </button>
                             }
                         </div>
-                    }
+                    } *@
                    
+                    @{
+                        // Extract just the ImageUrl values
+                        var imageUrls = Model.carImages.Select(ci => ci.ImageUrl).ToList();
+                    }
 
+                    @await Html.PartialAsync("_CarImagesPartial", imageUrls)
                 </div>
 
                 <div class="container mt-4 clearfix">
@@ -86,7 +92,10 @@
                                 <tbody>
                                     <tr>
                                         <td><strong>Other Selling Points</strong></td>
-                                        <td>@Model.EQUIP</td>
+
+                                        <td>
+                                            <div style="white-space: pre-wrap;">@Model.EQUIP</div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
