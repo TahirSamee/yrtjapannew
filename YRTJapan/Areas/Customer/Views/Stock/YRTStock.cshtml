@@ -14,7 +14,11 @@
 
 
 }
-
+<style>
+    .carfuncvalues{
+        height:auto !important;
+    }
+</style>
 <section class="search-wrapper pl-md-5 pl-lg-5 pl-0 pr-lg-5 pr-md-5 pr-0">
     
 @foreach (var car in Model.ListCars)
@@ -172,13 +176,13 @@
                 <div class="part-1" style="width: 65%;">
                     <div class="d-flex align-items-center justify-content-between">
                             <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Grade</p></div>
-                        <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Mileage</p></div>
+                            <div class="carfunc d-flex align-items-center justify-content-center"><p class="mb-0">Model Code</p></div>
                         <div class="carfunc d-flex align-items-center justify-content-center" style="background: #000;"><p class="mb-0">Engine</p></div>
                         
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
                             <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.GRADE</p></div>
-                        <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.MILEAGE km</p></div>
+                        <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.MARKA_ID</p></div>
                         <div class="carfuncvalues d-flex align-items-center justify-content-center"><p class="mb-0">@car.ENG_V cc</p></div>
                            
                     </div>
